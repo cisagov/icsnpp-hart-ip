@@ -1,0 +1,287 @@
+import HART_IP_UNIVERSAL_COMMANDS;
+import HART_IP_ENUM;
+import HART_IP_CONVERSION;
+import Zeek_HART_IP;
+
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifier;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariable;
+export HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrent;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrentResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariable;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableResponse;
+export HART_IP_UNIVERSAL_COMMANDS::WritePollingAddress;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfiguration;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfigurationResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassifications;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassificationsResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariable;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableRequest;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTag;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagRequest;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadMessage;
+export HART_IP_UNIVERSAL_COMMANDS::ReadMessageResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadTag;
+export HART_IP_UNIVERSAL_COMMANDS::ReadTagResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformation;
+export HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformationResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformation;
+export HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumber;
+export HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumberResponse;
+export HART_IP_UNIVERSAL_COMMANDS::WriteMessage;
+export HART_IP_UNIVERSAL_COMMANDS::WriteTagDescriptorDate;
+export HART_IP_UNIVERSAL_COMMANDS::WriteFinalAssemblyNumber;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLongTag;
+export HART_IP_UNIVERSAL_COMMANDS::ReadLongTagResponse;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTag;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagRequest;
+export HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagResponse;
+export HART_IP_UNIVERSAL_COMMANDS::WriteLongTag;
+export HART_IP_UNIVERSAL_COMMANDS::ResetConfigurationChangedFlag;
+export HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatus;
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifier -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariable -> event HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrent -> event HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrentEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrentResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrentResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariable -> event HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::WritePollingAddress -> event HART_IP_UNIVERSAL_COMMANDS::WritePollingAddressEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfiguration -> event HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfigurationEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfigurationResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfigurationResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassifications -> event HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassificationsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassificationsResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassificationsResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariable -> event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableRequest -> event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTag -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagRequest -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadMessage -> event HART_IP_UNIVERSAL_COMMANDS::ReadMessageEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadMessageResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadMessageResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadTag -> event HART_IP_UNIVERSAL_COMMANDS::ReadTagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadTagResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadTagResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformation -> event HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformationEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformationResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformationResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformation -> event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumber -> event HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumberEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumberResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumberResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::WriteMessage -> event HART_IP_UNIVERSAL_COMMANDS::WriteMessageEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::WriteTagDescriptorDate -> event HART_IP_UNIVERSAL_COMMANDS::WriteTagDescriptorDateEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::WriteFinalAssemblyNumber -> event HART_IP_UNIVERSAL_COMMANDS::WriteFinalAssemblyNumberEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLongTag -> event HART_IP_UNIVERSAL_COMMANDS::ReadLongTagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadLongTagResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadLongTagResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTag -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagRequest -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagResponse -> event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::WriteLongTag -> event HART_IP_UNIVERSAL_COMMANDS::WriteLongTagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ResetConfigurationChangedFlag -> event HART_IP_UNIVERSAL_COMMANDS::ResetConfigurationChangedFlagEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatus -> event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+

@@ -1,0 +1,11 @@
+module HART_IP_CONVERSION;
+
+public function latin1Conversion(input: bytes) : string &cxxname="HART_IP_CONVERSION::latin1Conversion";
+
+public function dateConversion(input: bytes) : string &cxxname="HART_IP_CONVERSION::dateConversion";
+
+public function timeConversion(input: bytes) : string &cxxname="HART_IP_CONVERSION::timeConversion";
+
+public function packedConversion(input: bytes) : string &cxxname="HART_IP_CONVERSION::packedConversion";
+
+

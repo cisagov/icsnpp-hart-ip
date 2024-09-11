@@ -1,0 +1,1158 @@
+[
+    {
+        "name": "StandardizedStatus0",
+        "reference": "refer to Common Table 29",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "DEVICE_CONFIGURATION_LOCK",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "ELECTRONIC_DEFECT",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "ENVIRONMENTAL_CONDITIONS_OUT_OF_RANGE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "POWER_SUPPLY_CONDITIONS_OUT_OF_RANGE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "WATCHDOG_RESET_EXECUTED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "VOLATILE_MEMORY_DEFECT",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "NON_VOLATILE_MEMORY_DEFECT",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "DEVICE_VARIABLE_SIMULATION_ACTIVE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "StandardizedStatus1",
+        "reference": "refer to Common Table 30",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_7",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_6",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "RESERVED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "BATTERY_OR_POWER_SUPPLY_NEEDS_MAINTENANCE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "EVENT_NOTIFICATION_OVERFLOW",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "DISCRETE_VARIABLE_SIMULATION_ACTIVE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "STATUS_SIMULATION_ACTIVE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "StandardizedStatus2",
+        "reference": "refer to Common Table 31",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_7",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_6",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "STALE_DATA_NOTICE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "SUB_DEVICE_WITH_DUPLICATE_ID",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "SUB_DEVICE_MISMATCH",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "DUPLICATE_MASTER_DETECTED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "SUB_DEVICE_LIST_CHANGED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "StandardizedStatus3",
+        "reference": "refer to Common Table 32",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_7",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_6",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "RADIO_FAILURE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "BLOCK_TRANSFER_PENDING",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "BANDWITH_ALLOCATION_PENDING",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "RESEREVED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "CAPACITY_DENIED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "PVAnalogChannel",
+        "reference": "refer to Common Table 28",
+        "notes": "Analog Channel 13 Fixed",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_7",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_6",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "UNDEFINED_4",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "UNDEFINED_3",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "UNDEFINED_2",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "UNDEFINED_1",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "ANALOG_CHANNEL",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "AnalogChannelSaturated",
+        "reference": "refer to Common Table 27",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_7",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_6",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "UNDEFINED_4",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "QUINARY_ANALOG",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "QUATERNARY_ANALOG",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "TERTIARY_ANALOG",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "SECONDARY_ANALOG",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "MessageType",
+        "reference": "",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "reserved",
+                "description": "Reserved Bits",
+                "notes": "Should always be 0",
+                "type": "uint",
+                "bits": "4..7"
+            },
+            {
+                "name": "messageType",
+                "description": "Actual Message Type",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "bits": "0..3",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "Delimiter",
+        "reference": "",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "addressType",
+                "description": "Address Type",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "AddressType",
+                "bits": "7",
+                "scope": "general"
+            },
+            {
+                "name": "expansionBytes",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "bits": "5..6"
+            },
+            {
+                "name": "physicalLayerType",
+                "description": "",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "PhysicalLayerType",
+                "bits": "3..4",
+                "scope": "general"
+            },
+            {
+                "name": "frameType",
+                "description": "",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "FrameType",
+                "bits": "0..2",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+        "reference": "",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "hardwareRevisionLevel",
+                "description": "Hardware Revision Level of the electronics in this particular device. Does Not Necessarily Trace Individual Component Changes. Level 31 is Reserved.",
+                "notes": "Most Significant 5 Bits",
+                "type": "uint",
+                "bits": "3..7"
+            },
+            {
+                "name": "physicalSignalingCode",
+                "description": "Physical Signaling Code",
+                "notes": "Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes",
+                "type": "enum",
+                "referenceType": "PhysicalSignalingCodes",
+                "bits": "0..2",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 5
+    },
+    {
+        "name": "Flags",
+        "reference": "",
+        "notes": "see Common Table 11, Flag Assignments",
+        "size": 8,
+        "fields": [
+            {
+                "name": "C8PSK_IN_MULTI_DROP_ONLY",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "C8PSK_CAPABLE_FIELD_DEVICE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_5",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "SAFEHART_CAPABLE_FIELD_DEVICE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "IEEE_802_15_4_DSSS_O_QPSK_MODULATION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "PROTOCOL_BRIDGE_DEVICE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "EEPROM_CONTROL",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "MUTLI_SENSOR_FIELD_DEVICE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 5
+    },
+    {
+        "name": "ExtendedFieldDevice",
+        "reference": "refer to Common Table 17, Extended Field Device Status",
+        "notes": "see Common Table 11, Flag Assignments",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_BIT_7",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "FUNCTION_CHECK",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "OUT_OF_SPECIFICATION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "FAILURE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "CRITICAL_POWER_FAILURE",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "DEVICE_VARIABLE_ALERT",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "MAINTENANCE_REQUIRED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 8
+    },
+    {
+        "name": "DeviceVariableStatus",
+        "reference": "Refer to table A-3, Common Tables Specification",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "PROCESS_DATA_STATUS",
+                "description": "OVerall Status of the Device Value",
+                "notes": "",
+                "type": "enum",
+                "bits": "6..7",
+                "referenceType": "ProcessDataStatus",
+                "scope": "general"
+            },
+            {
+                "name": "LIMIT_STATUS",
+                "description": "Indicates whether the Device Variable is responding to process changes.",
+                "notes": "",
+                "type": "enum",
+                "bits": "4..5",
+                "referenceType": "LimitStatus",
+                "scope": "general"
+            },
+            {
+                "name": "MORE_DEVICE_VARIABLE_STATUS_AVAILABLE",
+                "description": "Set if expanded Device Family Status Command contains diagnostic information that is useful to the Host Application",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "DEVICE_FAMILY_SPECIFIC_STATUS",
+                "description": "Speicified by Corresponding Device Family",
+                "notes": "",
+                "type": "uint",
+                "bits": "0..2"
+            }
+        ],
+        "referenceCount": 9
+    },
+    {
+        "name": "FieldDeviceStatus",
+        "reference": "Refer to table A-1, Common Tables Specification",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "DEVICE_MALFUNCTION",
+                "description": "The device detected a serious error or failure that compromises device operation.",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "CONFIGURATION_CHANGED",
+                "description": "An operation was performed that changed the device's configuration.",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "COLD_START",
+                "description": "A power failure or Device Reset has occurred.",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "MORE_STATUS_AVAILABLE",
+                "description": "More status information is available via Command 48.",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "LOOP_CURRENT_FIXED",
+                "description": "The Loop Current is being held at a fixed value and is not responding to process variations.",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "LOOP_CURRENT_SATURATED",
+                "description": "The loop current has reached its upper (or lower) endpoint limit and cannot increase (or decrease) any further.",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "NON_PRIMARY_VARIABLE_OUT_OF_LIMITS",
+                "description": "A device variable not mapped to the PV is beyond its operating limit.",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "PRIMARY_VARIABLE_OUT_OF_LIMITS",
+                "description": "This PV is beyond its operating limit.",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ServerStatus",
+        "reference": "Refer to 10.3.2.6 Server Status, Network Management Specification",
+        "notes": "",
+        "size": 16,
+        "fields": [
+            {
+                "name": "UNDEFINED_BIT_15",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "15"
+            },
+            {
+                "name": "UNDEFINED_BIT_14",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "14"
+            },
+            {
+                "name": "UNDEFINED_BIT_13",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "13"
+            },
+            {
+                "name": "UNDEFINED_BIT_12",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "12"
+            },
+            {
+                "name": "UNDEFINED_BIT_11",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "11"
+            },
+            {
+                "name": "UNDEFINED_BIT_10",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "10"
+            },
+            {
+                "name": "UNDEFINED_BIT_9",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "9"
+            },
+            {
+                "name": "UNDEFINED_BIT_8",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "8"
+            },
+            {
+                "name": "UNDEFINED_BIT_7",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_BIT_5",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "UNDEFINED_BIT_4",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "UNDEFINED_BIT_3",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "INSECURE_SYSLOG_CONNECTION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "SYSLOG_SERVER_LOCATED_BUT_CONNECTION_FAILED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "UNABLE_TO_LOCATE_SYSLOG_SERVER",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "SessionStatus",
+        "reference": "Refer to 10.3.2.6 Server Status, Network Management Specification",
+        "notes": "",
+        "size": 16,
+        "fields": [
+            {
+                "name": "UNDEFINED_BIT_15",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "15"
+            },
+            {
+                "name": "UNDEFINED_BIT_14",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "14"
+            },
+            {
+                "name": "UNDEFINED_BIT_13",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "13"
+            },
+            {
+                "name": "UNDEFINED_BIT_12",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "12"
+            },
+            {
+                "name": "UNDEFINED_BIT_11",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "11"
+            },
+            {
+                "name": "UNDEFINED_BIT_10",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "10"
+            },
+            {
+                "name": "UNDEFINED_BIT_9",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "9"
+            },
+            {
+                "name": "UNDEFINED_BIT_8",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "8"
+            },
+            {
+                "name": "UNDEFINED_BIT_7",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_BIT_5",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "INSECURE_SESSION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "SESSION_TIMEOUT",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "ABORTED_SESSION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "BAD_SESSION_INITIALIZATION",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "WRITES_OCCURED",
+                "description": "",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "DeviceVariablePropertyFlags",
+        "reference": "Common Table 65, Common Tables Specification",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "IS_SIMULATED",
+                "description": "Device Variable is being simulated.",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_BIT_5",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "UNDEFINED_BIT_4",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "UNDEFINED_BIT_3",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "UNDEFINED_BIT_2",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "UNDEFINED_BIT_1",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "IS_INPUT",
+                "description": "Device Variable is Input (e.g. written) to the Field Device",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "AnalogChannelFlags",
+        "reference": "Common Table 26, Common Tables Specification",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_BIT_7",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_BIT_5",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "UNDEFINED_BIT_4",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "UNDEFINED_BIT_3",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "UNDEFINED_BIT_2",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "UNDEFINED_BIT_1",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "ADC_CONNECTED",
+                "description": "If set, the ADC is connection. If not set the channel is connected to DAC.",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 0
+    },
+    {
+        "name": "LockDeviceStatus",
+        "reference": "Common Table 25, Common Tables Specification",
+        "notes": "",
+        "size": 8,
+        "fields": [
+            {
+                "name": "UNDEFINED_BIT_7",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "7"
+            },
+            {
+                "name": "UNDEFINED_BIT_6",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "6"
+            },
+            {
+                "name": "UNDEFINED_BIT_5",
+                "description": "Undefined in the specification",
+                "notes": "",
+                "type": "bool",
+                "bits": "5"
+            },
+            {
+                "name": "LOCK_GATEWAY",
+                "description": "Locked by Gateway",
+                "notes": "",
+                "type": "bool",
+                "bits": "4"
+            },
+            {
+                "name": "CONFIGURATION_LOCKED",
+                "description": "Configuration is locked and cannot be changed by any application.",
+                "notes": "",
+                "type": "bool",
+                "bits": "3"
+            },
+            {
+                "name": "LOCK_PRIMARY",
+                "description": "Locked by Primary",
+                "notes": "",
+                "type": "bool",
+                "bits": "2"
+            },
+            {
+                "name": "LOCK_PERMANENT",
+                "description": "Lock is Permanent",
+                "notes": "",
+                "type": "bool",
+                "bits": "1"
+            },
+            {
+                "name": "DEVICE_LOCKED",
+                "description": "Device Locked",
+                "notes": "",
+                "type": "bool",
+                "bits": "0"
+            }
+        ],
+        "referenceCount": 1
+    }
+]

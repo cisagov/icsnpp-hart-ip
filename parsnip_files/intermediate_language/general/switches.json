@@ -1,0 +1,2914 @@
+[
+    {
+        "name": "DirectPDUCommandSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber16Bit",
+                "scope": "general"
+            }
+        ],
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "directPDUContentsRequest",
+                    "type": "object",
+                    "referenceType": "DirectPDUContentsRequest",
+                    "inputs": [
+                        {
+                            "source": "commandNumber"
+                        },
+                        {
+                            "source": "messageType"
+                        },
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "directPDUContentsResponse",
+                    "type": "object",
+                    "referenceType": "DirectPDUContentsResponse",
+                    "inputs": [
+                        {
+                            "source": "commandNumber"
+                        },
+                        {
+                            "source": "messageType"
+                        },
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "TokenPassingPDUSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber8Bit",
+                "scope": "general"
+            }
+        ],
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "tokenPassingPDUContentsRequest",
+                    "type": "object",
+                    "referenceType": "TokenPassingPDUContentsRequest",
+                    "inputs": [
+                        {
+                            "source": "commandNumber"
+                        },
+                        {
+                            "source": "messageType"
+                        },
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "tokenPassingPDUContentsResponse",
+                    "type": "object",
+                    "referenceType": "TokenPassingPDUContentsResponse",
+                    "inputs": [
+                        {
+                            "source": "commandNumber"
+                        },
+                        {
+                            "source": "messageType"
+                        },
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readUniqueIdentifierResponse",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadPrimaryVariableSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readPrimaryVariableResponse",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariableResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLoopCurrentSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readLoopCurrentResponse",
+                    "type": "object",
+                    "referenceType": "ReadLoopCurrentResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariableSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDynamicVariableResponse",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableResponse",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLoopConfigurationSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readLoopConfigurationResponse",
+                    "type": "object",
+                    "referenceType": "ReadLoopConfigurationResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariableClassificationsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDynamicVariableClassificationsResponse",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableClassificationsResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readDeviceVariableRequest",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableRequest",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceVariableResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableResponse",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierTagSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readUniqueIdentifierTagRequest",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierTagRequest",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readUniqueIdentifierTagResponse",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierTagResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadMessageSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readMessageResponse",
+                    "type": "object",
+                    "referenceType": "ReadMessageResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadTagSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readTagResponse",
+                    "type": "object",
+                    "referenceType": "ReadTagResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadPrimaryVariableTransducerInformationSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readPrimaryVariableTransducerInformationResponse",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariableTransducerInformationResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceInformationSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceInformationResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceInformationResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadFinalAssemblyNumberSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readFinalAssemblyNumberResponse",
+                    "type": "object",
+                    "referenceType": "ReadFinalAssemblyNumberResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLongTagSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readLongTagResponse",
+                    "type": "object",
+                    "referenceType": "ReadLongTagResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierLongTagSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readUniqueIdentifierLongTagRequest",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierLongTagRequest",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readUniqueIdentifierLongTagResponse",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierLongTagResponse",
+                    "scope": "universal_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "Command8Switch",
+        "dependsOn": {
+            "name": "commandNumber",
+            "type": "enum",
+            "referenceType": "CommandNumber8Bit",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "options": [
+            {
+                "value": "READ_UNIQUE_IDENTIFIER",
+                "action": {
+                    "name": "readUniqueIdentifier",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifier",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_PRIMARY_VARIABLE",
+                "action": {
+                    "name": "readPrimaryVariable",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariable",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LOOP_CURRENT",
+                "action": {
+                    "name": "readLoopCurrent",
+                    "type": "object",
+                    "referenceType": "ReadLoopCurrent",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE",
+                "action": {
+                    "name": "readDynamicVariable",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariable",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_POLLING_ADDRESS",
+                "action": {
+                    "name": "writePollingAddress",
+                    "type": "object",
+                    "referenceType": "WritePollingAddress",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LOOP_CONFIGURATION",
+                "action": {
+                    "name": "readLoopConfiguration",
+                    "type": "object",
+                    "referenceType": "ReadLoopConfiguration",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE_CLASSIFICATIONS",
+                "action": {
+                    "name": "readDynamicVariableClassifications",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableClassifications",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE",
+                "action": {
+                    "name": "readDeviceVariable",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariable",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_UNIQUE_IDENTIFIER_TAG",
+                "action": {
+                    "name": "readUniqueIdentifierTag",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_MESSAGE",
+                "action": {
+                    "name": "readMessage",
+                    "type": "object",
+                    "referenceType": "ReadMessage",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_TAG",
+                "action": {
+                    "name": "readTag",
+                    "type": "object",
+                    "referenceType": "ReadTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_PRIMARY_VARIABLE_TRANSDUCER_INFORMATION",
+                "action": {
+                    "name": "readPrimaryVariableTransducerInformation",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariableTransducerInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_INFORMATION",
+                "action": {
+                    "name": "readDeviceInformation",
+                    "type": "object",
+                    "referenceType": "ReadDeviceInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_FINAL_ASSEMBLY_NUMBER",
+                "action": {
+                    "name": "readFinalAssemblyNumber",
+                    "type": "object",
+                    "referenceType": "ReadFinalAssemblyNumber",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_MESSAGE",
+                "action": {
+                    "name": "writeMessage",
+                    "type": "object",
+                    "referenceType": "WriteMessage",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "writeTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "WriteTagDescriptorDate",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_FINAL_ASSEMBLY_NUMBER",
+                "action": {
+                    "name": "writeFinalAssemblyNumber",
+                    "type": "object",
+                    "referenceType": "WriteFinalAssemblyNumber",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LONG_TAG",
+                "action": {
+                    "name": "readLongTag",
+                    "type": "object",
+                    "referenceType": "ReadLongTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_UNIQUE_IDENTIFIER_LONG_TAG",
+                "action": {
+                    "name": "readUniqueIdentifierLongTag",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierLongTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_LONG_TAG",
+                "action": {
+                    "name": "writeLongTag",
+                    "type": "object",
+                    "referenceType": "WriteLongTag",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "RESET_CONFIGURATION_CHANGED_FLAG",
+                "action": {
+                    "name": "resetConfigurationChangedFlag",
+                    "type": "object",
+                    "referenceType": "ResetConfigurationChangedFlag",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_ADDITIONAL_DEVICE_STATUS",
+                "action": {
+                    "name": "readAdditionalDeviceStatus",
+                    "type": "object",
+                    "referenceType": "ReadAdditionalDeviceStatus",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLES",
+                "action": {
+                    "name": "readDeviceVariables",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariables",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_DAMPING_VALUE",
+                "action": {
+                    "name": "writePrimaryVariableDampingValue",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_RANGE_VALUES",
+                "action": {
+                    "name": "writePrimaryVariableRangeValues",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableRangeValues",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_UPPER_RANGE_VALUE",
+                "action": {
+                    "name": "setPrimaryVariableUpperRangeValue",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_LOWER_RANGE_VALUE",
+                "action": {
+                    "name": "setPrimaryVariableLowerRangeValue",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "EEPROM_CONTROL_OBJECT",
+                "action": {
+                    "name": "eepromControl",
+                    "type": "object",
+                    "referenceType": "EEPROMControl",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "ENTER_EXIT_FIXED_CURRENT_MODE",
+                "action": {
+                    "name": "enterExitFixedCurrentMode",
+                    "type": "object",
+                    "referenceType": "EnterExitFixedCurrentMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "PERFORM_SELF_TEST",
+                "action": {
+                    "name": "performSelfTest",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "PERFORM_DEVICE_RESET",
+                "action": {
+                    "name": "performDeviceReset",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_ZERO",
+                "action": {
+                    "name": "setPrimaryVariableZero",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_UNITS",
+                "action": {
+                    "name": "writePrimaryVariableUnits",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableUnits",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_LOOP_CURRENT_ZERO",
+                "action": {
+                    "name": "trimLoopCurrentZero",
+                    "type": "object",
+                    "referenceType": "TrimLoopCurrentZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_LOOP_CURRENT_GAIN",
+                "action": {
+                    "name": "trimLoopCurrentGain",
+                    "type": "object",
+                    "referenceType": "TrimLoopCurrentGain",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_TRANSFER_FUNCTION",
+                "action": {
+                    "name": "writePrimaryVariableTransferFunction",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableTransferFunction",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_TRANSDUCER_SERIAL_NUMBER",
+                "action": {
+                    "name": "writePrimaryVariableTransducerSerialNumber",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableTransducerSerialNumber",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE_ASSIGNMENTS",
+                "action": {
+                    "name": "readDynamicVariableAssignments",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableAssignments",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DYNAMIC_VARIABLE_ASSIGNMENTS",
+                "action": {
+                    "name": "writeDynamicVariableAssignments",
+                    "type": "object",
+                    "referenceType": "WriteDynamicVariableAssignments",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_DEVICE_VARIABLE_ZERO",
+                "action": {
+                    "name": "setDeviceVariableZero",
+                    "type": "object",
+                    "referenceType": "SetDeviceVariableZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_UNITS",
+                "action": {
+                    "name": "writeDeviceVariableUnits",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableUnits",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_INFORMATION",
+                "action": {
+                    "name": "readDeviceVariableInformation",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_DAMPING_VALUE",
+                "action": {
+                    "name": "writeDeviceVariableDampingValue",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_TRANSDUCER_SERIAL_NO",
+                "action": {
+                    "name": "writeDeviceVariableTransducerSerialNo",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableTransducerSerialNo",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_UNIT_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "readUnitTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "ReadUnitTagDescriptorDate",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_UNIT_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "writeUnitTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "WriteUnitTagDescriptorDate",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_NUMBER_OF_RESPONSE_PREAMBLES",
+                "action": {
+                    "name": "writeNumberOfResponsePreambles",
+                    "type": "object",
+                    "referenceType": "WriteNumberOfResponsePreambles",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_AND_PERCENT_OF_RANGE",
+                "action": {
+                    "name": "readAnalogChannelAndPercentOfRange",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelAndPercentOfRange",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLES_AND_PRIMARY_VARIABLE_ANALOG_CHANNEL",
+                "action": {
+                    "name": "readDynamicVariablesAndPrimaryVariableAnalogChannel",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariablesAndPrimaryVariableAnalogChannel",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNELS",
+                "action": {
+                    "name": "readAnalogChannels",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannels",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_INFORMATION",
+                "action": {
+                    "name": "readAnalogChannelInformation",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_ADDITIONAL_DAMPING_VALUE",
+                "action": {
+                    "name": "writeAnalogChannelAdditionalDampingValue",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelAdditionalDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_RANGE_VALUES",
+                "action": {
+                    "name": "writeAnalogChannelRangeValues",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelRangeValues",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "ENTER_EXIT_FIXED_ANALOG_CHANNEL_MODE",
+                "action": {
+                    "name": "enterExitFixedAnalogChannelMode",
+                    "type": "object",
+                    "referenceType": "EnterExitFixedAnalogChannelMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_ANALOG_CHANNEL_ZERO",
+                "action": {
+                    "name": "trimAnalogChannelZero",
+                    "type": "object",
+                    "referenceType": "TrimAnalogChannelZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_ANALOG_CHANNEL_GAIN",
+                "action": {
+                    "name": "trimAnalogChannelGain",
+                    "type": "object",
+                    "referenceType": "TrimAnalogChannelGain",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_TRANSFER_FUNCTION",
+                "action": {
+                    "name": "writeAnalogChannelTransferFunction",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelTransferFunction",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_ENDPOINT_VALUES",
+                "action": {
+                    "name": "readAnalogChannelEndpointValues",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelEndpointValues",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "LOCK_DEVICE",
+                "action": {
+                    "name": "lockDevice",
+                    "type": "object",
+                    "referenceType": "LockDevice",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SQUAWK",
+                "action": {
+                    "name": "squawk",
+                    "type": "object",
+                    "referenceType": "Squawk",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "FIND_DEVICE",
+                "action": {
+                    "name": "findDevice",
+                    "type": "object",
+                    "referenceType": "FindDevice",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_IO_SYSTEM_CAPABILITIES",
+                "action": {
+                    "name": "readIOSystemCapabilities",
+                    "type": "object",
+                    "referenceType": "ReadIOSystemCapabilities",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "POLL_SUB_DEVICE",
+                "action": {
+                    "name": "pollSubDevice",
+                    "type": "object",
+                    "referenceType": "PollSubDevice",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_LOCK_DEVICE_STATE",
+                "action": {
+                    "name": "readLockDeviceState",
+                    "type": "object",
+                    "referenceType": "ReadLockDeviceState",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE",
+                "action": {
+                    "name": "writeDeviceVariable",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariable",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_TRIM_POINTS",
+                "action": {
+                    "name": "readDeviceVariableTrimPoints",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimPoints",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_TRIM_GUIDELINES",
+                "action": {
+                    "name": "readDeviceVariableTrimGuidelines",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimGuidelines",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_TRIM_POINT",
+                "action": {
+                    "name": "writeDeviceVariableTrimPoint",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableTrimPoint",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESET_DEVICE_VARIABLE_TRIM",
+                "action": {
+                    "name": "resetDeviceVariableTrim",
+                    "type": "object",
+                    "referenceType": "ResetDeviceVariableTrim",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_SUB_DEVICE_IDENTITY_SUMMARY",
+                "action": {
+                    "name": "readSubDeviceIdentitySummary",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceIdentitySummary",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_IO_CHANNEL_STATISTICS",
+                "action": {
+                    "name": "readIOChannelStatistics",
+                    "type": "object",
+                    "referenceType": "ReadIOChannelStatistics",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_SUB_DEVICE_STATISTICS",
+                "action": {
+                    "name": "readSubDeviceStatistics",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceStatistics",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_IO_SYSTEM_MASTER_MODE",
+                "action": {
+                    "name": "writeIOSystemMasterMode",
+                    "type": "object",
+                    "referenceType": "WriteIOSystemMasterMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_IO_SYSTEM_RETRY_COUNT",
+                "action": {
+                    "name": "writeIOSystemRetryCount",
+                    "type": "object",
+                    "referenceType": "WriteIOSystemRetryCount",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_REAL_TIME_CLOCK",
+                "action": {
+                    "name": "setRealTimeClock",
+                    "type": "object",
+                    "referenceType": "SetRealTimeClock",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "default": {
+            "name": "data",
+            "type": "list",
+            "elementType": "uint",
+            "size": 8,
+            "until": {
+                "conditionType": "COUNT",
+                "indicator": "byteCount"
+            }
+        },
+        "referenceCount": 1
+    },
+    {
+        "name": "Command16Switch",
+        "dependsOn": {
+            "name": "commandNumber",
+            "type": "enum",
+            "referenceType": "CommandNumber16Bit",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "options": [
+            {
+                "value": "READ_UNIQUE_IDENTIFIER",
+                "action": {
+                    "name": "readUniqueIdentifier",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifier",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_PRIMARY_VARIABLE",
+                "action": {
+                    "name": "readPrimaryVariable",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariable",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LOOP_CURRENT",
+                "action": {
+                    "name": "readLoopCurrent",
+                    "type": "object",
+                    "referenceType": "ReadLoopCurrent",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE",
+                "action": {
+                    "name": "readDynamicVariable",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariable",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_POLLING_ADDRESS",
+                "action": {
+                    "name": "writePollingAddress",
+                    "type": "object",
+                    "referenceType": "WritePollingAddress",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LOOP_CONFIGURATION",
+                "action": {
+                    "name": "readLoopConfiguration",
+                    "type": "object",
+                    "referenceType": "ReadLoopConfiguration",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE_CLASSIFICATIONS",
+                "action": {
+                    "name": "readDynamicVariableClassifications",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableClassifications",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE",
+                "action": {
+                    "name": "readDeviceVariable",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariable",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_UNIQUE_IDENTIFIER_TAG",
+                "action": {
+                    "name": "readUniqueIdentifierTag",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_MESSAGE",
+                "action": {
+                    "name": "readMessage",
+                    "type": "object",
+                    "referenceType": "ReadMessage",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_TAG",
+                "action": {
+                    "name": "readTag",
+                    "type": "object",
+                    "referenceType": "ReadTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_PRIMARY_VARIABLE_TRANSDUCER_INFORMATION",
+                "action": {
+                    "name": "readPrimaryVariableTransducerInformation",
+                    "type": "object",
+                    "referenceType": "ReadPrimaryVariableTransducerInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_INFORMATION",
+                "action": {
+                    "name": "readDeviceInformation",
+                    "type": "object",
+                    "referenceType": "ReadDeviceInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_FINAL_ASSEMBLY_NUMBER",
+                "action": {
+                    "name": "readFinalAssemblyNumber",
+                    "type": "object",
+                    "referenceType": "ReadFinalAssemblyNumber",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_MESSAGE",
+                "action": {
+                    "name": "writeMessage",
+                    "type": "object",
+                    "referenceType": "WriteMessage",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "writeTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "WriteTagDescriptorDate",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_FINAL_ASSEMBLY_NUMBER",
+                "action": {
+                    "name": "writeFinalAssemblyNumber",
+                    "type": "object",
+                    "referenceType": "WriteFinalAssemblyNumber",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_LONG_TAG",
+                "action": {
+                    "name": "readLongTag",
+                    "type": "object",
+                    "referenceType": "ReadLongTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_UNIQUE_IDENTIFIER_LONG_TAG",
+                "action": {
+                    "name": "readUniqueIdentifierLongTag",
+                    "type": "object",
+                    "referenceType": "ReadUniqueIdentifierLongTag",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "WRITE_LONG_TAG",
+                "action": {
+                    "name": "writeLongTag",
+                    "type": "object",
+                    "referenceType": "WriteLongTag",
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "RESET_CONFIGURATION_CHANGED_FLAG",
+                "action": {
+                    "name": "resetConfigurationChangedFlag",
+                    "type": "object",
+                    "referenceType": "ResetConfigurationChangedFlag",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_ADDITIONAL_DEVICE_STATUS",
+                "action": {
+                    "name": "readAdditionalDeviceStatus",
+                    "type": "object",
+                    "referenceType": "ReadAdditionalDeviceStatus",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "universal_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLES",
+                "action": {
+                    "name": "readDeviceVariables",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariables",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_DAMPING_VALUE",
+                "action": {
+                    "name": "writePrimaryVariableDampingValue",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_RANGE_VALUES",
+                "action": {
+                    "name": "writePrimaryVariableRangeValues",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableRangeValues",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_UPPER_RANGE_VALUE",
+                "action": {
+                    "name": "setPrimaryVariableUpperRangeValue",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_LOWER_RANGE_VALUE",
+                "action": {
+                    "name": "setPrimaryVariableLowerRangeValue",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "EEPROM_CONTROL_OBJECT",
+                "action": {
+                    "name": "eepromControl",
+                    "type": "object",
+                    "referenceType": "EEPROMControl",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "ENTER_EXIT_FIXED_CURRENT_MODE",
+                "action": {
+                    "name": "enterExitFixedCurrentMode",
+                    "type": "object",
+                    "referenceType": "EnterExitFixedCurrentMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "PERFORM_SELF_TEST",
+                "action": {
+                    "name": "performSelfTest",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "PERFORM_DEVICE_RESET",
+                "action": {
+                    "name": "performDeviceReset",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "SET_PRIMARY_VARIABLE_ZERO",
+                "action": {
+                    "name": "setPrimaryVariableZero",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_UNITS",
+                "action": {
+                    "name": "writePrimaryVariableUnits",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableUnits",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_LOOP_CURRENT_ZERO",
+                "action": {
+                    "name": "trimLoopCurrentZero",
+                    "type": "object",
+                    "referenceType": "TrimLoopCurrentZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_LOOP_CURRENT_GAIN",
+                "action": {
+                    "name": "trimLoopCurrentGain",
+                    "type": "object",
+                    "referenceType": "TrimLoopCurrentGain",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_TRANSFER_FUNCTION",
+                "action": {
+                    "name": "writePrimaryVariableTransferFunction",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableTransferFunction",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_PRIMARY_VARIABLE_TRANSDUCER_SERIAL_NUMBER",
+                "action": {
+                    "name": "writePrimaryVariableTransducerSerialNumber",
+                    "type": "object",
+                    "referenceType": "WritePrimaryVariableTransducerSerialNumber",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLE_ASSIGNMENTS",
+                "action": {
+                    "name": "readDynamicVariableAssignments",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableAssignments",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DYNAMIC_VARIABLE_ASSIGNMENTS",
+                "action": {
+                    "name": "writeDynamicVariableAssignments",
+                    "type": "object",
+                    "referenceType": "WriteDynamicVariableAssignments",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_DEVICE_VARIABLE_ZERO",
+                "action": {
+                    "name": "setDeviceVariableZero",
+                    "type": "object",
+                    "referenceType": "SetDeviceVariableZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_UNITS",
+                "action": {
+                    "name": "writeDeviceVariableUnits",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableUnits",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_INFORMATION",
+                "action": {
+                    "name": "readDeviceVariableInformation",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_DAMPING_VALUE",
+                "action": {
+                    "name": "writeDeviceVariableDampingValue",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_TRANSDUCER_SERIAL_NO",
+                "action": {
+                    "name": "writeDeviceVariableTransducerSerialNo",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableTransducerSerialNo",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_UNIT_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "readUnitTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "ReadUnitTagDescriptorDate",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_UNIT_TAG_DESCRIPTOR_DATE",
+                "action": {
+                    "name": "writeUnitTagDescriptorDate",
+                    "type": "object",
+                    "referenceType": "WriteUnitTagDescriptorDate",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_NUMBER_OF_RESPONSE_PREAMBLES",
+                "action": {
+                    "name": "writeNumberOfResponsePreambles",
+                    "type": "object",
+                    "referenceType": "WriteNumberOfResponsePreambles",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_AND_PERCENT_OF_RANGE",
+                "action": {
+                    "name": "readAnalogChannelAndPercentOfRange",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelAndPercentOfRange",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DYNAMIC_VARIABLES_AND_PRIMARY_VARIABLE_ANALOG_CHANNEL",
+                "action": {
+                    "name": "readDynamicVariablesAndPrimaryVariableAnalogChannel",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariablesAndPrimaryVariableAnalogChannel",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNELS",
+                "action": {
+                    "name": "readAnalogChannels",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannels",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_INFORMATION",
+                "action": {
+                    "name": "readAnalogChannelInformation",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelInformation",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_ADDITIONAL_DAMPING_VALUE",
+                "action": {
+                    "name": "writeAnalogChannelAdditionalDampingValue",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelAdditionalDampingValue",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_RANGE_VALUES",
+                "action": {
+                    "name": "writeAnalogChannelRangeValues",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelRangeValues",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "ENTER_EXIT_FIXED_ANALOG_CHANNEL_MODE",
+                "action": {
+                    "name": "enterExitFixedAnalogChannelMode",
+                    "type": "object",
+                    "referenceType": "EnterExitFixedAnalogChannelMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_ANALOG_CHANNEL_ZERO",
+                "action": {
+                    "name": "trimAnalogChannelZero",
+                    "type": "object",
+                    "referenceType": "TrimAnalogChannelZero",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "TRIM_ANALOG_CHANNEL_GAIN",
+                "action": {
+                    "name": "trimAnalogChannelGain",
+                    "type": "object",
+                    "referenceType": "TrimAnalogChannelGain",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_ANALOG_CHANNEL_TRANSFER_FUNCTION",
+                "action": {
+                    "name": "writeAnalogChannelTransferFunction",
+                    "type": "object",
+                    "referenceType": "WriteAnalogChannelTransferFunction",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_ANALOG_CHANNEL_ENDPOINT_VALUES",
+                "action": {
+                    "name": "readAnalogChannelEndpointValues",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelEndpointValues",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "LOCK_DEVICE",
+                "action": {
+                    "name": "lockDevice",
+                    "type": "object",
+                    "referenceType": "LockDevice",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SQUAWK",
+                "action": {
+                    "name": "squawk",
+                    "type": "object",
+                    "referenceType": "Squawk",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        },
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "FIND_DEVICE",
+                "action": {
+                    "name": "findDevice",
+                    "type": "object",
+                    "referenceType": "FindDevice",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_IO_SYSTEM_CAPABILITIES",
+                "action": {
+                    "name": "readIOSystemCapabilities",
+                    "type": "object",
+                    "referenceType": "ReadIOSystemCapabilities",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "POLL_SUB_DEVICE",
+                "action": {
+                    "name": "pollSubDevice",
+                    "type": "object",
+                    "referenceType": "PollSubDevice",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_LOCK_DEVICE_STATE",
+                "action": {
+                    "name": "readLockDeviceState",
+                    "type": "object",
+                    "referenceType": "ReadLockDeviceState",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE",
+                "action": {
+                    "name": "writeDeviceVariable",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariable",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_TRIM_POINTS",
+                "action": {
+                    "name": "readDeviceVariableTrimPoints",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimPoints",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_DEVICE_VARIABLE_TRIM_GUIDELINES",
+                "action": {
+                    "name": "readDeviceVariableTrimGuidelines",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimGuidelines",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_DEVICE_VARIABLE_TRIM_POINT",
+                "action": {
+                    "name": "writeDeviceVariableTrimPoint",
+                    "type": "object",
+                    "referenceType": "WriteDeviceVariableTrimPoint",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESET_DEVICE_VARIABLE_TRIM",
+                "action": {
+                    "name": "resetDeviceVariableTrim",
+                    "type": "object",
+                    "referenceType": "ResetDeviceVariableTrim",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_SUB_DEVICE_IDENTITY_SUMMARY",
+                "action": {
+                    "name": "readSubDeviceIdentitySummary",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceIdentitySummary",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_IO_CHANNEL_STATISTICS",
+                "action": {
+                    "name": "readIOChannelStatistics",
+                    "type": "object",
+                    "referenceType": "ReadIOChannelStatistics",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "READ_SUB_DEVICE_STATISTICS",
+                "action": {
+                    "name": "readSubDeviceStatistics",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceStatistics",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_IO_SYSTEM_MASTER_MODE",
+                "action": {
+                    "name": "writeIOSystemMasterMode",
+                    "type": "object",
+                    "referenceType": "WriteIOSystemMasterMode",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "WRITE_IO_SYSTEM_RETRY_COUNT",
+                "action": {
+                    "name": "writeIOSystemRetryCount",
+                    "type": "object",
+                    "referenceType": "WriteIOSystemRetryCount",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "SET_REAL_TIME_CLOCK",
+                "action": {
+                    "name": "setRealTimeClock",
+                    "type": "object",
+                    "referenceType": "SetRealTimeClock",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "default": {
+            "name": "data",
+            "type": "list",
+            "elementType": "uint",
+            "size": 8,
+            "until": {
+                "conditionType": "COUNT",
+                "indicator": "byteCount"
+            }
+        },
+        "referenceCount": 1
+    },
+    {
+        "name": "AddressSwitch",
+        "dependsOn": {
+            "name": "addressType",
+            "type": "enum",
+            "referenceType": "AddressType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "POLLING_ADDRESS",
+                "action": {
+                    "name": "addressV4",
+                    "type": "uint",
+                    "size": 8
+                }
+            },
+            {
+                "value": "UNIQUE_ADDRESS",
+                "action": {
+                    "name": "addressV6",
+                    "type": "bytes",
+                    "size": 40
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "BodySwitch",
+        "dependsOn": {
+            "name": "messageID",
+            "type": "enum",
+            "referenceType": "MessageID",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "options": [
+            {
+                "value": "SESSION_INITIATE",
+                "action": {
+                    "name": "sessionInitiate",
+                    "type": "object",
+                    "referenceType": "SessionInitiate",
+                    "scope": "general"
+                }
+            },
+            {
+                "value": "SESSION_CLOSE",
+                "action": {
+                    "name": "sessionClose",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "KEEP_ALIVE",
+                "action": {
+                    "name": "keepAlive",
+                    "type": "void"
+                }
+            },
+            {
+                "value": "TOKEN_PASSING_PDU",
+                "action": {
+                    "name": "tokenPassingPDU",
+                    "type": "object",
+                    "referenceType": "TokenPassingPDU",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            },
+            {
+                "value": "DIRECT_PDU",
+                "action": {
+                    "name": "directPDU",
+                    "type": "object",
+                    "referenceType": "DirectPDU",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        },
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            },
+            {
+                "value": "READ_AUDIT_LOG",
+                "action": {
+                    "name": "readAuditLog",
+                    "type": "object",
+                    "referenceType": "ReadAuditLog",
+                    "inputs": [
+                        {
+                            "source": "messageType"
+                        }
+                    ],
+                    "scope": "general"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariablesSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "additionalDependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readDeviceVariablesRequest",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariablesRequest",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceVariablesResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariablesResponse",
+                    "inputs": [
+                        {
+                            "source": "byteCount"
+                        }
+                    ],
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariableAssignmentsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDynamicVariableAssignmentsResponse",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariableAssignmentsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableInformationSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readDeviceVariableInformationRequest",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableInformationRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceVariableInformationResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableInformationResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUnitTagDescriptorDateSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readUnitTagDescriptorDateResponse",
+                    "type": "object",
+                    "referenceType": "ReadUnitTagDescriptorDateResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelAndPercentOfRangeSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readAnalogChannelAndPercentOfRangeRequest",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelAndPercentOfRangeRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readAnalogChannelAndPercentOfRangeResponse",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelAndPercentOfRangeResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariablesAndPrimaryVariableAnalogChannelSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDynamicVariablesAndPrimaryVariableAnalogChannelResponse",
+                    "type": "object",
+                    "referenceType": "ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readAnalogChannelsRequest",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelsRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readAnalogChannelsResponse",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelInformationSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readAnalogChannelInformationRequest",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelInformationRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readAnalogChannelInformationResponse",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelInformationResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelEndpointValuesSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "readAnalogChannelEndpointValuesRequest",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelEndpointValuesRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readAnalogChannelEndpointValuesResponse",
+                    "type": "object",
+                    "referenceType": "ReadAnalogChannelEndpointValuesResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "FindDeviceSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "findDeviceResponse",
+                    "type": "object",
+                    "referenceType": "FindDeviceResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadIOSystemCapabilitiesSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readIOSystemCapabilitiesResponse",
+                    "type": "object",
+                    "referenceType": "ReadIOSystemCapabilitiesResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "PollSubDeviceSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "REQUEST",
+                "action": {
+                    "name": "pollSubDeviceRequest",
+                    "type": "object",
+                    "referenceType": "PollSubDeviceRequest",
+                    "scope": "common_commands"
+                }
+            },
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "pollSubDeviceResponse",
+                    "type": "object",
+                    "referenceType": "PollSubDeviceResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLockDeviceStateSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readLockDeviceStateResponse",
+                    "type": "object",
+                    "referenceType": "ReadLockDeviceStateResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableTrimPointsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceVariableTrimPointsResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimPointsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableTrimGuidelinesSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readDeviceVariableTrimGuidelinesResponse",
+                    "type": "object",
+                    "referenceType": "ReadDeviceVariableTrimPointsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadSubDeviceIdentitySummarySwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readSubDeviceIdentitySummaryResponse",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceIdentitySummaryResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadIOChannelStatisticsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readIOChannelStatisticsResponse",
+                    "type": "object",
+                    "referenceType": "ReadIOChannelStatisticsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadSubDeviceStatisticsSwitch",
+        "dependsOn": {
+            "name": "messageType",
+            "type": "enum",
+            "referenceType": "MessageType",
+            "scope": "general"
+        },
+        "options": [
+            {
+                "value": "RESPONSE",
+                "action": {
+                    "name": "readSubDeviceStatisticsResponse",
+                    "type": "object",
+                    "referenceType": "ReadSubDeviceStatisticsResponse",
+                    "scope": "common_commands"
+                }
+            }
+        ],
+        "referenceCount": 1
+    }
+]

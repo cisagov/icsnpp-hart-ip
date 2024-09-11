@@ -1,0 +1,2266 @@
+[
+    {
+        "name": "ReadUniqueIdentifier",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.1",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readUniqueIdentifierContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadUniqueIdentifierSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadUniqueIdentifierResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.1",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "_254",
+                "description": "254",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type.",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumPreamblesMasterSlave",
+                "description": "Minimum number of Preambles required for the request message from the Master to the Slave. This number includes the two preambles used in asynchronous Physical Layers  to detect the start of message.",
+                "type": "uint",
+                "size": 8,
+                "notes": "along with the Delimiter"
+            },
+            {
+                "name": "hartProtocolMajorRevision",
+                "description": "HART Protocol Major Revision number implemented by this device. For HART Revision 7, this value must be the number 7.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceRevisionLevel",
+                "description": "Device Revision Level",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Command Summary Specification"
+            },
+            {
+                "name": "softwareRevisionLevel",
+                "description": "Software Revision Level of this device. Levels 254 and 255 are reserved.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "hardwareRevisionLevelAndPhysicalSignalingCodes",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+                "scope": "general"
+            },
+            {
+                "name": "flags",
+                "description": "Flags",
+                "type": "bits",
+                "referenceType": "Flags",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID. This number must be different for every device manufactured with a given Device Type.",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "numberPreamblesSlaveMaster",
+                "description": "Number of preambles to be sent with the response message from the Slave to the Master.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "lastDeviceVariableThis",
+                "description": "Last Device Variable code. This indicates the last Device Variable code that a host application should expect to be found in the field device . This count does not include the standard devices variables .",
+                "type": "uint",
+                "size": 8,
+                "notes": "e.g., when identifying the Device Variables using Command 54,See Common Table 34"
+            },
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceProfile",
+                "description": "Device Profile",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadPrimaryVariable",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.2",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readPrimaryVariableContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadPrimaryVariableSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadPrimaryVariableResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.2",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "primaryVariableUnits",
+                "description": "Primary Variable Units",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "primaryVariable",
+                "description": "Primary Variable",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLoopCurrent",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.3",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readLoopCurrentContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadLoopCurrentSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLoopCurrentResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.3",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "primaryVariableLoopCurrent",
+                "description": "Primary Variable Loop Current",
+                "type": "float",
+                "size": 32,
+                "notes": "units of milliamps "
+            },
+            {
+                "name": "primaryVariablePercentRange",
+                "description": "Primary Variable Percent of Range",
+                "type": "float",
+                "size": 32,
+                "notes": "units of percent"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariable",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.4",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDynamicVariableContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDynamicVariableSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDynamicVariableResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.4",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "primaryVariableLoopCurrent",
+                "description": "Primary Variable Loop Current",
+                "type": "float",
+                "size": 32,
+                "notes": "units of milliamps"
+            },
+            {
+                "name": "primaryVariableUnits",
+                "description": "Primary Variable Units",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "primaryVariable",
+                "description": "Primary Variable",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "secondaryVariableUnits",
+                "description": "Secondary Variable Units",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 14
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "secondaryVariable",
+                "description": "Secondary Variable",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 14
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "tertiaryVariableUnits",
+                "description": "Tertiary Variable Units",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 19
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "tertiaryVariable",
+                "description": "Tertiary Variable",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 19
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "quaternaryVariableUnits",
+                "description": "Quaternary Variable Units",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 24
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "quaternaryVariable",
+                "description": "Quaternary Variable",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 24
+                },
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WritePollingAddress",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.7",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "pollingAddressDevice",
+                "description": "Polling Address of Device",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Data Link Layer Specification"
+            },
+            {
+                "name": "loopCurrentMode",
+                "description": "Loop Current Mode",
+                "type": "enum",
+                "referenceType": "LoopCurrentModeCodes",
+                "notes": "refer to Common Table 16, Loop Current Modes",
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">=",
+                            "value": 2
+                        }
+                    ]
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLoopConfiguration",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.8",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readLoopConfigurationContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadLoopConfigurationSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLoopConfigurationResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.8",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "pollingAddressDevice",
+                "description": "Polling Address of Device",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Data Link Layer Specification"
+            },
+            {
+                "name": "loopCurrentMode",
+                "description": "Loop Current Mode",
+                "type": "enum",
+                "referenceType": "LoopCurrentModeCodes",
+                "notes": "refer to Common Table 16, Loop Current Modes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariableClassifications",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.9",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDynamicVariableClassificationsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDynamicVariableClassificationsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDynamicVariableClassificationsResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.9",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "primaryVariableClassification",
+                "description": "Primary Variable Classification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "notes": "see Common Table 21, Device Variable Classification Codes",
+                "scope": "general"
+            },
+            {
+                "name": "secondaryVariableClassification",
+                "description": "Secondary Variable Classification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "notes": "see Common Table 21, Device Variable Classification Codes",
+                "scope": "general"
+            },
+            {
+                "name": "tertiaryVariableClassification",
+                "description": "Tertiary Variable Classification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "notes": "see Common Table 21, Device Variable Classification Codes",
+                "scope": "general"
+            },
+            {
+                "name": "quaternaryVariableClassification",
+                "description": "Quaternary Variable Classification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "notes": "see Common Table 21, Device Variable Classification Codes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariable",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.10",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDeviceVariableContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceVariableSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableRequest",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.10",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "slot0DeviceVariableCode",
+                "description": "Slot 0: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 1
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot1DeviceVariableCode",
+                "description": "Slot 1: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 2
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot2DeviceVariableCode",
+                "description": "Slot 2: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 3
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot3DeviceVariableCode",
+                "description": "Slot 3: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 4
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot4DeviceVariableCode",
+                "description": "Slot 4: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 5
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot5DeviceVariableCode",
+                "description": "Slot 5: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 6
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot6DeviceVariableCode",
+                "description": "Slot 6: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 7
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot7DeviceVariableCode",
+                "description": "Slot 7: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 8
+                },
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.10",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "slot0DeviceVariableCode",
+                "description": "Slot 0: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot0DeviceVariableClass",
+                "description": "Slot 0: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot0UnitsCode",
+                "description": "Slot 0: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot0DeviceVariable",
+                "description": "Slot 0: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot0DeviceVariableStatus",
+                "description": "Slot 0: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot1DeviceVariableCode",
+                "description": "Slot 1: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 17
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot1DeviceVariableClass",
+                "description": "Slot 1: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 17
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot1UnitsCode",
+                "description": "Slot 1: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 17
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot1DeviceVariable",
+                "description": "Slot 1: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 17
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot1DeviceVariableStatus",
+                "description": "Slot 1: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 17
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot2DeviceVariableCode",
+                "description": "Slot 2: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 25
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot2DeviceVariableClass",
+                "description": "Slot 2: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 25
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot2UnitsCode",
+                "description": "Slot 2: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 25
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot2DeviceVariable",
+                "description": "Slot 2: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 25
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot2DeviceVariableStatus",
+                "description": "Slot 2: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 25
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot3DeviceVariableCode",
+                "description": "Slot 3: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 33
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot3DeviceVariableClass",
+                "description": "Slot 3: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 33
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot3UnitsCode",
+                "description": "Slot 3: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 33
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot3DeviceVariable",
+                "description": "Slot 3: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 33
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot3DeviceVariableStatus",
+                "description": "Slot 3: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 33
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot4DeviceVariableCode",
+                "description": "Slot 4: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 41
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot4DeviceVariableClass",
+                "description": "Slot 4: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 41
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot4UnitsCode",
+                "description": "Slot 4: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 41
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot4DeviceVariable",
+                "description": "Slot 4: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 41
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot4DeviceVariableStatus",
+                "description": "Slot 4: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 41
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot5DeviceVariableCode",
+                "description": "Slot 5: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 49
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot5DeviceVariableClass",
+                "description": "Slot 5: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 49
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot5UnitsCode",
+                "description": "Slot 5: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 49
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot5DeviceVariable",
+                "description": "Slot 5: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 49
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot5DeviceVariableStatus",
+                "description": "Slot 5: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 49
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot6DeviceVariableCode",
+                "description": "Slot 6: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 57
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot6DeviceVariableClass",
+                "description": "Slot 6: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 57
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot6UnitsCode",
+                "description": "Slot 6: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 57
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot6DeviceVariable",
+                "description": "Slot 6: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 57
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot6DeviceVariableStatus",
+                "description": "Slot 6: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 57
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot7DeviceVariableCode",
+                "description": "Slot 7: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 65
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot7DeviceVariableClass",
+                "description": "Slot 7: Device Variable Classification",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 65
+                },
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "slot7UnitsCode",
+                "description": "Slot 7: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 65
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot7DeviceVariable",
+                "description": "Slot 7: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 65
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot7DeviceVariableStatus",
+                "description": "Slot 7: Device Variable Status",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 65
+                },
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            },
+            {
+                "name": "slot0Time",
+                "description": "Slot 0: Timestamp",
+                "type": "uint",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierTag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.11",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readUniqueIdentifierTagContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadUniqueIdentifierTagSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadUniqueIdentifierTagRequest",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "tag",
+                "description": "Tag",
+                "notes": "",
+                "type": "Packed",
+                "size": 48
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierTagResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "_254",
+                "description": "254",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type.",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumPreamblesMasterSlave",
+                "description": "Minimum number of Preambles required for the request message from the Master to the Slave. This number includes the two preambles used in asynchronous Physical Layers  to detect the start of message.",
+                "type": "uint",
+                "size": 8,
+                "notes": "along with the Delimiter"
+            },
+            {
+                "name": "hartProtocolMajorRevision",
+                "description": "HART Protocol Major Revision number implemented by this device. For HART Revision 7, this value must be the number 7.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceRevisionLevel",
+                "description": "Device Revision Level",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Command Summary Specification"
+            },
+            {
+                "name": "softwareRevisionLevel",
+                "description": "Software Revision Level of this device. Levels 254 and 255 are reserved.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "hardwareRevisionLevelAndPhysicalSignalingCodes",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+                "scope": "general"
+            },
+            {
+                "name": "flags",
+                "description": "Flags",
+                "type": "bits",
+                "referenceType": "Flags",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID. This number must be different for every device manufactured with a given Device Type.",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "numberPreamblesSlaveMaster",
+                "description": "Number of preambles to be sent with the response message from the Slave to the Master.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "lastDeviceVariableThis",
+                "description": "Last Device Variable code. This indicates the last Device Variable code that a host application should expect to be found in the field device . This count does not include the standard devices variables .",
+                "type": "uint",
+                "size": 8,
+                "notes": "e.g., when identifying the Device Variables using Command 54,See Common Table 34"
+            },
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceProfile",
+                "description": "Device Profile",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadMessage",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.12",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readMessageContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadMessageSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadMessageResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "message",
+                "description": "Message",
+                "notes": "",
+                "type": "Packed",
+                "size": 192
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadTag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readTagContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadTagSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadTagResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "tag",
+                "description": "Tag",
+                "notes": "",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "descriptor",
+                "description": "Descriptor",
+                "notes": "",
+                "type": "Packed",
+                "size": 96
+            },
+            {
+                "name": "dateCode",
+                "description": "Date Code",
+                "notes": "",
+                "type": "Date",
+                "size": 24
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadPrimaryVariableTransducerInformation",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.14",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readPrimaryVariableTransducerInformationContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadPrimaryVariableTransducerInformationSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadPrimaryVariableTransducerInformationResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.14",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "pVTransducerSerialNumber",
+                "description": "PV Transducer Serial Number",
+                "notes": "",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "pVTransducerLimitsUnits",
+                "description": "PV Transducer Limits and Minimum Span Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "pVUpperTransducerLimit",
+                "description": "PV Upper Transducer Limit",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "pVLowerTransducerLimit",
+                "description": "PV Lower Transducer Limit",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "pVMinimumSpan",
+                "description": "PV Minimum Span",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceInformation",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.15",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDeviceInformationContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceInformationSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceInformationResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.15",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "pVAlarmSelectionCode",
+                "description": "PV Alarm Selection Code.",
+                "type": "enum",
+                "referenceType": "AlarmSelectionCodes",
+                "notes": "The Alarm Selection Code indicates the action taken by the device under error conditions. For transmitters, the code indicates the action taken by the Loop Current. For Actuators, the action taken by the positioner is indicated.",
+                "scope": "general"
+            },
+            {
+                "name": "pVTransferFunctionCode",
+                "description": "PV Transfer Function Code.",
+                "type": "enum",
+                "referenceType": "TransferFunctionCodes",
+                "notes": "The Transfer Function Code must return 0, Linear, if transfer functions are not supported by the device.",
+                "scope": "general"
+            },
+            {
+                "name": "pVUpperLowerRange",
+                "description": "PV Upper and Lower Range Values Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "pVUpperRangeValue",
+                "description": "PV Upper Range Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "pVLowerRangeValue",
+                "description": "PV Lower Range Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "pVDampingValue",
+                "description": "PV Damping Value",
+                "type": "float",
+                "size": 32,
+                "notes": "units of seconds"
+            },
+            {
+                "name": "writeProtectCode",
+                "description": "Write Protect Code. The Write Protect Code must return 251, None, when write protect is not implemented by a device.",
+                "type": "enum",
+                "referenceType": "WriteProtectCodes",
+                "notes": "see Common Table 7, Write Protect Codes",
+                "scope": "general"
+            },
+            {
+                "name": "_250",
+                "description": "250",
+                "type": "uint",
+                "size": 8,
+                "notes": "Reserved. Must be set to 250, Not Used."
+            },
+            {
+                "name": "pVAnalogChannelFlags",
+                "description": "PV Analog Channel Flags",
+                "type": "bits",
+                "referenceType": "PVAnalogChannel",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadFinalAssemblyNumber",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.16",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readFinalAssemblyNumberContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadFinalAssemblyNumberSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadFinalAssemblyNumberResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.16",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "finalAssemblyNumber",
+                "description": "Final Assembly Number",
+                "notes": "",
+                "type": "uint",
+                "size": 24
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteMessage",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.17",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "messageString",
+                "description": "Message String",
+                "notes": "",
+                "type": "Packed",
+                "size": 192
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteTagDescriptorDate",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.18",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "tag",
+                "description": "Tag",
+                "notes": "",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "recordKeepingDescriptor",
+                "description": "Descriptor Used By The Master For Record Keeping",
+                "notes": "",
+                "type": "Packed",
+                "size": 96
+            },
+            {
+                "name": "dateCode",
+                "description": "Date Code Used By The Master For Record Keeping",
+                "notes": "E.G. Last Or Next Calibration Date",
+                "type": "Date",
+                "size": 24
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteFinalAssemblyNumber",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.19",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "finalAssemblyNumber",
+                "description": "Final Assembly Number",
+                "notes": "",
+                "type": "uint",
+                "size": 24
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLongTag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.20",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readLongTagContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadLongTagSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLongTagResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.20",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "longTag",
+                "description": "Long Tag",
+                "notes": "",
+                "type": "latin-1",
+                "size": 256
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierLongTag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.21",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readUniqueIdentifierLongTagContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadUniqueIdentifierLongTagSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadUniqueIdentifierLongTagRequest",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.21",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "longTag",
+                "description": "Long Tag",
+                "notes": "",
+                "type": "latin-1",
+                "size": 256
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadUniqueIdentifierLongTagResponse",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.21",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "_254",
+                "description": "254",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type.",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumPreamblesMasterSlave",
+                "description": "Minimum number of Preambles required for the request message from the Master to the Slave. This number includes the two preambles used in asynchronous Physical Layers  to detect the start of message.",
+                "type": "uint",
+                "size": 8,
+                "notes": "along with the Delimiter"
+            },
+            {
+                "name": "hartProtocolMajorRevision",
+                "description": "HART Protocol Major Revision number implemented by this device. For HART Revision 7, this value must be the number 7.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceRevisionLevel",
+                "description": "Device Revision Level",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Command Summary Specification"
+            },
+            {
+                "name": "softwareRevisionLevel",
+                "description": "Software Revision Level of this device. Levels 254 and 255 are reserved.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "hardwareRevisionLevelAndPhysicalSignalingCodes",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+                "scope": "general"
+            },
+            {
+                "name": "flags",
+                "description": "Flags",
+                "type": "bits",
+                "referenceType": "Flags",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID. This number must be different for every device manufactured with a given Device Type.",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "numberPreamblesSlaveMaster",
+                "description": "Number of preambles to be sent with the response message from the Slave to the Master.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "lastDeviceVariableThis",
+                "description": "Last Device Variable code. This indicates the last Device Variable code that a host application should expect to be found in the field device . This count does not include the standard devices variables .",
+                "type": "uint",
+                "size": 8,
+                "notes": "e.g., when identifying the Device Variables using Command 54,See Common Table 34"
+            },
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceProfile",
+                "description": "Device Profile",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteLongTag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.22",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "fields": [
+            {
+                "name": "longTag",
+                "description": "Long Tag",
+                "notes": "",
+                "type": "latin-1",
+                "size": 256
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ResetConfigurationChangedFlag",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.23",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "notes": "",
+                "type": "uint",
+                "size": 16,
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">=",
+                            "value": 2
+                        }
+                    ]
+                }
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAdditionalDeviceStatus",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.24",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "packetContents",
+                "description": "Device-Specific Status",
+                "notes": "refer to appropriate device-specific document for detailed information",
+                "type": "object",
+                "referenceType": "ReadAdditionalDeviceStatusContents",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 9
+                },
+                "inputs": [
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "universal_commands"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAdditionalDeviceStatusContents",
+        "reference": "Universal Command specification TS20127 version 7.2 Section 6.24",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "scope": "universal_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "deviceSpecificStatus_0",
+                "description": "Device-Specific Status",
+                "notes": "refer to appropriate device-specific document for detailed information",
+                "type": "bytes",
+                "size": 48
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "notes": "refer to Common Table 17, Extended Field Device Status Information",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "deviceOperatingMode",
+                "description": "Device Operating Mode",
+                "notes": "refer to Common Table 14, Operating Mode Codes",
+                "type": "enum",
+                "referenceType": "OperatingModeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "standardizedStatus0",
+                "description": "Standardized Status 0",
+                "notes": "refer to Common Table 29",
+                "type": "bits",
+                "referenceType": "StandardizedStatus0",
+                "scope": "general"
+            },
+            {
+                "name": "standardizedStatus1",
+                "description": "Standardized Status 1",
+                "notes": "refer to Common Table 30",
+                "type": "bits",
+                "referenceType": "StandardizedStatus1",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 10
+                },
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelSaturated",
+                "description": "Analog Channel Saturated",
+                "notes": "refer to Common Table 27",
+                "type": "bits",
+                "referenceType": "AnalogChannelSaturated",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 11
+                },
+                "scope": "general"
+            },
+            {
+                "name": "standardizedStatus2",
+                "description": "Standardized Status 2",
+                "notes": "refer to Common Table 31",
+                "type": "bits",
+                "referenceType": "StandardizedStatus2",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 12
+                },
+                "scope": "general"
+            },
+            {
+                "name": "standardizedStatus3",
+                "description": "Standardized Status 3",
+                "notes": "refer to Common Table 32",
+                "type": "bits",
+                "referenceType": "StandardizedStatus3",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 13
+                },
+                "scope": "general"
+            },
+            {
+                "name": "analogChannel",
+                "description": "Analog Channel 13 Fixed",
+                "notes": "refer to Common Table 28",
+                "type": "bits",
+                "referenceType": "PVAnalogChannel",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 14
+                },
+                "scope": "general"
+            },
+            {
+                "name": "deviceSpecificStatus_1",
+                "description": "Device-Specific Status",
+                "notes": "refer to appropriate device-specific document for detailed information",
+                "type": "bytes",
+                "size": 88,
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 15
+                }
+            }
+        ],
+        "referenceCount": 1
+    }
+]

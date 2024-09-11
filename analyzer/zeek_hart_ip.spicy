@@ -1,0 +1,13 @@
+module Zeek_HART_IP;
+
+import HART_IP;
+import spicy;
+
+on HART_IP::Messages::%done {
+    spicy::accept_input();
+}
+
+on HART_IP::Messages::%error {
+    spicy::decline_input("error parsing HART_IP message");
+}
+

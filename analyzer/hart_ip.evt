@@ -1,0 +1,40 @@
+import HART_IP;
+import HART_IP_ENUM;
+import HART_IP_GENERATEID;
+import HART_IP_UNIVERSAL_COMMANDS;
+import HART_IP_COMMON_COMMANDS;
+import HART_IP_CONVERSION;
+import Zeek_HART_IP;
+
+protocol analyzer spicy::HART_IP_TCP over TCP:
+    parse with HART_IP::Messages,
+    ports {5094/tcp};
+
+protocol analyzer spicy::HART_IP_UDP over UDP:
+    parse with HART_IP::Messages,
+    ports {5094/udp};
+
+export HART_IP::Messages;
+export HART_IP::Message;
+export HART_IP::DirectPDUCommand;
+export HART_IP::SessionLogRecord;
+
+on HART_IP::Message -> event HART_IP::MessageEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP::DirectPDUCommand -> event HART_IP::DirectPDUCommandEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP::SessionLogRecord -> event HART_IP::SessionLogRecordEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+

@@ -1,0 +1,757 @@
+module HART_IP_UNIVERSAL_COMMANDS;
+
+import spicy;
+
+import HART_IP_ENUM;
+import HART_IP_CONVERSION;
+
+# Universal Command specification TS20127 version 7.2 Section 6.1
+type ReadUniqueIdentifier = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readUniqueIdentifierResponse     : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponse(parentLinkId);
+        *                                       ->                                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.1
+type ReadUniqueIdentifierResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    _254                                                 : uint8;
+    expandedDeviceType                                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    # along with the Delimiter
+    minimumPreamblesMasterSlave                          : uint8;
+    hartProtocolMajorRevision                            : uint8;
+    # refer to the Command Summary Specification
+    deviceRevisionLevel                                  : uint8;
+    softwareRevisionLevel                                : uint8;
+    hardwareRevisionLevelAndPhysicalSignalingCodes       : bitfield(8) {
+                                                               # Most Significant 5 Bits
+                                                               hardwareRevisionLevel    : 3..7;
+                                                               # Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes
+                                                               physicalSignalingCode    : 0..2 &convert=HART_IP_ENUM::PhysicalSignalingCodes($$);
+                                                           };
+    flags                                                : bitfield(8) {
+                                                               C8PSK_IN_MULTI_DROP_ONLY                 : 7 &convert=cast<bool>($$);
+                                                               C8PSK_CAPABLE_FIELD_DEVICE               : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_5                              : 5 &convert=cast<bool>($$);
+                                                               SAFEHART_CAPABLE_FIELD_DEVICE            : 4 &convert=cast<bool>($$);
+                                                               IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
+                                                               PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
+                                                               EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
+                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                           };
+    var deviceID                                         : uint64;
+                                                         : bytes &size=3 {
+                                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                                           }
+    numberPreamblesSlaveMaster                           : uint8;
+    # e.g., when identifying the Device Variables using Command 54,See Common Table 34
+    lastDeviceVariableThis                               : uint8;
+    configurationChangeCounter                           : uint16;
+    extendedFieldDeviceStatus                            : bitfield(8) {
+                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                                               OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                                               FAILURE                  : 3 &convert=cast<bool>($$);
+                                                               CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                                               DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                                               MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                                           };
+    manufacturerIdentificationCode                       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    privateLabelDistributorCode                          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    deviceProfile                                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.2
+type ReadPrimaryVariable = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readPrimaryVariableResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableResponse(parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.2
+type ReadPrimaryVariableResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    primaryVariableUnits         : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    primaryVariable              : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.3
+type ReadLoopCurrent = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readLoopCurrentResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrentResponse(parentLinkId);
+        *                                       ->                          : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.3
+type ReadLoopCurrentResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # units of milliamps 
+    primaryVariableLoopCurrent       : real &type=spicy::RealType::IEEE754_Single;
+    # units of percent
+    primaryVariablePercentRange      : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.4
+type ReadDynamicVariable = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDynamicVariableResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableResponse(byteCount, parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.4
+type ReadDynamicVariableResponse = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # units of milliamps
+    primaryVariableLoopCurrent       : real &type=spicy::RealType::IEEE754_Single;
+    primaryVariableUnits             : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 9);
+    primaryVariable                  : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 9);
+    secondaryVariableUnits           : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 14);
+    secondaryVariable                : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 14);
+    tertiaryVariableUnits            : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 19);
+    tertiaryVariable                 : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 19);
+    quaternaryVariableUnits          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 24);
+    quaternaryVariable               : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 24);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.7
+type WritePollingAddress = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # refer to the Data Link Layer Specification
+    pollingAddressDevice         : uint8;
+    # refer to Common Table 16, Loop Current Modes
+    loopCurrentMode              : uint8 &convert=HART_IP_ENUM::LoopCurrentModeCodes($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount >= 2);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.8
+type ReadLoopConfiguration = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readLoopConfigurationResponse    : HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfigurationResponse(parentLinkId);
+        *                                       ->                                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.8
+type ReadLoopConfigurationResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # refer to the Data Link Layer Specification
+    pollingAddressDevice         : uint8;
+    # refer to Common Table 16, Loop Current Modes
+    loopCurrentMode              : uint8 &convert=HART_IP_ENUM::LoopCurrentModeCodes($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.9
+type ReadDynamicVariableClassifications = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDynamicVariableClassificationsResponse   : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassificationsResponse(parentLinkId);
+        *                                       ->                                              : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.9
+type ReadDynamicVariableClassificationsResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # see Common Table 21, Device Variable Classification Codes
+    primaryVariableClassification            : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+    # see Common Table 21, Device Variable Classification Codes
+    secondaryVariableClassification          : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+    # see Common Table 21, Device Variable Classification Codes
+    tertiaryVariableClassification           : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+    # see Common Table 21, Device Variable Classification Codes
+    quaternaryVariableClassification         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.10
+type ReadDeviceVariable = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readDeviceVariableRequest    : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableRequest(byteCount, parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceVariableResponse   : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableResponse(byteCount, parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.10
+type ReadDeviceVariableRequest = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    slot0DeviceVariableCode      : uint8 if (byteCount >= 1);
+    slot1DeviceVariableCode      : uint8 if (byteCount >= 2);
+    slot2DeviceVariableCode      : uint8 if (byteCount >= 3);
+    slot3DeviceVariableCode      : uint8 if (byteCount >= 4);
+    slot4DeviceVariableCode      : uint8 if (byteCount >= 5);
+    slot5DeviceVariableCode      : uint8 if (byteCount >= 6);
+    slot6DeviceVariableCode      : uint8 if (byteCount >= 7);
+    slot7DeviceVariableCode      : uint8 if (byteCount >= 8);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.10
+type ReadDeviceVariableResponse = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    extendedFieldDeviceStatus        : bitfield(8) {
+                                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                           FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                           OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                           FAILURE                  : 3 &convert=cast<bool>($$);
+                                           CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                           DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                           MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                       };
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot0DeviceVariableCode          : uint8 if (byteCount >= 9);
+    slot0DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 9);
+    # refer to Common Tables Specification
+    slot0UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 9);
+    slot0DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 9);
+    slot0DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 9);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot1DeviceVariableCode          : uint8 if (byteCount >= 17);
+    slot1DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 17);
+    # refer to Common Tables Specification
+    slot1UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 17);
+    slot1DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 17);
+    slot1DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 17);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot2DeviceVariableCode          : uint8 if (byteCount >= 25);
+    slot2DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 25);
+    # refer to Common Tables Specification
+    slot2UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 25);
+    slot2DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 25);
+    slot2DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 25);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot3DeviceVariableCode          : uint8 if (byteCount >= 33);
+    slot3DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 33);
+    # refer to Common Tables Specification
+    slot3UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 33);
+    slot3DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 33);
+    slot3DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 33);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot4DeviceVariableCode          : uint8 if (byteCount >= 41);
+    slot4DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 41);
+    # refer to Common Tables Specification
+    slot4UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 41);
+    slot4DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 41);
+    slot4DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 41);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot5DeviceVariableCode          : uint8 if (byteCount >= 49);
+    slot5DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 49);
+    # refer to Common Tables Specification
+    slot5UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 49);
+    slot5DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 49);
+    slot5DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 49);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot6DeviceVariableCode          : uint8 if (byteCount >= 57);
+    slot6DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 57);
+    # refer to Common Tables Specification
+    slot6UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 57);
+    slot6DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 57);
+    slot6DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 57);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot7DeviceVariableCode          : uint8 if (byteCount >= 65);
+    slot7DeviceVariableClass         : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$) if (byteCount >= 65);
+    # refer to Common Tables Specification
+    slot7UnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 65);
+    slot7DeviceVariable              : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 65);
+    slot7DeviceVariableStatus        : bitfield(8) {
+                                           PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                           LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                           MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                           DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                       } if (byteCount >= 65);
+    slot0Time                        : uint32;
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.11
+type ReadUniqueIdentifierTag = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readUniqueIdentifierTagRequest   : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readUniqueIdentifierTagResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagResponse(parentLinkId);
+        *                                       ->                                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.13
+type ReadUniqueIdentifierTagRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    tag      : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.13
+type ReadUniqueIdentifierTagResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    _254                                                 : uint8;
+    expandedDeviceType                                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    # along with the Delimiter
+    minimumPreamblesMasterSlave                          : uint8;
+    hartProtocolMajorRevision                            : uint8;
+    # refer to the Command Summary Specification
+    deviceRevisionLevel                                  : uint8;
+    softwareRevisionLevel                                : uint8;
+    hardwareRevisionLevelAndPhysicalSignalingCodes       : bitfield(8) {
+                                                               # Most Significant 5 Bits
+                                                               hardwareRevisionLevel    : 3..7;
+                                                               # Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes
+                                                               physicalSignalingCode    : 0..2 &convert=HART_IP_ENUM::PhysicalSignalingCodes($$);
+                                                           };
+    flags                                                : bitfield(8) {
+                                                               C8PSK_IN_MULTI_DROP_ONLY                 : 7 &convert=cast<bool>($$);
+                                                               C8PSK_CAPABLE_FIELD_DEVICE               : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_5                              : 5 &convert=cast<bool>($$);
+                                                               SAFEHART_CAPABLE_FIELD_DEVICE            : 4 &convert=cast<bool>($$);
+                                                               IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
+                                                               PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
+                                                               EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
+                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                           };
+    var deviceID                                         : uint64;
+                                                         : bytes &size=3 {
+                                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                                           }
+    numberPreamblesSlaveMaster                           : uint8;
+    # e.g., when identifying the Device Variables using Command 54,See Common Table 34
+    lastDeviceVariableThis                               : uint8;
+    configurationChangeCounter                           : uint16;
+    extendedFieldDeviceStatus                            : bitfield(8) {
+                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                                               OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                                               FAILURE                  : 3 &convert=cast<bool>($$);
+                                                               CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                                               DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                                               MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                                           };
+    manufacturerIdentificationCode                       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    privateLabelDistributorCode                          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    deviceProfile                                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.12
+type ReadMessage = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readMessageResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadMessageResponse(parentLinkId);
+        *                                       ->                      : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.13
+type ReadMessageResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    message      : bytes &size=24 &convert=HART_IP_CONVERSION::packedConversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.13
+type ReadTag = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readTagResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadTagResponse(parentLinkId);
+        *                                       ->                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.13
+type ReadTagResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    tag              : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    descriptor       : bytes &size=12 &convert=HART_IP_CONVERSION::packedConversion($$);
+    dateCode         : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.14
+type ReadPrimaryVariableTransducerInformation = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readPrimaryVariableTransducerInformationResponse     : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformationResponse(parentLinkId);
+        *                                       ->                                                      : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.14
+type ReadPrimaryVariableTransducerInformationResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    var pVTransducerSerialNumber     : uint64;
+                                     : bytes &size=3 {
+                                           self.pVTransducerSerialNumber = $$.to_uint(spicy::ByteOrder::Big);
+                                       }
+    # refer to Common Tables Specification
+    pVTransducerLimitsUnits          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    pVUpperTransducerLimit           : real &type=spicy::RealType::IEEE754_Single;
+    pVLowerTransducerLimit           : real &type=spicy::RealType::IEEE754_Single;
+    pVMinimumSpan                    : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.15
+type ReadDeviceInformation = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceInformationResponse    : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationResponse(parentLinkId);
+        *                                       ->                                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.15
+type ReadDeviceInformationResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # The Alarm Selection Code indicates the action taken by the device under error conditions. For transmitters, the code indicates the action taken by the Loop Current. For Actuators, the action taken by the positioner is indicated.
+    pVAlarmSelectionCode         : uint8 &convert=HART_IP_ENUM::AlarmSelectionCodes($$);
+    # The Transfer Function Code must return 0, Linear, if transfer functions are not supported by the device.
+    pVTransferFunctionCode       : uint8 &convert=HART_IP_ENUM::TransferFunctionCodes($$);
+    # refer to Common Tables Specification
+    pVUpperLowerRange            : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    pVUpperRangeValue            : real &type=spicy::RealType::IEEE754_Single;
+    pVLowerRangeValue            : real &type=spicy::RealType::IEEE754_Single;
+    # units of seconds
+    pVDampingValue               : real &type=spicy::RealType::IEEE754_Single;
+    # see Common Table 7, Write Protect Codes
+    writeProtectCode             : uint8 &convert=HART_IP_ENUM::WriteProtectCodes($$);
+    # Reserved. Must be set to 250, Not Used.
+    _250                         : uint8;
+    pVAnalogChannelFlags         : bitfield(8) {
+                                       UNDEFINED_7      : 7 &convert=cast<bool>($$);
+                                       UNDEFINED_6      : 6 &convert=cast<bool>($$);
+                                       UNDEFINED_5      : 5 &convert=cast<bool>($$);
+                                       UNDEFINED_4      : 4 &convert=cast<bool>($$);
+                                       UNDEFINED_3      : 3 &convert=cast<bool>($$);
+                                       UNDEFINED_2      : 2 &convert=cast<bool>($$);
+                                       UNDEFINED_1      : 1 &convert=cast<bool>($$);
+                                       ANALOG_CHANNEL   : 0 &convert=cast<bool>($$);
+                                   };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.16
+type ReadFinalAssemblyNumber = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readFinalAssemblyNumberResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumberResponse(parentLinkId);
+        *                                       ->                                  : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.16
+type ReadFinalAssemblyNumberResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    var finalAssemblyNumber  : uint64;
+                             : bytes &size=3 {
+                                   self.finalAssemblyNumber = $$.to_uint(spicy::ByteOrder::Big);
+                               }
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.17
+type WriteMessage = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    messageString        : bytes &size=24 &convert=HART_IP_CONVERSION::packedConversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.18
+type WriteTagDescriptorDate = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    tag                          : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    recordKeepingDescriptor      : bytes &size=12 &convert=HART_IP_CONVERSION::packedConversion($$);
+    # E.G. Last Or Next Calibration Date
+    dateCode                     : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.19
+type WriteFinalAssemblyNumber = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    var finalAssemblyNumber  : uint64;
+                             : bytes &size=3 {
+                                   self.finalAssemblyNumber = $$.to_uint(spicy::ByteOrder::Big);
+                               }
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.20
+type ReadLongTag = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readLongTagResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadLongTagResponse(parentLinkId);
+        *                                       ->                      : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.20
+type ReadLongTagResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    longTag      : bytes &size=32 &convert=HART_IP_CONVERSION::latin1Conversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.21
+type ReadUniqueIdentifierLongTag = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readUniqueIdentifierLongTagRequest   : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readUniqueIdentifierLongTagResponse  : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagResponse(parentLinkId);
+        *                                       ->                                      : void;
+    };
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.21
+type ReadUniqueIdentifierLongTagRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    longTag      : bytes &size=32 &convert=HART_IP_CONVERSION::latin1Conversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.21
+type ReadUniqueIdentifierLongTagResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    _254                                                 : uint8;
+    expandedDeviceType                                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    # along with the Delimiter
+    minimumPreamblesMasterSlave                          : uint8;
+    hartProtocolMajorRevision                            : uint8;
+    # refer to the Command Summary Specification
+    deviceRevisionLevel                                  : uint8;
+    softwareRevisionLevel                                : uint8;
+    hardwareRevisionLevelAndPhysicalSignalingCodes       : bitfield(8) {
+                                                               # Most Significant 5 Bits
+                                                               hardwareRevisionLevel    : 3..7;
+                                                               # Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes
+                                                               physicalSignalingCode    : 0..2 &convert=HART_IP_ENUM::PhysicalSignalingCodes($$);
+                                                           };
+    flags                                                : bitfield(8) {
+                                                               C8PSK_IN_MULTI_DROP_ONLY                 : 7 &convert=cast<bool>($$);
+                                                               C8PSK_CAPABLE_FIELD_DEVICE               : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_5                              : 5 &convert=cast<bool>($$);
+                                                               SAFEHART_CAPABLE_FIELD_DEVICE            : 4 &convert=cast<bool>($$);
+                                                               IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
+                                                               PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
+                                                               EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
+                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                           };
+    var deviceID                                         : uint64;
+                                                         : bytes &size=3 {
+                                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                                           }
+    numberPreamblesSlaveMaster                           : uint8;
+    # e.g., when identifying the Device Variables using Command 54,See Common Table 34
+    lastDeviceVariableThis                               : uint8;
+    configurationChangeCounter                           : uint16;
+    extendedFieldDeviceStatus                            : bitfield(8) {
+                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                                               OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                                               FAILURE                  : 3 &convert=cast<bool>($$);
+                                                               CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                                               DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                                               MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                                           };
+    manufacturerIdentificationCode                       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    privateLabelDistributorCode                          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    deviceProfile                                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.22
+type WriteLongTag = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    longTag      : bytes &size=32 &convert=HART_IP_CONVERSION::latin1Conversion($$);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.23
+type ResetConfigurationChangedFlag = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    configurationChangeCounter       : uint16 if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount >= 2);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.24
+type ReadAdditionalDeviceStatus = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # refer to appropriate device-specific document for detailed information
+    packetContents       : HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusContents(byteCount) if (byteCount >= 9);
+};
+
+# Universal Command specification TS20127 version 7.2 Section 6.24
+type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
+    # refer to appropriate device-specific document for detailed information
+    deviceSpecificStatus_0           : bytes &size=6;
+    # refer to Common Table 17, Extended Field Device Status Information
+    extendedFieldDeviceStatus        : bitfield(8) {
+                                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                           FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                           OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                           FAILURE                  : 3 &convert=cast<bool>($$);
+                                           CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                           DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                           MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                       };
+    # refer to Common Table 14, Operating Mode Codes
+    deviceOperatingMode              : uint8 &convert=HART_IP_ENUM::OperatingModeCodes($$);
+    # refer to Common Table 29
+    standardizedStatus0              : bitfield(8) {
+                                           DEVICE_CONFIGURATION_LOCK                : 7 &convert=cast<bool>($$);
+                                           ELECTRONIC_DEFECT                        : 6 &convert=cast<bool>($$);
+                                           ENVIRONMENTAL_CONDITIONS_OUT_OF_RANGE    : 5 &convert=cast<bool>($$);
+                                           POWER_SUPPLY_CONDITIONS_OUT_OF_RANGE     : 4 &convert=cast<bool>($$);
+                                           WATCHDOG_RESET_EXECUTED                  : 3 &convert=cast<bool>($$);
+                                           VOLATILE_MEMORY_DEFECT                   : 2 &convert=cast<bool>($$);
+                                           NON_VOLATILE_MEMORY_DEFECT               : 1 &convert=cast<bool>($$);
+                                           DEVICE_VARIABLE_SIMULATION_ACTIVE        : 0 &convert=cast<bool>($$);
+                                       };
+    # refer to Common Table 30
+    standardizedStatus1              : bitfield(8) {
+                                           UNDEFINED_7                                  : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_6                                  : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_5                                  : 5 &convert=cast<bool>($$);
+                                           RESERVED                                     : 4 &convert=cast<bool>($$);
+                                           BATTERY_OR_POWER_SUPPLY_NEEDS_MAINTENANCE    : 3 &convert=cast<bool>($$);
+                                           EVENT_NOTIFICATION_OVERFLOW                  : 2 &convert=cast<bool>($$);
+                                           DISCRETE_VARIABLE_SIMULATION_ACTIVE          : 1 &convert=cast<bool>($$);
+                                           STATUS_SIMULATION_ACTIVE                     : 0 &convert=cast<bool>($$);
+                                       } if (byteCount >= 10);
+    # refer to Common Table 27
+    analogChannelSaturated           : bitfield(8) {
+                                           UNDEFINED_7          : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_6          : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_5          : 5 &convert=cast<bool>($$);
+                                           UNDEFINED_4          : 4 &convert=cast<bool>($$);
+                                           QUINARY_ANALOG       : 3 &convert=cast<bool>($$);
+                                           QUATERNARY_ANALOG    : 2 &convert=cast<bool>($$);
+                                           TERTIARY_ANALOG      : 1 &convert=cast<bool>($$);
+                                           SECONDARY_ANALOG     : 0 &convert=cast<bool>($$);
+                                       } if (byteCount >= 11);
+    # refer to Common Table 31
+    standardizedStatus2              : bitfield(8) {
+                                           UNDEFINED_7                      : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_6                      : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_5                      : 5 &convert=cast<bool>($$);
+                                           STALE_DATA_NOTICE                : 4 &convert=cast<bool>($$);
+                                           SUB_DEVICE_WITH_DUPLICATE_ID     : 3 &convert=cast<bool>($$);
+                                           SUB_DEVICE_MISMATCH              : 2 &convert=cast<bool>($$);
+                                           DUPLICATE_MASTER_DETECTED        : 1 &convert=cast<bool>($$);
+                                           SUB_DEVICE_LIST_CHANGED          : 0 &convert=cast<bool>($$);
+                                       } if (byteCount >= 12);
+    # refer to Common Table 32
+    standardizedStatus3              : bitfield(8) {
+                                           UNDEFINED_7                  : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_6                  : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_5                  : 5 &convert=cast<bool>($$);
+                                           RADIO_FAILURE                : 4 &convert=cast<bool>($$);
+                                           BLOCK_TRANSFER_PENDING       : 3 &convert=cast<bool>($$);
+                                           BANDWITH_ALLOCATION_PENDING  : 2 &convert=cast<bool>($$);
+                                           RESEREVED                    : 1 &convert=cast<bool>($$);
+                                           CAPACITY_DENIED              : 0 &convert=cast<bool>($$);
+                                       } if (byteCount >= 13);
+    # refer to Common Table 28
+    analogChannel                    : bitfield(8) {
+                                           UNDEFINED_7      : 7 &convert=cast<bool>($$);
+                                           UNDEFINED_6      : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_5      : 5 &convert=cast<bool>($$);
+                                           UNDEFINED_4      : 4 &convert=cast<bool>($$);
+                                           UNDEFINED_3      : 3 &convert=cast<bool>($$);
+                                           UNDEFINED_2      : 2 &convert=cast<bool>($$);
+                                           UNDEFINED_1      : 1 &convert=cast<bool>($$);
+                                           ANALOG_CHANNEL   : 0 &convert=cast<bool>($$);
+                                       } if (byteCount >= 14);
+    # refer to appropriate device-specific document for detailed information
+    deviceSpecificStatus_1           : bytes &size=11 if (byteCount >= 15);
+};
+
+# vim: ai si tabstop=4 shiftwidth=4 softtabstop=4 expandtab colorcolumn=101 syntax=spicy

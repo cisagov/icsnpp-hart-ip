@@ -1,0 +1,938 @@
+module HART_IP_COMMON_COMMANDS;
+
+import spicy;
+
+import HART_IP_ENUM;
+import HART_IP_CONVERSION;
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.1
+type ReadDeviceVariables = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readDeviceVariablesRequest   : HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequest(byteCount, parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceVariablesResponse  : HART_IP_COMMON_COMMANDS::ReadDeviceVariablesResponse(byteCount, parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.1
+type ReadDeviceVariablesRequest = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    slot0DeviceVariableCode      : uint8 if (byteCount >= 1);
+    slot1DeviceVariableCode      : uint8 if (byteCount >= 2);
+    slot2DeviceVariableCode      : uint8 if (byteCount >= 3);
+    slot3DeviceVariableCode      : uint8 if (byteCount >= 4);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.1
+type ReadDeviceVariablesResponse = unit (byteCount : uint8, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot0DeviceVariableCode      : uint8 if (byteCount >= 6);
+    # refer to Common Tables Specification
+    slot0UnitsCode               : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 6);
+    slot0DeviceVariable          : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 6);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot1DeviceVariableCode      : uint8 if (byteCount >= 12);
+    # refer to Common Tables Specification
+    slot1UnitsCode               : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 12);
+    slot1DeviceVariable          : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 12);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot2DeviceVariableCode      : uint8 if (byteCount >= 18);
+    # refer to Common Tables Specification
+    slot2UnitsCode               : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 18);
+    slot2DeviceVariable          : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 18);
+    # refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document
+    slot3DeviceVariableCode      : uint8 if (byteCount >= 24);
+    # refer to Common Tables Specification
+    slot3UnitsCode               : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$) if (byteCount >= 24);
+    slot3DeviceVariable          : real &type=spicy::RealType::IEEE754_Single if (byteCount >= 24);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.2
+type WritePrimaryVariableDampingValue = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.
+    pvDampingValue       : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.3
+type WritePrimaryVariableRangeValues = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # See common Tables Specification
+    pvUpperAndLowerRangeValuesUnitsCode      : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    # The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.
+    pvUpperRangeValue                        : real &type=spicy::RealType::IEEE754_Single;
+    # The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.
+    pVLowerRangeValue                        : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.7
+type EEPROMControl = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    eepromControlCode        : uint8 &convert=HART_IP_ENUM::EEPROMControlCode($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.8
+type EnterExitFixedCurrentMode = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # Units of milliamperes, response returns actual levels.
+    pvFixedCurrentLevel      : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.12
+type WritePrimaryVariableUnits = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    pvUnitCodes      : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.13
+type TrimLoopCurrentZero = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # Units of milliamperes
+    measuredPVLoopCurrentLevel       : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.14
+type TrimLoopCurrentGain = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    # Units of milliamperes
+    measuredPVLoopCurrentLevel       : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.15
+type WritePrimaryVariableTransferFunction = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    pVTransferFunctionCode       : uint8 &convert=HART_IP_ENUM::TransferFunctionCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.17
+type WritePrimaryVariableTransducerSerialNumber = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    var pvTransducerSerialNumber     : uint64;
+                                     : bytes &size=3 {
+                                           self.pvTransducerSerialNumber = $$.to_uint(spicy::ByteOrder::Big);
+                                       }
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.18
+type ReadDynamicVariableAssignments = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDynamicVariableAssignmentsResponse   : HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignmentsResponse(parentLinkId);
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.18
+type ReadDynamicVariableAssignmentsResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableAssignedToPrimaryVariable          : uint8;
+    deviceVariableAssignedToSecondaryVariable        : uint8;
+    deviceVariableAssignedToTertiaryVariable         : uint8;
+    deviceVariableAssignedToQuaternaryVariable       : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.19
+type WriteDynamicVariableAssignments = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableAssignedToPrimaryVariable          : uint8;
+    deviceVariableAssignedToSecondaryVariable        : uint8 if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount > 1);
+    deviceVariableAssignedToTertiaryVariable         : uint8 if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount > 2);
+    deviceVariableAssignedToQuaternaryVariable       : uint8 if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount > 3);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.20
+type SetDeviceVariableZero = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableZeroed         : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.21
+type WriteDeviceVariableUnits = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode           : uint8;
+    deviceVariableUnitsCode      : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.22
+type ReadDeviceVariableInformation = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readDeviceVariableInformationRequest     : HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceVariableInformationResponse    : HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationResponse(parentLinkId);
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.22
+type ReadDeviceVariableInformationRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode       : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.22
+type ReadDeviceVariableInformationResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode                               : uint8;
+    var deviceVariableTransducerSerialNumber         : uint64;
+                                                     : bytes &size=3 {
+                                                           self.deviceVariableTransducerSerialNumber = $$.to_uint(spicy::ByteOrder::Big);
+                                                       }
+    deviceVariableLimitsMinimumSpanUnitsCode         : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    deviceVariableUpperTransducerLimit               : real &type=spicy::RealType::IEEE754_Single;
+    deviceVariableLowerTransducerLimit               : real &type=spicy::RealType::IEEE754_Single;
+    deviceVariableDampingValue                       : real &type=spicy::RealType::IEEE754_Single;
+    deviceVariableMinimumSpan                        : real &type=spicy::RealType::IEEE754_Single;
+    deviceVariableClassification                     : uint8 &convert=HART_IP_ENUM::DeviceVariableClassificationCodes($$);
+    deviceVariableFamily                             : uint8 &convert=HART_IP_ENUM::DeviceVariableFamilyCode($$);
+    acquisitionPeriod                                : bytes &size=4 &convert=HART_IP_CONVERSION::timeConversion($$);
+    deviceVariableProperties                         : bitfield(8) {
+                                                           IS_SIMULATED     : 7 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_6  : 6 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_5  : 5 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_4  : 4 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_3  : 3 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_2  : 2 &convert=cast<bool>($$);
+                                                           UNDEFINED_BIT_1  : 1 &convert=cast<bool>($$);
+                                                           IS_INPUT         : 0 &convert=cast<bool>($$);
+                                                       };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.23
+type WriteDeviceVariableDampingValue = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode               : uint8;
+    deviceVariableDampingValue       : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.24
+type WriteDeviceVariableTransducerSerialNo = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode                           : uint8;
+    var deviceVariableTransducerSerialNumber     : uint64;
+                                                 : bytes &size=3 {
+                                                       self.deviceVariableTransducerSerialNumber = $$.to_uint(spicy::ByteOrder::Big);
+                                                   }
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.25
+type ReadUnitTagDescriptorDate = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readUnitTagDescriptorDateResponse    : HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDateResponse(parentLinkId);
+        *                                       ->                                      : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.25
+type ReadUnitTagDescriptorDateResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    unitTag              : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    unitDescriptor       : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    unitDate             : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.26
+type WriteUnitTagDescriptorDate = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    unitTag              : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    unitDescriptor       : bytes &size=6 &convert=HART_IP_CONVERSION::packedConversion($$);
+    unitDate             : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.27
+type WriteNumberOfResponsePreambles = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    numberOfPreambles        : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.28
+type ReadAnalogChannelAndPercentOfRange = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readAnalogChannelAndPercentOfRangeRequest    : HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readAnalogChannelAndPercentOfRangeResponse   : HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeResponse(parentLinkId);
+        *                                       ->                                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.28
+type ReadAnalogChannelAndPercentOfRangeRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.28
+type ReadAnalogChannelAndPercentOfRangeResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode          : uint8;
+    analogChannelUnitsCode           : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevel               : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelPercentOfRange      : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.29
+type ReadDynamicVariablesAndPrimaryVariableAnalogChannel = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDynamicVariablesAndPrimaryVariableAnalogChannelResponse  : HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse(parentLinkId);
+        *                                       ->                                                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.29
+type ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    primaryVariableAnalogChannelUnitsCode        : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    primaryVariableAnalogLevel                   : real &type=spicy::RealType::IEEE754_Single;
+    primaryVariableUnitsCode                     : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    primaryVariable                              : real &type=spicy::RealType::IEEE754_Single;
+    secondaryVariableUnitsCode                   : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    secondaryVariable                            : real &type=spicy::RealType::IEEE754_Single;
+    tertiaryVariableUnitsCode                    : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    tertiaryVariable                             : real &type=spicy::RealType::IEEE754_Single;
+    quaternaryVariableUnitsCode                  : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    quaternaryVariable                           : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.30
+type ReadAnalogChannels = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readAnalogChannelsRequest    : HART_IP_COMMON_COMMANDS::ReadAnalogChannelsRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readAnalogChannelsResponse   : HART_IP_COMMON_COMMANDS::ReadAnalogChannelsResponse(parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.30
+type ReadAnalogChannelsRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCodeSlot0         : uint8;
+    analogChannelNumberCodeSlot1         : uint8;
+    analogChannelNumberCodeSlot2         : uint8;
+    analogChannelNumberCodeSlot3         : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.30
+type ReadAnalogChannelsResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCodeSlot0         : uint8;
+    analogChannelUnitsCodeSlot0          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevelSlot0              : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelNumberCodeSlot1         : uint8;
+    analogChannelUnitsCodeSlot1          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevelSlot1              : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelNumberCodeSlot2         : uint8;
+    analogChannelUnitsCodeSlot2          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevelSlot2              : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelNumberCodeSlot3         : uint8;
+    analogChannelUnitsCodeSlot3          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevelSlot3              : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.31
+type ReadAnalogChannelInformation = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readAnalogChannelInformationRequest      : HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readAnalogChannelInformationResponse     : HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationResponse(parentLinkId);
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.31
+type ReadAnalogChannelInformationRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.31
+type ReadAnalogChannelInformationResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode                              : uint8;
+    analogChannelAlarmSelectionCode                      : uint8 &convert=HART_IP_ENUM::AlarmSelectionCodes($$);
+    analogChannelTransferFunctionCode                    : uint8 &convert=HART_IP_ENUM::TransferFunctionCodes($$);
+    analogChannelUpperAndLowerRangeValuesUnitsCode       : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelUpperRangeValue                         : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelLowerRangeValue                         : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelDampingValue                            : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelFlags                                   : bitfield(8) {
+                                                               IS_SIMULATED     : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6  : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_5  : 5 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_4  : 4 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_3  : 3 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_2  : 2 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_1  : 1 &convert=cast<bool>($$);
+                                                               IS_INPUT         : 0 &convert=cast<bool>($$);
+                                                           };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.32
+type WriteAnalogChannelAdditionalDampingValue = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode          : uint8;
+    analogChannelDampingValue        : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.33
+type WriteAnalogChannelRangeValues = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode                              : uint8;
+    analogChannelUpperAndLowerRangeValuesUnitsCode       : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelUpperRangeValue                         : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelLowerRangeValue                         : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.34
+type EnterExitFixedAnalogChannelMode = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+    analogChannelUnitsCode       : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    fixedAnalogChannelLevel      : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.35
+type TrimAnalogChannelZero = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+    analogChannelUnitsCode       : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevel           : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.36
+type TrimAnalogChannelGain = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+    analogChannelUnitsCode       : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelLevel           : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.37
+type WriteAnalogChannelTransferFunction = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+    analogChannelUnitsCode       : uint8 &convert=HART_IP_ENUM::TransferFunctionCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.38
+type ReadAnalogChannelEndpointValues = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> readAnalogChannelEndpointValuesRequest   : HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> readAnalogChannelEndpointValuesResponse  : HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesResponse(parentLinkId);
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.38
+type ReadAnalogChannelEndpointValuesRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode      : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.38
+type ReadAnalogChannelEndpointValuesResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    analogChannelNumberCode                                  : uint8;
+    analogChannelUpperAndLowerEndpointValuesUnitsCode        : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    analogChannelUpperEndpointValue                          : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelLowerEndpointValue                          : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelUpperLimitValue                             : real &type=spicy::RealType::IEEE754_Single;
+    analogChannelLowerLimitValue                             : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.39
+type LockDevice = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    lockCode         : uint8 &convert=HART_IP_ENUM::LockDeviceCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.41
+type Squawk = unit (byteCount : uint8, messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    squawkControl        : uint8 &convert=HART_IP_ENUM::SquawkControlCodes($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE || byteCount > 1);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.41
+type FindDevice = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> findDeviceResponse   : HART_IP_COMMON_COMMANDS::FindDeviceResponse(parentLinkId);
+        *                                       ->                      : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.41
+type FindDeviceResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    _254                                                 : uint8;
+    expandedDeviceType                                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    # along with the Delimiter
+    minimumPreamblesMasterSlave                          : uint8;
+    hartProtocolMajorRevision                            : uint8;
+    # refer to the Command Summary Specification
+    deviceRevisionLevel                                  : uint8;
+    softwareRevisionLevel                                : uint8;
+    hardwareRevisionLevelAndPhysicalSignalingCodes       : bitfield(8) {
+                                                               # Most Significant 5 Bits
+                                                               hardwareRevisionLevel    : 3..7;
+                                                               # Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes
+                                                               physicalSignalingCode    : 0..2 &convert=HART_IP_ENUM::PhysicalSignalingCodes($$);
+                                                           };
+    flags                                                : bitfield(8) {
+                                                               C8PSK_IN_MULTI_DROP_ONLY                 : 7 &convert=cast<bool>($$);
+                                                               C8PSK_CAPABLE_FIELD_DEVICE               : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_5                              : 5 &convert=cast<bool>($$);
+                                                               SAFEHART_CAPABLE_FIELD_DEVICE            : 4 &convert=cast<bool>($$);
+                                                               IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
+                                                               PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
+                                                               EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
+                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                           };
+    var deviceID                                         : uint64;
+                                                         : bytes &size=3 {
+                                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                                           }
+    numberPreamblesSlaveMaster                           : uint8;
+    # e.g., when identifying the Device Variables using Command 54,See Common Table 34
+    lastDeviceVariableThis                               : uint8;
+    configurationChangeCounter                           : uint16;
+    extendedFieldDeviceStatus                            : bitfield(8) {
+                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                                               OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                                               FAILURE                  : 3 &convert=cast<bool>($$);
+                                                               CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                                               DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                                               MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                                           };
+    manufacturerIdentificationCode                       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    privateLabelDistributorCode                          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    deviceProfile                                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.42
+type ReadIOSystemCapabilities = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readIOSystemCapabilitiesResponse     : HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilitiesResponse(parentLinkId);
+        *                                       ->                                      : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.42
+type ReadIOSystemCapabilitiesResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    maxIOCards                           : uint8;
+    maxChannelsPerIOCard                 : uint8;
+    maxSubDevicesPerChannel              : uint8;
+    numberOfDevicesDetected              : uint16;
+    maxDelayedResponsesSupported         : uint8;
+    masterMode                           : uint8 &convert=HART_IP_ENUM::MasterMode($$);
+    retryCount                           : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.43
+type PollSubDevice = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> pollSubDeviceRequest     : HART_IP_COMMON_COMMANDS::PollSubDeviceRequest(parentLinkId);
+        HART_IP_ENUM::MessageType::RESPONSE     -> pollSubDeviceResponse    : HART_IP_COMMON_COMMANDS::PollSubDeviceResponse(parentLinkId);
+        *                                       ->                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.43
+type PollSubDeviceRequest = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    ioCard                       : uint8;
+    channel                      : uint8;
+    subDevicePollingAddress      : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.43
+type PollSubDeviceResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    _254                                                 : uint8;
+    expandedDeviceType                                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    # along with the Delimiter
+    minimumPreamblesMasterSlave                          : uint8;
+    hartProtocolMajorRevision                            : uint8;
+    # refer to the Command Summary Specification
+    deviceRevisionLevel                                  : uint8;
+    softwareRevisionLevel                                : uint8;
+    hardwareRevisionLevelAndPhysicalSignalingCodes       : bitfield(8) {
+                                                               # Most Significant 5 Bits
+                                                               hardwareRevisionLevel    : 3..7;
+                                                               # Least Significant 3 Bits,see Common Table 10, Physical Signaling Codes
+                                                               physicalSignalingCode    : 0..2 &convert=HART_IP_ENUM::PhysicalSignalingCodes($$);
+                                                           };
+    flags                                                : bitfield(8) {
+                                                               C8PSK_IN_MULTI_DROP_ONLY                 : 7 &convert=cast<bool>($$);
+                                                               C8PSK_CAPABLE_FIELD_DEVICE               : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_5                              : 5 &convert=cast<bool>($$);
+                                                               SAFEHART_CAPABLE_FIELD_DEVICE            : 4 &convert=cast<bool>($$);
+                                                               IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
+                                                               PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
+                                                               EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
+                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                           };
+    var deviceID                                         : uint64;
+                                                         : bytes &size=3 {
+                                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                                           }
+    numberPreamblesSlaveMaster                           : uint8;
+    # e.g., when identifying the Device Variables using Command 54,See Common Table 34
+    lastDeviceVariableThis                               : uint8;
+    configurationChangeCounter                           : uint16;
+    extendedFieldDeviceStatus                            : bitfield(8) {
+                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                                               OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                                               FAILURE                  : 3 &convert=cast<bool>($$);
+                                                               CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                                               DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                                               MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                                           };
+    manufacturerIdentificationCode                       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    privateLabelDistributorCode                          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    deviceProfile                                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.44
+type ReadLockDeviceState = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readLockDeviceStateResponse  : HART_IP_COMMON_COMMANDS::ReadLockDeviceStateResponse(parentLinkId);
+        *                                       ->                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.44
+type ReadLockDeviceStateResponse = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    lockStatus       : bitfield(8) {
+                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                           UNDEFINED_BIT_5          : 5 &convert=cast<bool>($$);
+                           LOCK_GATEWAY             : 4 &convert=cast<bool>($$);
+                           CONFIGURATION_LOCKED     : 3 &convert=cast<bool>($$);
+                           LOCK_PRIMARY             : 2 &convert=cast<bool>($$);
+                           LOCK_PERMANENT           : 1 &convert=cast<bool>($$);
+                           DEVICE_LOCKED            : 0 &convert=cast<bool>($$);
+                       };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.47
+type WriteDeviceVariable = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode                   : uint8;
+    writeDeviceVariableCommandCode       : uint8 &convert=HART_IP_ENUM::WriteDeviceVariableCodes($$);
+    unitsCode                            : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    deviceVariableValue                  : real &type=spicy::RealType::IEEE754_Single;
+    deviceVariableStatus                 : bitfield(8) {
+                                               PROCESS_DATA_STATUS                      : 6..7 &convert=HART_IP_ENUM::ProcessDataStatus($$);
+                                               LIMIT_STATUS                             : 4..5 &convert=HART_IP_ENUM::LimitStatus($$);
+                                               MORE_DEVICE_VARIABLE_STATUS_AVAILABLE    : 3 &convert=cast<bool>($$);
+                                               DEVICE_FAMILY_SPECIFIC_STATUS            : 0..2;
+                                           };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.48
+type ReadDeviceVariableTrimPoints = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableCode                           : uint8;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceVariableTrimPointsResponse     : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPointsResponse;
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.48
+type ReadDeviceVariableTrimPointsResponse = unit {
+    trimPointsUnitsCode          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    lowerOrSingleTrimPoint       : real &type=spicy::RealType::IEEE754_Single;
+    upperTrimPoint               : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.49
+type ReadDeviceVariableTrimGuidelines = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableGuidelines                         : uint8;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readDeviceVariableTrimGuidelinesResponse     : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPointsResponse;
+        *                                       ->                                              : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.48
+type ReadDeviceVariableTrimGuidelinesResponse = unit {
+    trimPointsSupported              : uint8 &convert=HART_IP_ENUM::TrimPointCodes($$);
+    trimPointsUnitsCode              : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    minimumLowerTrimpointValue       : real &type=spicy::RealType::IEEE754_Single;
+    maximumLowerTrimpointValue       : real &type=spicy::RealType::IEEE754_Single;
+    minimumUpperTrimpointValue       : real &type=spicy::RealType::IEEE754_Single;
+    maximumUpperTrimpointValue       : real &type=spicy::RealType::IEEE754_Single;
+    minimumDifferential              : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.50
+type WriteDeviceVariableTrimPoint = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableToTrim         : uint8;
+    trimPoint                    : uint8 &convert=HART_IP_ENUM::TrimPointCodes($$);
+    trimPointsUnitsCode          : uint8 &convert=HART_IP_ENUM::EngineeringUnitCodes($$);
+    trimPointValue               : real &type=spicy::RealType::IEEE754_Single;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.51
+type ResetDeviceVariableTrim = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    deviceVariableTrimToReset        : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.52
+type ReadSubDeviceIdentitySummary = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    subDeviceIndex                               : uint16;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readSubDeviceIdentitySummaryResponse     : HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummaryResponse;
+        *                                       ->                                          : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.52
+type ReadSubDeviceIdentitySummaryResponse = unit {
+    ioCard                               : uint8;
+    channel                              : uint8;
+    manufacturerIdentificationCode       : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+    expandedDeviceType                   : uint16 &convert=HART_IP_ENUM::ExpandedDeviceTypeCodes($$);
+    var deviceID                         : uint64;
+                                         : bytes &size=3 {
+                                               self.deviceID = $$.to_uint(spicy::ByteOrder::Big);
+                                           }
+    universalCommandRevisionLevel        : uint8;
+    longTag                              : bytes &size=32 &convert=HART_IP_CONVERSION::latin1Conversion($$);
+    deviceRevision                       : uint8;
+    # Common Table 57
+    deviceProfile                        : uint8 &convert=HART_IP_ENUM::DeviceProfileCodes($$);
+    # Common Table 8, Manufacturer Identification Codes
+    privateLabelDistributorCode          : uint16 &convert=HART_IP_ENUM::ManufacturerIdentificationCodes($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.53
+type ReadIOChannelStatistics = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    ioCard                               : uint8;
+    channel                              : uint8;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readIOChannelStatisticsResponse  : HART_IP_COMMON_COMMANDS::ReadIOChannelStatisticsResponse;
+        *                                       ->                                  : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.53
+type ReadIOChannelStatisticsResponse = unit {
+    stxCount         : uint16;
+    ackCount         : uint16;
+    ostxCount        : uint16;
+    oackCount        : uint16;
+    backCount        : uint16;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.54
+type ReadSubDeviceStatistics = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    subDeviceIndex                       : uint16;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::RESPONSE     -> readSubDeviceStatisticsResponse  : HART_IP_COMMON_COMMANDS::ReadSubDeviceStatisticsResponse;
+        *                                       ->                                  : void;
+    };
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.54
+type ReadSubDeviceStatisticsResponse = unit {
+    stxCount         : uint16;
+    ackCount         : uint16;
+    backCount        : uint16;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.55
+type WriteIOSystemMasterMode = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    masterMode       : uint8 &convert=HART_IP_ENUM::MasterMode($$);
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.56
+type WriteIOSystemRetryCount = unit (parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    retryCount       : uint8;
+};
+
+# Common Practice Command Specification TS20151 version 13.0 Section 7.57
+type SetRealTimeClock = unit (messageType : HART_IP_ENUM::MessageType, parentLinkId : string) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = parentLinkId;
+    }
+    timeSetCode      : uint8 &convert=HART_IP_ENUM::TimeSetCodes($$);
+    date             : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
+    timeOfDay        : bytes &size=4 &convert=HART_IP_CONVERSION::timeConversion($$);
+    nullBytes        : uint16 if (messageType == HART_IP_ENUM::MessageType::REQUEST);
+};
+
+# vim: ai si tabstop=4 shiftwidth=4 softtabstop=4 expandtab colorcolumn=101 syntax=spicy
