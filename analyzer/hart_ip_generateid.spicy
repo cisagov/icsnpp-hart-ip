@@ -1,0 +1,3 @@
+module HART_IP_GENERATEID;
+
+public function generateId() : string &cxxname="HART_IP_GENERATEID::generateId";

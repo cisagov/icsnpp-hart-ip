@@ -1,0 +1,2762 @@
+[
+    {
+        "name": "ReadDeviceVariables",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.1",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDeviceVariablesContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceVariablesSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariablesRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.1",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "slot0DeviceVariableCode",
+                "description": "Slot 0: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 1
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot1DeviceVariableCode",
+                "description": "Slot 1: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 2
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot2DeviceVariableCode",
+                "description": "Slot 2: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 3
+                },
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "slot3DeviceVariableCode",
+                "description": "Slot 3: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 4
+                },
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariablesResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.1",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "slot0DeviceVariableCode",
+                "description": "Slot 0: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 6
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot0UnitsCode",
+                "description": "Slot 0: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 6
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot0DeviceVariable",
+                "description": "Slot 0: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 6
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot1DeviceVariableCode",
+                "description": "Slot 1: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 12
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot1UnitsCode",
+                "description": "Slot 1: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 12
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot1DeviceVariable",
+                "description": "Slot 1: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 12
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot2DeviceVariableCode",
+                "description": "Slot 2: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 18
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot2UnitsCode",
+                "description": "Slot 2: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 18
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot2DeviceVariable",
+                "description": "Slot 2: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 18
+                },
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "slot3DeviceVariableCode",
+                "description": "Slot 3: Device Variable Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 24
+                },
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to Common Table 34, Device Variable Code Table and the appropriate device-specific document"
+            },
+            {
+                "name": "slot3UnitsCode",
+                "description": "Slot 3: Units Code",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 24
+                },
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "notes": "refer to Common Tables Specification",
+                "scope": "general"
+            },
+            {
+                "name": "slot3DeviceVariable",
+                "description": "Slot 3: Device Variable Value",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">=",
+                    "value": 24
+                },
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WritePrimaryVariableDampingValue",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.2",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pvDampingValue",
+                "description": "PV Damping Value (In units of Seconds)",
+                "notes": "The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WritePrimaryVariableRangeValues",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.3",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pvUpperAndLowerRangeValuesUnitsCode",
+                "description": "PV Upper and Lower Range Values Units Code",
+                "notes": "See common Tables Specification",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "pvUpperRangeValue",
+                "description": "PV Upper Range Value",
+                "notes": "The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "pVLowerRangeValue",
+                "description": "PV Lower Range Value",
+                "notes": "The value returned in the response data bytes reflects the rounded or truncated value actually used by the device.",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "EEPROMControl",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.7",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "eepromControlCode",
+                "description": "EEPROM Control Code",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "EEPROMControlCode",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "EnterExitFixedCurrentMode",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.8",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pvFixedCurrentLevel",
+                "description": "PV Fixed Current Level",
+                "notes": "Units of milliamperes, response returns actual levels.",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WritePrimaryVariableUnits",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.12",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pvUnitCodes",
+                "description": "PV Unit Codes",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "TrimLoopCurrentZero",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.13",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "measuredPVLoopCurrentLevel",
+                "description": "Actual value in the response packet.",
+                "notes": "Units of milliamperes",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "TrimLoopCurrentGain",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.14",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "measuredPVLoopCurrentLevel",
+                "description": "Actual value in the response packet.",
+                "notes": "Units of milliamperes",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WritePrimaryVariableTransferFunction",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.15",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pVTransferFunctionCode",
+                "description": "PV Transfer Function Code.",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "TransferFunctionCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WritePrimaryVariableTransducerSerialNumber",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.17",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "pvTransducerSerialNumber",
+                "description": "PV Transducer Serial Number.",
+                "notes": "",
+                "type": "uint",
+                "size": 24
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDynamicVariableAssignments",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.18",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDynamicVariableAssignmentsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDynamicVariableAssignmentsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDynamicVariableAssignmentsResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.18",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableAssignedToPrimaryVariable",
+                "description": "Device Variable Assigned to the Primary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableAssignedToSecondaryVariable",
+                "description": "Device Variable Assigned to the Secondary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableAssignedToTertiaryVariable",
+                "description": "Device Variable Assigned to the Tertiary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableAssignedToQuaternaryVariable",
+                "description": "Device Variable Assigned to the Quaternary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteDynamicVariableAssignments",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.19",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "deviceVariableAssignedToPrimaryVariable",
+                "description": "Device Variable Assigned to the Primary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableAssignedToSecondaryVariable",
+                "description": "Device Variable Assigned to the Secondary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8,
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">",
+                            "value": 1
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "deviceVariableAssignedToTertiaryVariable",
+                "description": "Device Variable Assigned to the Tertiary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8,
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">",
+                            "value": 2
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "deviceVariableAssignedToQuaternaryVariable",
+                "description": "Device Variable Assigned to the Quaternary Variable (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8,
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">",
+                            "value": 3
+                        }
+                    ]
+                }
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "SetDeviceVariableZero",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.20",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableZeroed",
+                "description": "Device Variable to be Zeroed (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteDeviceVariableUnits",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.21",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Codes  Table in Appropriate Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableUnitsCode",
+                "description": "Device Variable Units Code (Refer to Common Tables Specification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableInformation",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.22",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDeviceVariableInformationContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceVariableInformationSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableInformationRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.22",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDeviceVariableInformationResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.22",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableTransducerSerialNumber",
+                "description": "Device Variable Transducer Serial Number",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "deviceVariableLimitsMinimumSpanUnitsCode",
+                "description": "Device Variable Limits/Minimum Span Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceVariableUpperTransducerLimit",
+                "description": "Device Variable Upper Transducer Limit",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableLowerTransducerLimit",
+                "description": "Device Variable Lower Transducer Limit",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableDampingValue",
+                "description": "Device Variable Damping Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableMinimumSpan",
+                "description": "Device Variable Minimum Span",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableClassification",
+                "description": "Device Variable Classification",
+                "type": "enum",
+                "referenceType": "DeviceVariableClassificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceVariableFamily",
+                "description": "Device Variable Family",
+                "type": "enum",
+                "referenceType": "DeviceVariableFamilyCode",
+                "scope": "general"
+            },
+            {
+                "name": "acquisitionPeriod",
+                "description": "Acquisition Period",
+                "type": "Time",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableProperties",
+                "description": "Device Variable Properties",
+                "type": "bits",
+                "referenceType": "DeviceVariablePropertyFlags",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteDeviceVariableDampingValue",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.23",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableDampingValue",
+                "description": "Device Variable Damping Value (Units of seconds)",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteDeviceVariableTransducerSerialNo",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.24",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceVariableTransducerSerialNumber",
+                "description": "Device Variable Transducer Serial Number",
+                "type": "uint",
+                "size": 24
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadUnitTagDescriptorDate",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.25",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readUnitTagDescriptorDateContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadUnitTagDescriptorDateSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadUnitTagDescriptorDateResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.25",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "unitTag",
+                "description": "Unit Tag",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "unitDescriptor",
+                "description": "Unit Descriptor",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "unitDate",
+                "description": "Unit Date",
+                "type": "Date",
+                "size": 24
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteUnitTagDescriptorDate",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.26",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "unitTag",
+                "description": "Unit Tag",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "unitDescriptor",
+                "description": "Unit Descriptor",
+                "type": "Packed",
+                "size": 48
+            },
+            {
+                "name": "unitDate",
+                "description": "Unit Descriptor",
+                "type": "Date",
+                "size": 24
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteNumberOfResponsePreambles",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.27",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "numberOfPreambles",
+                "description": "Number of Preambles to be sent with the response message from the Slave to the Master",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelAndPercentOfRange",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.28",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readAnalogChannelAndPercentOfRangeContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadAnalogChannelAndPercentOfRangeSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelAndPercentOfRangeRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.28",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelAndPercentOfRangeResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.28",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCode",
+                "description": "Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevel",
+                "description": "Analog Channel Level",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelPercentOfRange",
+                "description": "Analog Channel Percent Of Range",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadDynamicVariablesAndPrimaryVariableAnalogChannel",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.29",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readDynamicVariablesAndPrimaryVariableAnalogChannelContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDynamicVariablesAndPrimaryVariableAnalogChannelSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.29",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "primaryVariableAnalogChannelUnitsCode",
+                "description": "Primary Variable Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "primaryVariableAnalogLevel",
+                "description": "Primary Variable Analog Level",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "primaryVariableUnitsCode",
+                "description": "Primary Variable Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "primaryVariable",
+                "description": "Primary Variable",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "secondaryVariableUnitsCode",
+                "description": "Secondary Variable Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "secondaryVariable",
+                "description": "Secondary Variable",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "tertiaryVariableUnitsCode",
+                "description": "Tertiary Variable Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "tertiaryVariable",
+                "description": "Tertiary Variable",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "quaternaryVariableUnitsCode",
+                "description": "Quaternary Variable Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "quaternaryVariable",
+                "description": "Quaternary Variable",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannels",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.30",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readAnalogChannelsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadAnalogChannelsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelsRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.30",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCodeSlot0",
+                "description": "Analog Channel Number Code assigned to Slot 0 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelNumberCodeSlot1",
+                "description": "Analog Channel Number Code assigned to Slot 1 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelNumberCodeSlot2",
+                "description": "Analog Channel Number Code assigned to Slot 2 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelNumberCodeSlot3",
+                "description": "Analog Channel Number Code assigned to Slot 3 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelsResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.30",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCodeSlot0",
+                "description": "Analog Channel Number Code Slot 0(See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCodeSlot0",
+                "description": "Analog Channel Units Code Slot 0",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevelSlot0",
+                "description": "Analog Channel Level Slot 0",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelNumberCodeSlot1",
+                "description": "Analog Channel Number Code Slot 1 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCodeSlot1",
+                "description": "Analog Channel Units Code Slot 1",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevelSlot1",
+                "description": "Analog Channel Level Slot 1",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelNumberCodeSlot2",
+                "description": "Analog Channel Number Code Slot 2 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCodeSlot2",
+                "description": "Analog Channel Units Code Slot 2",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevelSlot2",
+                "description": "Analog Channel Level Slot 2",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelNumberCodeSlot3",
+                "description": "Analog Channel Number Code Slot 3 (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCodeSlot3",
+                "description": "Analog Channel Units Code Slot 3",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevelSlot3",
+                "description": "Analog Channel Level Slot 3",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelInformation",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.31",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readAnalogChannelInformationContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadAnalogChannelInformationSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelInformationRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.31",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelInformationResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.31",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelAlarmSelectionCode",
+                "description": "Analog Channel Alarm Selecetion Code",
+                "type": "enum",
+                "referenceType": "AlarmSelectionCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelTransferFunctionCode",
+                "description": "Analog Channel Transfer Function Code",
+                "type": "enum",
+                "referenceType": "TransferFunctionCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelUpperAndLowerRangeValuesUnitsCode",
+                "description": "Analog Channel Upper and Lower Range Values Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelUpperRangeValue",
+                "description": "Analog Channel Upper Range Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelLowerRangeValue",
+                "description": "Analog Channel Lower Range Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelDampingValue",
+                "description": "Analog Channel Damping Value (units of seconds)",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelFlags",
+                "description": "Analog Channel Flags",
+                "type": "bits",
+                "referenceType": "DeviceVariablePropertyFlags",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteAnalogChannelAdditionalDampingValue",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.32",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelDampingValue",
+                "description": "Analog Channel Damping Value (units of seconds)",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteAnalogChannelRangeValues",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.33",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUpperAndLowerRangeValuesUnitsCode",
+                "description": "Analog Channel Upper and Lower Range Values Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelUpperRangeValue",
+                "description": "Analog Channel Upper Range Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelLowerRangeValue",
+                "description": "Analog Channel Lower Range Value",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "EnterExitFixedAnalogChannelMode",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.34",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCode",
+                "description": "Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "fixedAnalogChannelLevel",
+                "description": "Fixed Analog Channel Level",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "TrimAnalogChannelZero",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.35",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCode",
+                "description": "Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevel",
+                "description": "Analog Channel Level",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "TrimAnalogChannelGain",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.36",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCode",
+                "description": "Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelLevel",
+                "description": "Analog Channel Level",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteAnalogChannelTransferFunction",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.37",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUnitsCode",
+                "description": "Analog Channel Units Code",
+                "type": "enum",
+                "referenceType": "TransferFunctionCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelEndpointValues",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.38",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readAnalogChannelEndpointValuesContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadAnalogChannelEndpointValuesSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadAnalogChannelEndpointValuesRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.38",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAnalogChannelEndpointValuesResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.38",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "analogChannelNumberCode",
+                "description": "Analog Channel Number Code (See Analog Channel Number Codes Table in Device-Specific Document)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "analogChannelUpperAndLowerEndpointValuesUnitsCode",
+                "description": "Analog Channel Upper and Lower Endpoint Values Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "analogChannelUpperEndpointValue",
+                "description": "Analog Channel Upper Endpoint Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelLowerEndpointValue",
+                "description": "Analog Channel Lower Endpoint Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelUpperLimitValue",
+                "description": "Analog Channel Upper Limit Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "analogChannelLowerLimitValue",
+                "description": "Analog Channel Lower Limit Value",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "LockDevice",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.39",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "lockCode",
+                "description": "Lock Code",
+                "type": "enum",
+                "referenceType": "LockDeviceCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "Squawk",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.41",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "squawkControl",
+                "description": "Squawk Control",
+                "type": "enum",
+                "referenceType": "SquawkControlCodes",
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "messageType",
+                            "operator": "=",
+                            "value": "RESPONSE"
+                        },
+                        {
+                            "indicator": "byteCount",
+                            "operator": ">",
+                            "value": 1
+                        }
+                    ]
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "FindDevice",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.41",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "findDeviceContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "FindDeviceSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "FindDeviceResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.41",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "_254",
+                "description": "254",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type.",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumPreamblesMasterSlave",
+                "description": "Minimum number of Preambles required for the request message from the Master to the Slave. This number includes the two preambles used in asynchronous Physical Layers  to detect the start of message.",
+                "type": "uint",
+                "size": 8,
+                "notes": "along with the Delimiter"
+            },
+            {
+                "name": "hartProtocolMajorRevision",
+                "description": "HART Protocol Major Revision number implemented by this device. For HART Revision 7, this value must be the number 7.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceRevisionLevel",
+                "description": "Device Revision Level",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Command Summary Specification"
+            },
+            {
+                "name": "softwareRevisionLevel",
+                "description": "Software Revision Level of this device. Levels 254 and 255 are reserved.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "hardwareRevisionLevelAndPhysicalSignalingCodes",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+                "scope": "general"
+            },
+            {
+                "name": "flags",
+                "description": "Flags",
+                "type": "bits",
+                "referenceType": "Flags",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID. This number must be different for every device manufactured with a given Device Type.",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "numberPreamblesSlaveMaster",
+                "description": "Number of preambles to be sent with the response message from the Slave to the Master.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "lastDeviceVariableThis",
+                "description": "Last Device Variable code. This indicates the last Device Variable code that a host application should expect to be found in the field device . This count does not include the standard devices variables .",
+                "type": "uint",
+                "size": 8,
+                "notes": "e.g., when identifying the Device Variables using Command 54,See Common Table 34"
+            },
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceProfile",
+                "description": "Device Profile",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadIOSystemCapabilities",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.42",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readIOSystemCapabilitiesContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadIOSystemCapabilitiesSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadIOSystemCapabilitiesResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.42",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "maxIOCards",
+                "description": "Maximum Number of I/O Cards",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "maxChannelsPerIOCard",
+                "description": "Maximum Number of Channels Per I/O Card",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "maxSubDevicesPerChannel",
+                "description": "Maximum Number of Sub-Devices Per Channel",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "numberOfDevicesDetected",
+                "description": "Number of Devices Detected",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "maxDelayedResponsesSupported",
+                "description": "Maximum Number of Delayed Responses supported by the I/O system.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "masterMode",
+                "description": "Master Mode for communication on channels.",
+                "type": "enum",
+                "referenceType": "MasterMode",
+                "scope": "general"
+            },
+            {
+                "name": "retryCount",
+                "description": "Retry count to use when sending commands to sub-device.",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "PollSubDevice",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.43",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "pollSubDeviceContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "PollSubDeviceSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "PollSubDeviceRequest",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.43",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "ioCard",
+                "description": "I/O Card",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "channel",
+                "description": "Channel",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "subDevicePollingAddress",
+                "description": "Sub-Device Polling Address",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "PollSubDeviceResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.43",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "_254",
+                "description": "254",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type.",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumPreamblesMasterSlave",
+                "description": "Minimum number of Preambles required for the request message from the Master to the Slave. This number includes the two preambles used in asynchronous Physical Layers  to detect the start of message.",
+                "type": "uint",
+                "size": 8,
+                "notes": "along with the Delimiter"
+            },
+            {
+                "name": "hartProtocolMajorRevision",
+                "description": "HART Protocol Major Revision number implemented by this device. For HART Revision 7, this value must be the number 7.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceRevisionLevel",
+                "description": "Device Revision Level",
+                "type": "uint",
+                "size": 8,
+                "notes": "refer to the Command Summary Specification"
+            },
+            {
+                "name": "softwareRevisionLevel",
+                "description": "Software Revision Level of this device. Levels 254 and 255 are reserved.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "hardwareRevisionLevelAndPhysicalSignalingCodes",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "HardwareRevisionLevelAndPhysicalSignalingCodes",
+                "scope": "general"
+            },
+            {
+                "name": "flags",
+                "description": "Flags",
+                "type": "bits",
+                "referenceType": "Flags",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID. This number must be different for every device manufactured with a given Device Type.",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "numberPreamblesSlaveMaster",
+                "description": "Number of preambles to be sent with the response message from the Slave to the Master.",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "lastDeviceVariableThis",
+                "description": "Last Device Variable code. This indicates the last Device Variable code that a host application should expect to be found in the field device . This count does not include the standard devices variables .",
+                "type": "uint",
+                "size": 8,
+                "notes": "e.g., when identifying the Device Variables using Command 54,See Common Table 34"
+            },
+            {
+                "name": "configurationChangeCounter",
+                "description": "Configuration Change Counter",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "extendedFieldDeviceStatus",
+                "description": "Extended Field Device Status",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceProfile",
+                "description": "Device Profile",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadLockDeviceState",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.44",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "readLockDeviceStateContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadLockDeviceStateSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadLockDeviceStateResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.44",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "lockStatus",
+                "description": "Lock Status",
+                "type": "bits",
+                "referenceType": "LockDeviceStatus",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteDeviceVariable",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.47",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "writeDeviceVariableCommandCode",
+                "description": "Number of Commands Requested",
+                "type": "enum",
+                "referenceType": "WriteDeviceVariableCodes",
+                "scope": "general"
+            },
+            {
+                "name": "unitsCode",
+                "description": "Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceVariableValue",
+                "description": "Device Variable Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "deviceVariableStatus",
+                "description": "Device Variable Status",
+                "type": "bits",
+                "referenceType": "DeviceVariableStatus",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableTrimPoints",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.48",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "deviceVariableCode",
+                "description": "Device Variable Code (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "readDeviceVariableTrimPointsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceVariableTrimPointsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableTrimPointsResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.48",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "trimPointsUnitsCode",
+                "description": "Trim Points Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "lowerOrSingleTrimPoint",
+                "description": "Lower or Single Trim Point",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "upperTrimPoint",
+                "description": "Upper Trim Point",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableTrimGuidelines",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.49",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "deviceVariableGuidelines",
+                "description": "Device Variable guidelines to read (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "readDeviceVariableTrimGuidelinesContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadDeviceVariableTrimGuidelinesSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadDeviceVariableTrimGuidelinesResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.48",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "trimPointsSupported",
+                "description": "Trim Points Supported",
+                "type": "enum",
+                "referenceType": "TrimPointCodes",
+                "scope": "general"
+            },
+            {
+                "name": "trimPointsUnitsCode",
+                "description": "Trim Points Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "minimumLowerTrimpointValue",
+                "description": "Minimum Lower Trim Point Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "maximumLowerTrimpointValue",
+                "description": "Maximum Lower Trim Point Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "minimumUpperTrimpointValue",
+                "description": "Minimum Upper Trim Point Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "maximumUpperTrimpointValue",
+                "description": "Maximum Upper Trim Point Value",
+                "type": "float",
+                "size": 32
+            },
+            {
+                "name": "minimumDifferential",
+                "description": "Minimum Differential",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 0
+    },
+    {
+        "name": "WriteDeviceVariableTrimPoint",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.50",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableToTrim",
+                "description": "Device Variable To Trim (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "trimPoint",
+                "description": "Trim Points Supported",
+                "type": "enum",
+                "referenceType": "TrimPointCodes",
+                "scope": "general"
+            },
+            {
+                "name": "trimPointsUnitsCode",
+                "description": "Trim Points Units Code",
+                "type": "enum",
+                "referenceType": "EngineeringUnitCodes",
+                "scope": "general"
+            },
+            {
+                "name": "trimPointValue",
+                "description": "Trim Point Value",
+                "type": "float",
+                "size": 32
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ResetDeviceVariableTrim",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.51",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "deviceVariableTrimToReset",
+                "description": "Device Variable Trim to Reset (See Device Variable Code Table in Appropriate Device-Specific Documentation)",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadSubDeviceIdentitySummary",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.52",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "subDeviceIndex",
+                "description": "Sub-Device Index",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "readSubDeviceIdentitySummaryContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadSubDeviceIdentitySummarySwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadSubDeviceIdentitySummaryResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.52",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "ioCard",
+                "description": "I/O Card",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "channel",
+                "description": "Channel",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "manufacturerIdentificationCode",
+                "description": "Manufacturer Identification Codes",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            },
+            {
+                "name": "expandedDeviceType",
+                "description": "Expanded Device Type Code",
+                "type": "enum",
+                "referenceType": "ExpandedDeviceTypeCodes",
+                "scope": "general"
+            },
+            {
+                "name": "deviceID",
+                "description": "Device ID",
+                "type": "uint",
+                "size": 24
+            },
+            {
+                "name": "universalCommandRevisionLevel",
+                "description": "Universal Command Revision Level",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "longTag",
+                "description": "Long Tag",
+                "notes": "",
+                "type": "latin-1",
+                "size": 256
+            },
+            {
+                "name": "deviceRevision",
+                "description": "Device Revision",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceProfile",
+                "description": "DeviceProfile",
+                "notes": "Common Table 57",
+                "type": "enum",
+                "referenceType": "DeviceProfileCodes",
+                "scope": "general"
+            },
+            {
+                "name": "privateLabelDistributorCode",
+                "description": "Private Label Distributor Code",
+                "notes": "Common Table 8, Manufacturer Identification Codes",
+                "type": "enum",
+                "referenceType": "ManufacturerIdentificationCodes",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadIOChannelStatistics",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.53",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "ioCard",
+                "description": "I/O Card",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "channel",
+                "description": "Channel",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "readIOChannelStatisticsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadIOChannelStatisticsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadIOChannelStatisticsResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.53",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "stxCount",
+                "description": "Count of STX messages sent by the I/O system on this channel",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "ackCount",
+                "description": "Count of ACK messages received",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "ostxCount",
+                "description": "Count of OSTX messages received (messages from other master)",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "oackCount",
+                "description": "Count of OACK messages received (replies to other master)",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "backCount",
+                "description": "Count of BACK messages received (addressed to either master)",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadSubDeviceStatistics",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.54",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "subDeviceIndex",
+                "description": "Sub-Device Index",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "readSubDeviceStatisticsContents",
+                "description": "Actual Packet Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "ReadSubDeviceStatisticsSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "ReadSubDeviceStatisticsResponse",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.54",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "stxCount",
+                "description": "Count of STX messages sent to this device",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "ackCount",
+                "description": "Count of ACK messages received from this device",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "backCount",
+                "description": "Count of BACK messages received from this device",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "WriteIOSystemMasterMode",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.55",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "masterMode",
+                "description": "Master Mode",
+                "type": "enum",
+                "referenceType": "MasterMode",
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "WriteIOSystemRetryCount",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.56",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "fields": [
+            {
+                "name": "retryCount",
+                "description": "Retry Count",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "SetRealTimeClock",
+        "reference": "Common Practice Command Specification TS20151 version 13.0 Section 7.57",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "scope": "common_commands",
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "timeSetCode",
+                "description": "Time-Set Code",
+                "type": "enum",
+                "referenceType": "TimeSetCodes",
+                "scope": "general"
+            },
+            {
+                "name": "date",
+                "description": "Date Code to set devices Real-Time Clock",
+                "type": "Date",
+                "size": 24
+            },
+            {
+                "name": "timeOfDay",
+                "description": "Time of Day to set device's Real-Time Clock",
+                "type": "Time",
+                "size": 32
+            },
+            {
+                "name": "nullBytes",
+                "description": "Timing bytes set to zero.",
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "REQUEST"
+                },
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "referenceCount": 2
+    }
+]

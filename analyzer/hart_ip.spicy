@@ -1,0 +1,383 @@
+module HART_IP;
+
+import spicy;
+
+import HART_IP_ENUM;
+import HART_IP_GENERATEID;
+import HART_IP_UNIVERSAL_COMMANDS;
+import HART_IP_COMMON_COMMANDS;
+import HART_IP_CONVERSION;
+
+public type Messages = unit {
+     : Message[];
+};
+
+public type Message = unit {
+    header           : HART_IP::Header;
+    body             : HART_IP::Body(self.header.messageID, self.header.messageType.messageType, self.header.length - 8) if (self.header.messageType.messageType == HART_IP_ENUM::MessageType::REQUEST || self.header.messageType.messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    # Not currently parsing the packet
+    packetBytes      : (uint8)[(self.header.length - 8)] if (self.header.messageType.messageType != HART_IP_ENUM::MessageType::REQUEST && self.header.messageType.messageType != HART_IP_ENUM::MessageType::RESPONSE);
+};
+
+type Header = unit {
+    version              : uint8;
+    messageType          : bitfield(8) {
+                               # Should always be 0
+                               reserved     : 4..7;
+                               messageType  : 0..3 &convert=HART_IP_ENUM::MessageType($$);
+                           };
+    messageID            : uint8 &convert=HART_IP_ENUM::MessageID($$);
+    # Technically Depends on messageID
+    statusCode           : uint8 &convert=HART_IP_ENUM::StatusCode($$);
+    sequenceNumber       : uint16;
+    # This includes the length of the header
+    length               : uint16;
+};
+
+type Body = unit (messageID : HART_IP_ENUM::MessageID, messageType : HART_IP_ENUM::MessageType, byteCount : uint16) {
+    switch(messageID) {
+        HART_IP_ENUM::MessageID::SESSION_INITIATE     -> sessionInitiate  : HART_IP::SessionInitiate;
+        HART_IP_ENUM::MessageID::TOKEN_PASSING_PDU    -> tokenPassingPDU  : HART_IP::TokenPassingPDU(messageType);
+        HART_IP_ENUM::MessageID::DIRECT_PDU           -> directPDU        : HART_IP::DirectPDU(messageType, byteCount);
+        HART_IP_ENUM::MessageID::READ_AUDIT_LOG       -> readAuditLog     : HART_IP::ReadAuditLog(messageType);
+        *                                             ->                  : void;
+    };
+};
+
+type SessionInitiate = unit {
+    # Any value other than one is invalid
+    masterType                   : uint8;
+    inactivityCloseTimer         : uint32;
+};
+
+type TokenPassingPDU = unit (messageType : HART_IP_ENUM::MessageType) {
+    delimiter            : bitfield(8) {
+                               addressType          : 7 &convert=HART_IP_ENUM::AddressType($$);
+                               expansionBytes       : 5..6;
+                               physicalLayerType    : 3..4 &convert=HART_IP_ENUM::PhysicalLayerType($$);
+                               frameType            : 0..2 &convert=HART_IP_ENUM::FrameType($$);
+                           };
+    switch(self.delimiter.addressType) {
+        HART_IP_ENUM::AddressType::POLLING_ADDRESS  -> addressV4    : uint8;
+        HART_IP_ENUM::AddressType::UNIQUE_ADDRESS   -> addressV6    : bytes &size=5;
+        *                                           ->              : void;
+    };
+    commandNumber        : uint8 &convert=HART_IP_ENUM::CommandNumber8Bit($$);
+    # Number of bytes between byteCount and checkByte
+    byteCount            : uint8;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> tokenPassingPDUContentsRequest   : HART_IP::TokenPassingPDUContentsRequest(self.commandNumber, messageType, self.byteCount);
+        HART_IP_ENUM::MessageType::RESPONSE     -> tokenPassingPDUContentsResponse  : HART_IP::TokenPassingPDUContentsResponse(self.commandNumber, messageType, self.byteCount);
+        *                                       ->                                  : void;
+    };
+    checkByte            : uint8;
+};
+
+type TokenPassingPDUContentsData = unit (messageType : HART_IP_ENUM::MessageType, commandNumber : HART_IP_ENUM::CommandNumber8Bit, byteCount : uint8) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = HART_IP_GENERATEID::generateId();
+    }
+    switch(commandNumber) {
+        HART_IP_ENUM::CommandNumber8Bit::READ_UNIQUE_IDENTIFIER                                       -> readUniqueIdentifier                                 : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifier(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_PRIMARY_VARIABLE                                        -> readPrimaryVariable                                  : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariable(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_LOOP_CURRENT                                            -> readLoopCurrent                                      : HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrent(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DYNAMIC_VARIABLE                                        -> readDynamicVariable                                  : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariable(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_POLLING_ADDRESS                                        -> writePollingAddress                                  : HART_IP_UNIVERSAL_COMMANDS::WritePollingAddress(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_LOOP_CONFIGURATION                                      -> readLoopConfiguration                                : HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfiguration(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DYNAMIC_VARIABLE_CLASSIFICATIONS                        -> readDynamicVariableClassifications                   : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassifications(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_VARIABLE                                         -> readDeviceVariable                                   : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariable(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_UNIQUE_IDENTIFIER_TAG                                   -> readUniqueIdentifierTag                              : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_MESSAGE                                                 -> readMessage                                          : HART_IP_UNIVERSAL_COMMANDS::ReadMessage(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_TAG                                                     -> readTag                                              : HART_IP_UNIVERSAL_COMMANDS::ReadTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_PRIMARY_VARIABLE_TRANSDUCER_INFORMATION                 -> readPrimaryVariableTransducerInformation             : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_INFORMATION                                      -> readDeviceInformation                                : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_FINAL_ASSEMBLY_NUMBER                                   -> readFinalAssemblyNumber                              : HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumber(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_MESSAGE                                                -> writeMessage                                         : HART_IP_UNIVERSAL_COMMANDS::WriteMessage(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_TAG_DESCRIPTOR_DATE                                    -> writeTagDescriptorDate                               : HART_IP_UNIVERSAL_COMMANDS::WriteTagDescriptorDate(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_FINAL_ASSEMBLY_NUMBER                                  -> writeFinalAssemblyNumber                             : HART_IP_UNIVERSAL_COMMANDS::WriteFinalAssemblyNumber(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_LONG_TAG                                                -> readLongTag                                          : HART_IP_UNIVERSAL_COMMANDS::ReadLongTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_UNIQUE_IDENTIFIER_LONG_TAG                              -> readUniqueIdentifierLongTag                          : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_LONG_TAG                                               -> writeLongTag                                         : HART_IP_UNIVERSAL_COMMANDS::WriteLongTag(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::RESET_CONFIGURATION_CHANGED_FLAG                             -> resetConfigurationChangedFlag                        : HART_IP_UNIVERSAL_COMMANDS::ResetConfigurationChangedFlag(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_ADDITIONAL_DEVICE_STATUS                                -> readAdditionalDeviceStatus                           : HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatus(byteCount, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_VARIABLES                                        -> readDeviceVariables                                  : HART_IP_COMMON_COMMANDS::ReadDeviceVariables(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_PRIMARY_VARIABLE_DAMPING_VALUE                         -> writePrimaryVariableDampingValue                     : HART_IP_COMMON_COMMANDS::WritePrimaryVariableDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_PRIMARY_VARIABLE_RANGE_VALUES                          -> writePrimaryVariableRangeValues                      : HART_IP_COMMON_COMMANDS::WritePrimaryVariableRangeValues(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::EEPROM_CONTROL_OBJECT                                        -> eepromControl                                        : HART_IP_COMMON_COMMANDS::EEPROMControl(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::ENTER_EXIT_FIXED_CURRENT_MODE                                -> enterExitFixedCurrentMode                            : HART_IP_COMMON_COMMANDS::EnterExitFixedCurrentMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_PRIMARY_VARIABLE_UNITS                                 -> writePrimaryVariableUnits                            : HART_IP_COMMON_COMMANDS::WritePrimaryVariableUnits(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::TRIM_LOOP_CURRENT_ZERO                                       -> trimLoopCurrentZero                                  : HART_IP_COMMON_COMMANDS::TrimLoopCurrentZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::TRIM_LOOP_CURRENT_GAIN                                       -> trimLoopCurrentGain                                  : HART_IP_COMMON_COMMANDS::TrimLoopCurrentGain(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_PRIMARY_VARIABLE_TRANSFER_FUNCTION                     -> writePrimaryVariableTransferFunction                 : HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransferFunction(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_PRIMARY_VARIABLE_TRANSDUCER_SERIAL_NUMBER              -> writePrimaryVariableTransducerSerialNumber           : HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransducerSerialNumber(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DYNAMIC_VARIABLE_ASSIGNMENTS                            -> readDynamicVariableAssignments                       : HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignments(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DYNAMIC_VARIABLE_ASSIGNMENTS                           -> writeDynamicVariableAssignments                      : HART_IP_COMMON_COMMANDS::WriteDynamicVariableAssignments(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::SET_DEVICE_VARIABLE_ZERO                                     -> setDeviceVariableZero                                : HART_IP_COMMON_COMMANDS::SetDeviceVariableZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DEVICE_VARIABLE_UNITS                                  -> writeDeviceVariableUnits                             : HART_IP_COMMON_COMMANDS::WriteDeviceVariableUnits(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_VARIABLE_INFORMATION                             -> readDeviceVariableInformation                        : HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DEVICE_VARIABLE_DAMPING_VALUE                          -> writeDeviceVariableDampingValue                      : HART_IP_COMMON_COMMANDS::WriteDeviceVariableDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DEVICE_VARIABLE_TRANSDUCER_SERIAL_NO                   -> writeDeviceVariableTransducerSerialNo                : HART_IP_COMMON_COMMANDS::WriteDeviceVariableTransducerSerialNo(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_UNIT_TAG_DESCRIPTOR_DATE                                -> readUnitTagDescriptorDate                            : HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDate(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_UNIT_TAG_DESCRIPTOR_DATE                               -> writeUnitTagDescriptorDate                           : HART_IP_COMMON_COMMANDS::WriteUnitTagDescriptorDate(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_NUMBER_OF_RESPONSE_PREAMBLES                           -> writeNumberOfResponsePreambles                       : HART_IP_COMMON_COMMANDS::WriteNumberOfResponsePreambles(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_ANALOG_CHANNEL_AND_PERCENT_OF_RANGE                     -> readAnalogChannelAndPercentOfRange                   : HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRange(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DYNAMIC_VARIABLES_AND_PRIMARY_VARIABLE_ANALOG_CHANNEL   -> readDynamicVariablesAndPrimaryVariableAnalogChannel  : HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannel(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_ANALOG_CHANNELS                                         -> readAnalogChannels                                   : HART_IP_COMMON_COMMANDS::ReadAnalogChannels(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_ANALOG_CHANNEL_INFORMATION                              -> readAnalogChannelInformation                         : HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_ANALOG_CHANNEL_ADDITIONAL_DAMPING_VALUE                -> writeAnalogChannelAdditionalDampingValue             : HART_IP_COMMON_COMMANDS::WriteAnalogChannelAdditionalDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_ANALOG_CHANNEL_RANGE_VALUES                            -> writeAnalogChannelRangeValues                        : HART_IP_COMMON_COMMANDS::WriteAnalogChannelRangeValues(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::ENTER_EXIT_FIXED_ANALOG_CHANNEL_MODE                         -> enterExitFixedAnalogChannelMode                      : HART_IP_COMMON_COMMANDS::EnterExitFixedAnalogChannelMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::TRIM_ANALOG_CHANNEL_ZERO                                     -> trimAnalogChannelZero                                : HART_IP_COMMON_COMMANDS::TrimAnalogChannelZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::TRIM_ANALOG_CHANNEL_GAIN                                     -> trimAnalogChannelGain                                : HART_IP_COMMON_COMMANDS::TrimAnalogChannelGain(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_ANALOG_CHANNEL_TRANSFER_FUNCTION                       -> writeAnalogChannelTransferFunction                   : HART_IP_COMMON_COMMANDS::WriteAnalogChannelTransferFunction(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_ANALOG_CHANNEL_ENDPOINT_VALUES                          -> readAnalogChannelEndpointValues                      : HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValues(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::LOCK_DEVICE                                                  -> lockDevice                                           : HART_IP_COMMON_COMMANDS::LockDevice(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::SQUAWK                                                       -> squawk                                               : HART_IP_COMMON_COMMANDS::Squawk(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::FIND_DEVICE                                                  -> findDevice                                           : HART_IP_COMMON_COMMANDS::FindDevice(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_IO_SYSTEM_CAPABILITIES                                  -> readIOSystemCapabilities                             : HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilities(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::POLL_SUB_DEVICE                                              -> pollSubDevice                                        : HART_IP_COMMON_COMMANDS::PollSubDevice(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_LOCK_DEVICE_STATE                                       -> readLockDeviceState                                  : HART_IP_COMMON_COMMANDS::ReadLockDeviceState(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DEVICE_VARIABLE                                        -> writeDeviceVariable                                  : HART_IP_COMMON_COMMANDS::WriteDeviceVariable(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_VARIABLE_TRIM_POINTS                             -> readDeviceVariableTrimPoints                         : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPoints(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_DEVICE_VARIABLE_TRIM_GUIDELINES                         -> readDeviceVariableTrimGuidelines                     : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelines(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_DEVICE_VARIABLE_TRIM_POINT                             -> writeDeviceVariableTrimPoint                         : HART_IP_COMMON_COMMANDS::WriteDeviceVariableTrimPoint(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::RESET_DEVICE_VARIABLE_TRIM                                   -> resetDeviceVariableTrim                              : HART_IP_COMMON_COMMANDS::ResetDeviceVariableTrim(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_SUB_DEVICE_IDENTITY_SUMMARY                             -> readSubDeviceIdentitySummary                         : HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummary(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_IO_CHANNEL_STATISTICS                                   -> readIOChannelStatistics                              : HART_IP_COMMON_COMMANDS::ReadIOChannelStatistics(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::READ_SUB_DEVICE_STATISTICS                                   -> readSubDeviceStatistics                              : HART_IP_COMMON_COMMANDS::ReadSubDeviceStatistics(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_IO_SYSTEM_MASTER_MODE                                  -> writeIOSystemMasterMode                              : HART_IP_COMMON_COMMANDS::WriteIOSystemMasterMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::WRITE_IO_SYSTEM_RETRY_COUNT                                  -> writeIOSystemRetryCount                              : HART_IP_COMMON_COMMANDS::WriteIOSystemRetryCount(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber8Bit::SET_REAL_TIME_CLOCK                                          -> setRealTimeClock                                     : HART_IP_COMMON_COMMANDS::SetRealTimeClock(messageType, self.commandNumberLinkID);
+        *                                                                                             -> data                                                 : (uint8)[byteCount];
+    };
+};
+
+type TokenPassingPDUContentsResponse = unit (commandNumber : HART_IP_ENUM::CommandNumber8Bit, messageType : HART_IP_ENUM::MessageType, byteCount : uint8) {
+    responseCode         : uint8;
+    # This byte does not exist in the spec. It DOES exist in the pcap. Schrödinger's Field
+    deviceStatus         : bitfield(8) {
+                               DEVICE_MALFUNCTION                   : 7 &convert=cast<bool>($$);
+                               CONFIGURATION_CHANGED                : 6 &convert=cast<bool>($$);
+                               COLD_START                           : 5 &convert=cast<bool>($$);
+                               MORE_STATUS_AVAILABLE                : 4 &convert=cast<bool>($$);
+                               LOOP_CURRENT_FIXED                   : 3 &convert=cast<bool>($$);
+                               LOOP_CURRENT_SATURATED               : 2 &convert=cast<bool>($$);
+                               NON_PRIMARY_VARIABLE_OUT_OF_LIMITS   : 1 &convert=cast<bool>($$);
+                               PRIMARY_VARIABLE_OUT_OF_LIMITS       : 0 &convert=cast<bool>($$);
+                           };
+    command              : HART_IP::TokenPassingPDUContentsData(messageType, commandNumber, byteCount - 2) if (byteCount > 2);
+};
+
+type TokenPassingPDUContentsRequest = unit (commandNumber : HART_IP_ENUM::CommandNumber8Bit, messageType : HART_IP_ENUM::MessageType, byteCount : uint8) {
+    command      : HART_IP::TokenPassingPDUContentsData(messageType, commandNumber, byteCount) if (byteCount > 0);
+};
+
+# Network Management Specification Section 10.3.2.5
+type DirectPDU = unit (messageType : HART_IP_ENUM::MessageType, byteCount : uint16) {
+    var directPDUCommandLinkID : string;
+    on %init() {
+        self.directPDUCommandLinkID = HART_IP_GENERATEID::generateId();
+    }
+    deviceStatus                 : bitfield(8) {
+                                       DEVICE_MALFUNCTION                   : 7 &convert=cast<bool>($$);
+                                       CONFIGURATION_CHANGED                : 6 &convert=cast<bool>($$);
+                                       COLD_START                           : 5 &convert=cast<bool>($$);
+                                       MORE_STATUS_AVAILABLE                : 4 &convert=cast<bool>($$);
+                                       LOOP_CURRENT_FIXED                   : 3 &convert=cast<bool>($$);
+                                       LOOP_CURRENT_SATURATED               : 2 &convert=cast<bool>($$);
+                                       NON_PRIMARY_VARIABLE_OUT_OF_LIMITS   : 1 &convert=cast<bool>($$);
+                                       PRIMARY_VARIABLE_OUT_OF_LIMITS       : 0 &convert=cast<bool>($$);
+                                   };
+    extendedStatus               : bitfield(8) {
+                                       UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
+                                       UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                       FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
+                                       OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
+                                       FAILURE                  : 3 &convert=cast<bool>($$);
+                                       CRITICAL_POWER_FAILURE   : 2 &convert=cast<bool>($$);
+                                       DEVICE_VARIABLE_ALERT    : 1 &convert=cast<bool>($$);
+                                       MAINTENANCE_REQUIRED     : 0 &convert=cast<bool>($$);
+                                   };
+    directPDUCommandList         : (HART_IP::DirectPDUCommand(messageType, self.directPDUCommandLinkID))[] &until=(byteCount - 2);
+};
+
+# Network Management Specification Section 10.3.2.5
+type DirectPDUCommandData = unit (messageType : HART_IP_ENUM::MessageType, commandNumber : HART_IP_ENUM::CommandNumber16Bit, byteCount : uint8) {
+    var commandNumberLinkID : string;
+    on %init() {
+        self.commandNumberLinkID = HART_IP_GENERATEID::generateId();
+    }
+    switch(commandNumber) {
+        HART_IP_ENUM::CommandNumber16Bit::READ_UNIQUE_IDENTIFIER                                       -> readUniqueIdentifier                                 : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifier(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_PRIMARY_VARIABLE                                        -> readPrimaryVariable                                  : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariable(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_LOOP_CURRENT                                            -> readLoopCurrent                                      : HART_IP_UNIVERSAL_COMMANDS::ReadLoopCurrent(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DYNAMIC_VARIABLE                                        -> readDynamicVariable                                  : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariable(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_POLLING_ADDRESS                                        -> writePollingAddress                                  : HART_IP_UNIVERSAL_COMMANDS::WritePollingAddress(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_LOOP_CONFIGURATION                                      -> readLoopConfiguration                                : HART_IP_UNIVERSAL_COMMANDS::ReadLoopConfiguration(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DYNAMIC_VARIABLE_CLASSIFICATIONS                        -> readDynamicVariableClassifications                   : HART_IP_UNIVERSAL_COMMANDS::ReadDynamicVariableClassifications(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_VARIABLE                                         -> readDeviceVariable                                   : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariable(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_UNIQUE_IDENTIFIER_TAG                                   -> readUniqueIdentifierTag                              : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_MESSAGE                                                 -> readMessage                                          : HART_IP_UNIVERSAL_COMMANDS::ReadMessage(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_TAG                                                     -> readTag                                              : HART_IP_UNIVERSAL_COMMANDS::ReadTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_PRIMARY_VARIABLE_TRANSDUCER_INFORMATION                 -> readPrimaryVariableTransducerInformation             : HART_IP_UNIVERSAL_COMMANDS::ReadPrimaryVariableTransducerInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_INFORMATION                                      -> readDeviceInformation                                : HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_FINAL_ASSEMBLY_NUMBER                                   -> readFinalAssemblyNumber                              : HART_IP_UNIVERSAL_COMMANDS::ReadFinalAssemblyNumber(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_MESSAGE                                                -> writeMessage                                         : HART_IP_UNIVERSAL_COMMANDS::WriteMessage(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_TAG_DESCRIPTOR_DATE                                    -> writeTagDescriptorDate                               : HART_IP_UNIVERSAL_COMMANDS::WriteTagDescriptorDate(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_FINAL_ASSEMBLY_NUMBER                                  -> writeFinalAssemblyNumber                             : HART_IP_UNIVERSAL_COMMANDS::WriteFinalAssemblyNumber(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_LONG_TAG                                                -> readLongTag                                          : HART_IP_UNIVERSAL_COMMANDS::ReadLongTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_UNIQUE_IDENTIFIER_LONG_TAG                              -> readUniqueIdentifierLongTag                          : HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTag(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_LONG_TAG                                               -> writeLongTag                                         : HART_IP_UNIVERSAL_COMMANDS::WriteLongTag(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::RESET_CONFIGURATION_CHANGED_FLAG                             -> resetConfigurationChangedFlag                        : HART_IP_UNIVERSAL_COMMANDS::ResetConfigurationChangedFlag(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_ADDITIONAL_DEVICE_STATUS                                -> readAdditionalDeviceStatus                           : HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatus(byteCount, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_VARIABLES                                        -> readDeviceVariables                                  : HART_IP_COMMON_COMMANDS::ReadDeviceVariables(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_PRIMARY_VARIABLE_DAMPING_VALUE                         -> writePrimaryVariableDampingValue                     : HART_IP_COMMON_COMMANDS::WritePrimaryVariableDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_PRIMARY_VARIABLE_RANGE_VALUES                          -> writePrimaryVariableRangeValues                      : HART_IP_COMMON_COMMANDS::WritePrimaryVariableRangeValues(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::EEPROM_CONTROL_OBJECT                                        -> eepromControl                                        : HART_IP_COMMON_COMMANDS::EEPROMControl(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::ENTER_EXIT_FIXED_CURRENT_MODE                                -> enterExitFixedCurrentMode                            : HART_IP_COMMON_COMMANDS::EnterExitFixedCurrentMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_PRIMARY_VARIABLE_UNITS                                 -> writePrimaryVariableUnits                            : HART_IP_COMMON_COMMANDS::WritePrimaryVariableUnits(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::TRIM_LOOP_CURRENT_ZERO                                       -> trimLoopCurrentZero                                  : HART_IP_COMMON_COMMANDS::TrimLoopCurrentZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::TRIM_LOOP_CURRENT_GAIN                                       -> trimLoopCurrentGain                                  : HART_IP_COMMON_COMMANDS::TrimLoopCurrentGain(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_PRIMARY_VARIABLE_TRANSFER_FUNCTION                     -> writePrimaryVariableTransferFunction                 : HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransferFunction(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_PRIMARY_VARIABLE_TRANSDUCER_SERIAL_NUMBER              -> writePrimaryVariableTransducerSerialNumber           : HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransducerSerialNumber(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DYNAMIC_VARIABLE_ASSIGNMENTS                            -> readDynamicVariableAssignments                       : HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignments(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DYNAMIC_VARIABLE_ASSIGNMENTS                           -> writeDynamicVariableAssignments                      : HART_IP_COMMON_COMMANDS::WriteDynamicVariableAssignments(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::SET_DEVICE_VARIABLE_ZERO                                     -> setDeviceVariableZero                                : HART_IP_COMMON_COMMANDS::SetDeviceVariableZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DEVICE_VARIABLE_UNITS                                  -> writeDeviceVariableUnits                             : HART_IP_COMMON_COMMANDS::WriteDeviceVariableUnits(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_VARIABLE_INFORMATION                             -> readDeviceVariableInformation                        : HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DEVICE_VARIABLE_DAMPING_VALUE                          -> writeDeviceVariableDampingValue                      : HART_IP_COMMON_COMMANDS::WriteDeviceVariableDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DEVICE_VARIABLE_TRANSDUCER_SERIAL_NO                   -> writeDeviceVariableTransducerSerialNo                : HART_IP_COMMON_COMMANDS::WriteDeviceVariableTransducerSerialNo(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_UNIT_TAG_DESCRIPTOR_DATE                                -> readUnitTagDescriptorDate                            : HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDate(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_UNIT_TAG_DESCRIPTOR_DATE                               -> writeUnitTagDescriptorDate                           : HART_IP_COMMON_COMMANDS::WriteUnitTagDescriptorDate(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_NUMBER_OF_RESPONSE_PREAMBLES                           -> writeNumberOfResponsePreambles                       : HART_IP_COMMON_COMMANDS::WriteNumberOfResponsePreambles(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_ANALOG_CHANNEL_AND_PERCENT_OF_RANGE                     -> readAnalogChannelAndPercentOfRange                   : HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRange(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DYNAMIC_VARIABLES_AND_PRIMARY_VARIABLE_ANALOG_CHANNEL   -> readDynamicVariablesAndPrimaryVariableAnalogChannel  : HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannel(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_ANALOG_CHANNELS                                         -> readAnalogChannels                                   : HART_IP_COMMON_COMMANDS::ReadAnalogChannels(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_ANALOG_CHANNEL_INFORMATION                              -> readAnalogChannelInformation                         : HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformation(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_ANALOG_CHANNEL_ADDITIONAL_DAMPING_VALUE                -> writeAnalogChannelAdditionalDampingValue             : HART_IP_COMMON_COMMANDS::WriteAnalogChannelAdditionalDampingValue(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_ANALOG_CHANNEL_RANGE_VALUES                            -> writeAnalogChannelRangeValues                        : HART_IP_COMMON_COMMANDS::WriteAnalogChannelRangeValues(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::ENTER_EXIT_FIXED_ANALOG_CHANNEL_MODE                         -> enterExitFixedAnalogChannelMode                      : HART_IP_COMMON_COMMANDS::EnterExitFixedAnalogChannelMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::TRIM_ANALOG_CHANNEL_ZERO                                     -> trimAnalogChannelZero                                : HART_IP_COMMON_COMMANDS::TrimAnalogChannelZero(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::TRIM_ANALOG_CHANNEL_GAIN                                     -> trimAnalogChannelGain                                : HART_IP_COMMON_COMMANDS::TrimAnalogChannelGain(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_ANALOG_CHANNEL_TRANSFER_FUNCTION                       -> writeAnalogChannelTransferFunction                   : HART_IP_COMMON_COMMANDS::WriteAnalogChannelTransferFunction(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_ANALOG_CHANNEL_ENDPOINT_VALUES                          -> readAnalogChannelEndpointValues                      : HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValues(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::LOCK_DEVICE                                                  -> lockDevice                                           : HART_IP_COMMON_COMMANDS::LockDevice(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::SQUAWK                                                       -> squawk                                               : HART_IP_COMMON_COMMANDS::Squawk(byteCount, messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::FIND_DEVICE                                                  -> findDevice                                           : HART_IP_COMMON_COMMANDS::FindDevice(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_IO_SYSTEM_CAPABILITIES                                  -> readIOSystemCapabilities                             : HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilities(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::POLL_SUB_DEVICE                                              -> pollSubDevice                                        : HART_IP_COMMON_COMMANDS::PollSubDevice(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_LOCK_DEVICE_STATE                                       -> readLockDeviceState                                  : HART_IP_COMMON_COMMANDS::ReadLockDeviceState(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DEVICE_VARIABLE                                        -> writeDeviceVariable                                  : HART_IP_COMMON_COMMANDS::WriteDeviceVariable(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_VARIABLE_TRIM_POINTS                             -> readDeviceVariableTrimPoints                         : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPoints(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_DEVICE_VARIABLE_TRIM_GUIDELINES                         -> readDeviceVariableTrimGuidelines                     : HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelines(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_DEVICE_VARIABLE_TRIM_POINT                             -> writeDeviceVariableTrimPoint                         : HART_IP_COMMON_COMMANDS::WriteDeviceVariableTrimPoint(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::RESET_DEVICE_VARIABLE_TRIM                                   -> resetDeviceVariableTrim                              : HART_IP_COMMON_COMMANDS::ResetDeviceVariableTrim(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_SUB_DEVICE_IDENTITY_SUMMARY                             -> readSubDeviceIdentitySummary                         : HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummary(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_IO_CHANNEL_STATISTICS                                   -> readIOChannelStatistics                              : HART_IP_COMMON_COMMANDS::ReadIOChannelStatistics(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::READ_SUB_DEVICE_STATISTICS                                   -> readSubDeviceStatistics                              : HART_IP_COMMON_COMMANDS::ReadSubDeviceStatistics(messageType, self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_IO_SYSTEM_MASTER_MODE                                  -> writeIOSystemMasterMode                              : HART_IP_COMMON_COMMANDS::WriteIOSystemMasterMode(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::WRITE_IO_SYSTEM_RETRY_COUNT                                  -> writeIOSystemRetryCount                              : HART_IP_COMMON_COMMANDS::WriteIOSystemRetryCount(self.commandNumberLinkID);
+        HART_IP_ENUM::CommandNumber16Bit::SET_REAL_TIME_CLOCK                                          -> setRealTimeClock                                     : HART_IP_COMMON_COMMANDS::SetRealTimeClock(messageType, self.commandNumberLinkID);
+        *                                                                                              -> data                                                 : (uint8)[byteCount];
+    };
+};
+
+# Network Management Specification Section 10.3.2.5
+type DirectPDUCommand = unit (messageType : HART_IP_ENUM::MessageType, listParentLinkId : string) {
+    var directPDUCommandLinkID : string;
+    on %init() {
+        self.directPDUCommandLinkID = listParentLinkId;
+    }
+    commandNumber        : uint16 &convert=HART_IP_ENUM::CommandNumber16Bit($$);
+    byteCount            : uint8;
+    switch(messageType) {
+        HART_IP_ENUM::MessageType::REQUEST      -> directPDUContentsRequest     : HART_IP::DirectPDUContentsRequest(self.commandNumber, messageType, self.byteCount);
+        HART_IP_ENUM::MessageType::RESPONSE     -> directPDUContentsResponse    : HART_IP::DirectPDUContentsResponse(self.commandNumber, messageType, self.byteCount);
+        *                                       ->                              : void;
+    };
+};
+
+type DirectPDUContentsResponse = unit (commandNumber : HART_IP_ENUM::CommandNumber16Bit, messageType : HART_IP_ENUM::MessageType, byteCount : uint8) {
+    responseCode         : uint8;
+    command              : HART_IP::DirectPDUCommandData(messageType, commandNumber, byteCount - 1) if (byteCount > 1);
+};
+
+type DirectPDUContentsRequest = unit (commandNumber : HART_IP_ENUM::CommandNumber16Bit, messageType : HART_IP_ENUM::MessageType, byteCount : uint8) {
+    command      : HART_IP::DirectPDUCommandData(messageType, commandNumber, byteCount) if (byteCount > 0);
+};
+
+# Network Management Specification Section 10.3.2.6
+type ReadAuditLog = unit (messageType : HART_IP_ENUM::MessageType) {
+    var sessionLogRecordLinkID : string;
+    on %init() {
+        self.sessionLogRecordLinkID = HART_IP_GENERATEID::generateId();
+    }
+    startRecord              : uint8;
+    numberOfRecords          : uint8;
+    # time_t is the number of seconds since 1970-01 00:00:00
+    powerUpTime              : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    # time_t is the number of seconds since 1970-01 00:00:00
+    lastSecurityChange       : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    serverStatus             : bitfield(16) {
+                                   UNDEFINED_BIT_15                             : 15 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_14                             : 14 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_13                             : 13 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_12                             : 12 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_11                             : 11 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_10                             : 10 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_9                              : 9 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_8                              : 8 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_7                              : 7 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_6                              : 6 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_5                              : 5 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_4                              : 4 &convert=cast<bool>($$);
+                                   UNDEFINED_BIT_3                              : 3 &convert=cast<bool>($$);
+                                   INSECURE_SYSLOG_CONNECTION                   : 2 &convert=cast<bool>($$);
+                                   SYSLOG_SERVER_LOCATED_BUT_CONNECTION_FAILED  : 1 &convert=cast<bool>($$);
+                                   UNABLE_TO_LOCATE_SYSLOG_SERVER               : 0 &convert=cast<bool>($$);
+                               } if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    sessionRecordSize        : uint16 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    sessionLogRecords        : (HART_IP::SessionLogRecord(self.sessionLogRecordLinkID))[self.numberOfRecords] if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+};
+
+# Network Management Specification Section 10.3.2.6
+type SessionLogRecord = unit (listParentLinkId : string) {
+    var sessionLogRecordLinkID : string;
+    on %init() {
+        self.sessionLogRecordLinkID = listParentLinkId;
+    }
+    clientIPv4Address                    : addr &ipv4;
+    clientIPv6Address                    : addr &ipv6;
+    clientPort                           : uint16;
+    serverPort                           : uint16;
+    # time_t is the number of seconds since 1970-01 00:00:00
+    connectTime                          : uint64;
+    # time_t is the number of seconds since 1970-01 00:00:00
+    disconnectTime                       : uint64;
+    sessionStatusSummary                 : bitfield(16) {
+                                               UNDEFINED_BIT_15             : 15 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_14             : 14 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_13             : 13 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_12             : 12 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_11             : 11 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_10             : 10 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_9              : 9 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_8              : 8 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_7              : 7 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_6              : 6 &convert=cast<bool>($$);
+                                               UNDEFINED_BIT_5              : 5 &convert=cast<bool>($$);
+                                               INSECURE_SESSION             : 4 &convert=cast<bool>($$);
+                                               SESSION_TIMEOUT              : 3 &convert=cast<bool>($$);
+                                               ABORTED_SESSION              : 2 &convert=cast<bool>($$);
+                                               BAD_SESSION_INITIALIZATION   : 1 &convert=cast<bool>($$);
+                                               WRITES_OCCURED               : 0 &convert=cast<bool>($$);
+                                           };
+    startConfigurationChangeCount        : uint16;
+    endConfigurationChangeCount          : uint16;
+    numPublishPDU                        : uint32;
+    numRequestPDU                        : uint32;
+    numResponsePDU                       : uint32;
+};
+
+# vim: ai si tabstop=4 shiftwidth=4 softtabstop=4 expandtab colorcolumn=101 syntax=spicy

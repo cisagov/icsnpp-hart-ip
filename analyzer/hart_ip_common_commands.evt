@@ -1,0 +1,490 @@
+import HART_IP_COMMON_COMMANDS;
+import HART_IP_ENUM;
+import HART_IP_CONVERSION;
+import Zeek_HART_IP;
+
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariables;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequest;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariablesResponse;
+export HART_IP_COMMON_COMMANDS::WritePrimaryVariableDampingValue;
+export HART_IP_COMMON_COMMANDS::WritePrimaryVariableRangeValues;
+export HART_IP_COMMON_COMMANDS::EEPROMControl;
+export HART_IP_COMMON_COMMANDS::EnterExitFixedCurrentMode;
+export HART_IP_COMMON_COMMANDS::WritePrimaryVariableUnits;
+export HART_IP_COMMON_COMMANDS::TrimLoopCurrentZero;
+export HART_IP_COMMON_COMMANDS::TrimLoopCurrentGain;
+export HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransferFunction;
+export HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransducerSerialNumber;
+export HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignments;
+export HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignmentsResponse;
+export HART_IP_COMMON_COMMANDS::WriteDynamicVariableAssignments;
+export HART_IP_COMMON_COMMANDS::SetDeviceVariableZero;
+export HART_IP_COMMON_COMMANDS::WriteDeviceVariableUnits;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformation;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationRequest;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationResponse;
+export HART_IP_COMMON_COMMANDS::WriteDeviceVariableDampingValue;
+export HART_IP_COMMON_COMMANDS::WriteDeviceVariableTransducerSerialNo;
+export HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDate;
+export HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDateResponse;
+export HART_IP_COMMON_COMMANDS::WriteUnitTagDescriptorDate;
+export HART_IP_COMMON_COMMANDS::WriteNumberOfResponsePreambles;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRange;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeRequest;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeResponse;
+export HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannel;
+export HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannels;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelsRequest;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelsResponse;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformation;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationRequest;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationResponse;
+export HART_IP_COMMON_COMMANDS::WriteAnalogChannelAdditionalDampingValue;
+export HART_IP_COMMON_COMMANDS::WriteAnalogChannelRangeValues;
+export HART_IP_COMMON_COMMANDS::EnterExitFixedAnalogChannelMode;
+export HART_IP_COMMON_COMMANDS::TrimAnalogChannelZero;
+export HART_IP_COMMON_COMMANDS::TrimAnalogChannelGain;
+export HART_IP_COMMON_COMMANDS::WriteAnalogChannelTransferFunction;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValues;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesRequest;
+export HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesResponse;
+export HART_IP_COMMON_COMMANDS::LockDevice;
+export HART_IP_COMMON_COMMANDS::Squawk;
+export HART_IP_COMMON_COMMANDS::FindDevice;
+export HART_IP_COMMON_COMMANDS::FindDeviceResponse;
+export HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilities;
+export HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilitiesResponse;
+export HART_IP_COMMON_COMMANDS::PollSubDevice;
+export HART_IP_COMMON_COMMANDS::PollSubDeviceRequest;
+export HART_IP_COMMON_COMMANDS::PollSubDeviceResponse;
+export HART_IP_COMMON_COMMANDS::ReadLockDeviceState;
+export HART_IP_COMMON_COMMANDS::ReadLockDeviceStateResponse;
+export HART_IP_COMMON_COMMANDS::WriteDeviceVariable;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPoints;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelines;
+export HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelinesResponse;
+export HART_IP_COMMON_COMMANDS::WriteDeviceVariableTrimPoint;
+export HART_IP_COMMON_COMMANDS::ResetDeviceVariableTrim;
+export HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummary;
+export HART_IP_COMMON_COMMANDS::ReadIOChannelStatistics;
+export HART_IP_COMMON_COMMANDS::ReadSubDeviceStatistics;
+export HART_IP_COMMON_COMMANDS::WriteIOSystemMasterMode;
+export HART_IP_COMMON_COMMANDS::WriteIOSystemRetryCount;
+export HART_IP_COMMON_COMMANDS::SetRealTimeClock;
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariables -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariablesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequest -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariablesResponse -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariablesResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WritePrimaryVariableDampingValue -> event HART_IP_COMMON_COMMANDS::WritePrimaryVariableDampingValueEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WritePrimaryVariableRangeValues -> event HART_IP_COMMON_COMMANDS::WritePrimaryVariableRangeValuesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::EEPROMControl -> event HART_IP_COMMON_COMMANDS::EEPROMControlEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::EnterExitFixedCurrentMode -> event HART_IP_COMMON_COMMANDS::EnterExitFixedCurrentModeEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WritePrimaryVariableUnits -> event HART_IP_COMMON_COMMANDS::WritePrimaryVariableUnitsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::TrimLoopCurrentZero -> event HART_IP_COMMON_COMMANDS::TrimLoopCurrentZeroEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::TrimLoopCurrentGain -> event HART_IP_COMMON_COMMANDS::TrimLoopCurrentGainEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransferFunction -> event HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransferFunctionEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransducerSerialNumber -> event HART_IP_COMMON_COMMANDS::WritePrimaryVariableTransducerSerialNumberEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignments -> event HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignmentsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignmentsResponse -> event HART_IP_COMMON_COMMANDS::ReadDynamicVariableAssignmentsResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDynamicVariableAssignments -> event HART_IP_COMMON_COMMANDS::WriteDynamicVariableAssignmentsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::SetDeviceVariableZero -> event HART_IP_COMMON_COMMANDS::SetDeviceVariableZeroEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDeviceVariableUnits -> event HART_IP_COMMON_COMMANDS::WriteDeviceVariableUnitsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformation -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationRequest -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationResponse -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableInformationResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDeviceVariableDampingValue -> event HART_IP_COMMON_COMMANDS::WriteDeviceVariableDampingValueEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDeviceVariableTransducerSerialNo -> event HART_IP_COMMON_COMMANDS::WriteDeviceVariableTransducerSerialNoEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDate -> event HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDateEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDateResponse -> event HART_IP_COMMON_COMMANDS::ReadUnitTagDescriptorDateResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteUnitTagDescriptorDate -> event HART_IP_COMMON_COMMANDS::WriteUnitTagDescriptorDateEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteNumberOfResponsePreambles -> event HART_IP_COMMON_COMMANDS::WriteNumberOfResponsePreamblesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRange -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeRequest -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeResponse -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelAndPercentOfRangeResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannel -> event HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannelEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponse -> event HART_IP_COMMON_COMMANDS::ReadDynamicVariablesAndPrimaryVariableAnalogChannelResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannels -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelsRequest -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelsRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelsResponse -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelsResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformation -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationRequest -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationResponse -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelInformationResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteAnalogChannelAdditionalDampingValue -> event HART_IP_COMMON_COMMANDS::WriteAnalogChannelAdditionalDampingValueEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteAnalogChannelRangeValues -> event HART_IP_COMMON_COMMANDS::WriteAnalogChannelRangeValuesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::EnterExitFixedAnalogChannelMode -> event HART_IP_COMMON_COMMANDS::EnterExitFixedAnalogChannelModeEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::TrimAnalogChannelZero -> event HART_IP_COMMON_COMMANDS::TrimAnalogChannelZeroEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::TrimAnalogChannelGain -> event HART_IP_COMMON_COMMANDS::TrimAnalogChannelGainEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteAnalogChannelTransferFunction -> event HART_IP_COMMON_COMMANDS::WriteAnalogChannelTransferFunctionEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValues -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesRequest -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesResponse -> event HART_IP_COMMON_COMMANDS::ReadAnalogChannelEndpointValuesResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::LockDevice -> event HART_IP_COMMON_COMMANDS::LockDeviceEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::Squawk -> event HART_IP_COMMON_COMMANDS::SquawkEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::FindDevice -> event HART_IP_COMMON_COMMANDS::FindDeviceEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::FindDeviceResponse -> event HART_IP_COMMON_COMMANDS::FindDeviceResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilities -> event HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilitiesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilitiesResponse -> event HART_IP_COMMON_COMMANDS::ReadIOSystemCapabilitiesResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::PollSubDevice -> event HART_IP_COMMON_COMMANDS::PollSubDeviceEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::PollSubDeviceRequest -> event HART_IP_COMMON_COMMANDS::PollSubDeviceRequestEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::PollSubDeviceResponse -> event HART_IP_COMMON_COMMANDS::PollSubDeviceResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadLockDeviceState -> event HART_IP_COMMON_COMMANDS::ReadLockDeviceStateEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadLockDeviceStateResponse -> event HART_IP_COMMON_COMMANDS::ReadLockDeviceStateResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDeviceVariable -> event HART_IP_COMMON_COMMANDS::WriteDeviceVariableEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPoints -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimPointsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelines -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelinesEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelinesResponse -> event HART_IP_COMMON_COMMANDS::ReadDeviceVariableTrimGuidelinesResponseEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteDeviceVariableTrimPoint -> event HART_IP_COMMON_COMMANDS::WriteDeviceVariableTrimPointEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ResetDeviceVariableTrim -> event HART_IP_COMMON_COMMANDS::ResetDeviceVariableTrimEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummary -> event HART_IP_COMMON_COMMANDS::ReadSubDeviceIdentitySummaryEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadIOChannelStatistics -> event HART_IP_COMMON_COMMANDS::ReadIOChannelStatisticsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::ReadSubDeviceStatistics -> event HART_IP_COMMON_COMMANDS::ReadSubDeviceStatisticsEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteIOSystemMasterMode -> event HART_IP_COMMON_COMMANDS::WriteIOSystemMasterModeEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::WriteIOSystemRetryCount -> event HART_IP_COMMON_COMMANDS::WriteIOSystemRetryCountEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+on HART_IP_COMMON_COMMANDS::SetRealTimeClock -> event HART_IP_COMMON_COMMANDS::SetRealTimeClockEvt (
+    $conn,
+    $is_orig,
+    self
+);
+
+

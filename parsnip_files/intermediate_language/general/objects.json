@@ -1,0 +1,917 @@
+[
+    {
+        "name": "Message",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": false,
+        "fields": [
+            {
+                "name": "header",
+                "description": "Protocol Header",
+                "notes": "",
+                "type": "object",
+                "referenceType": "Header",
+                "scope": "general"
+            },
+            {
+                "name": "body",
+                "description": "Protocol Body",
+                "notes": "",
+                "type": "object",
+                "referenceType": "Body",
+                "inputs": [
+                    {
+                        "source": "self.header.messageID"
+                    },
+                    {
+                        "source": "self.header.messageType.messageType"
+                    },
+                    {
+                        "source": "self.header.length",
+                        "minus": 8
+                    }
+                ],
+                "conditional": {
+                    "or": [
+                        {
+                            "indicator": "self.header.messageType.messageType",
+                            "operator": "=",
+                            "value": "HART_IP_ENUM::MessageType::REQUEST"
+                        },
+                        {
+                            "indicator": "self.header.messageType.messageType",
+                            "operator": "=",
+                            "value": "HART_IP_ENUM::MessageType::RESPONSE"
+                        }
+                    ]
+                },
+                "scope": "general"
+            },
+            {
+                "name": "packetBytes",
+                "description": "Packet Bytes",
+                "notes": "Not currently parsing the packet",
+                "type": "list",
+                "elementType": "uint",
+                "size": 8,
+                "until": {
+                    "conditionType": "COUNT",
+                    "indicator": "self.header.length",
+                    "minus": 8
+                },
+                "conditional": {
+                    "and": [
+                        {
+                            "indicator": "self.header.messageType.messageType",
+                            "operator": "!=",
+                            "value": "HART_IP_ENUM::MessageType::REQUEST"
+                        },
+                        {
+                            "indicator": "self.header.messageType.messageType",
+                            "operator": "!=",
+                            "value": "HART_IP_ENUM::MessageType::RESPONSE"
+                        }
+                    ]
+                }
+            }
+        ],
+        "referenceCount": 0
+    },
+    {
+        "name": "Header",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "fields": [
+            {
+                "name": "version",
+                "description": "Protocol Version",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "messageType",
+                "description": "Message Type",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "messageID",
+                "description": "Message ID",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "MessageID",
+                "scope": "general"
+            },
+            {
+                "name": "statusCode",
+                "description": "Message Status Code",
+                "notes": "Technically Depends on messageID",
+                "type": "enum",
+                "referenceType": "StatusCode",
+                "scope": "general"
+            },
+            {
+                "name": "sequenceNumber",
+                "description": "Sequence Number",
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "length",
+                "description": "Length of the packet",
+                "notes": "This includes the length of the header",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "Body",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageID",
+                "type": "enum",
+                "referenceType": "MessageID",
+                "scope": "general"
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "fields": [
+            {
+                "name": "bodyContents",
+                "description": "Actual Body Contents",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "BodySwitch",
+                "input": {
+                    "source": "messageID"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "messageType"
+                    },
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "SessionInitiate",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "fields": [
+            {
+                "name": "masterType",
+                "description": "",
+                "notes": "Any value other than one is invalid",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "inactivityCloseTimer",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 32
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "TokenPassingPDU",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "delimiter",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "Delimiter",
+                "scope": "general"
+            },
+            {
+                "name": "address",
+                "description": "PDU Address",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "AddressSwitch",
+                "input": {
+                    "source": "self.delimiter.addressType"
+                },
+                "scope": "general"
+            },
+            {
+                "name": "commandNumber",
+                "description": "Command Number",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "CommandNumber8Bit",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "description": "Size of the data",
+                "notes": "Number of bytes between byteCount and checkByte",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "contentsSwitch",
+                "description": "Contents Switch",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "TokenPassingPDUSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "self.byteCount"
+                    },
+                    {
+                        "source": "self.commandNumber"
+                    }
+                ],
+                "scope": "general"
+            },
+            {
+                "name": "checkByte",
+                "description": "Check Byte",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "TokenPassingPDUContentsData",
+        "reference": "",
+        "notes": "Being used to handle issue with conditional switches",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber8Bit",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "command",
+                "description": "Command Data",
+                "type": "switch",
+                "referenceType": "Command8Switch",
+                "input": {
+                    "source": "commandNumber"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "byteCount"
+                    },
+                    {
+                        "source": "messageType"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "TokenPassingPDUContentsResponse",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber8Bit",
+                "scope": "general"
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "responseCode",
+                "description": "Response Code",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "deviceStatus",
+                "description": "Device Status",
+                "notes": "This byte does not exist in the spec. It DOES exist in the pcap. Schr\u00f6dinger's Field",
+                "type": "bits",
+                "referenceType": "FieldDeviceStatus",
+                "scope": "general"
+            },
+            {
+                "name": "command",
+                "description": "Command Data",
+                "type": "object",
+                "referenceType": "TokenPassingPDUContentsData",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">",
+                    "value": 2
+                },
+                "inputs": [
+                    {
+                        "source": "messageType"
+                    },
+                    {
+                        "source": "commandNumber"
+                    },
+                    {
+                        "source": "byteCount",
+                        "minus": 2
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "TokenPassingPDUContentsRequest",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber8Bit",
+                "scope": "general"
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "command",
+                "description": "Command Data",
+                "type": "object",
+                "referenceType": "TokenPassingPDUContentsData",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">",
+                    "value": 0
+                },
+                "inputs": [
+                    {
+                        "source": "messageType"
+                    },
+                    {
+                        "source": "commandNumber"
+                    },
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "DirectPDU",
+        "reference": "Network Management Specification Section 10.3.2.5",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 16
+            }
+        ],
+        "fields": [
+            {
+                "name": "deviceStatus",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "FieldDeviceStatus",
+                "scope": "general"
+            },
+            {
+                "name": "extendedStatus",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "ExtendedFieldDevice",
+                "scope": "general"
+            },
+            {
+                "name": "directPDUCommandList",
+                "description": "",
+                "notes": "",
+                "type": "list",
+                "elementType": "object",
+                "referenceType": "DirectPDUCommand",
+                "until": {
+                    "conditionType": "BYTECOUNT",
+                    "indicator": "byteCount",
+                    "minus": 2
+                },
+                "inputs": [
+                    {
+                        "source": "messageType"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "DirectPDUCommandData",
+        "reference": "Network Management Specification Section 10.3.2.5",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber16Bit",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "contentsSwitch",
+                "description": "Contents Switch",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "Command16Switch",
+                "input": {
+                    "source": "commandNumber"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "byteCount"
+                    },
+                    {
+                        "source": "messageType"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 2
+    },
+    {
+        "name": "DirectPDUCommand",
+        "reference": "Network Management Specification Section 10.3.2.5",
+        "notes": "",
+        "logIndependently": true,
+        "logWithParent": false,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "commandNumber",
+                "description": "16 Bit Command Number",
+                "notes": "",
+                "type": "enum",
+                "referenceType": "CommandNumber16Bit",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "contentsSwitch",
+                "description": "Contents Switch",
+                "notes": "",
+                "type": "switch",
+                "referenceType": "DirectPDUCommandSwitch",
+                "input": {
+                    "source": "messageType"
+                },
+                "additionalInputs": [
+                    {
+                        "source": "self.byteCount"
+                    },
+                    {
+                        "source": "self.commandNumber"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 0
+    },
+    {
+        "name": "DirectPDUContentsResponse",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber16Bit",
+                "scope": "general"
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "responseCode",
+                "description": "Response Code",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "command",
+                "description": "Command Data",
+                "type": "object",
+                "referenceType": "DirectPDUCommandData",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">",
+                    "value": 1
+                },
+                "inputs": [
+                    {
+                        "source": "messageType"
+                    },
+                    {
+                        "source": "commandNumber"
+                    },
+                    {
+                        "source": "byteCount",
+                        "minus": 1
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "DirectPDUContentsRequest",
+        "reference": "",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "commandNumber",
+                "type": "enum",
+                "referenceType": "CommandNumber16Bit",
+                "scope": "general"
+            },
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            },
+            {
+                "name": "byteCount",
+                "type": "uint",
+                "size": 8
+            }
+        ],
+        "fields": [
+            {
+                "name": "command",
+                "description": "Command Data",
+                "type": "object",
+                "referenceType": "DirectPDUCommandData",
+                "conditional": {
+                    "indicator": "byteCount",
+                    "operator": ">",
+                    "value": 0
+                },
+                "inputs": [
+                    {
+                        "source": "messageType"
+                    },
+                    {
+                        "source": "commandNumber"
+                    },
+                    {
+                        "source": "byteCount"
+                    }
+                ],
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "ReadAuditLog",
+        "reference": "Network Management Specification Section 10.3.2.6",
+        "notes": "",
+        "logIndependently": false,
+        "logWithParent": true,
+        "dependsOn": [
+            {
+                "name": "messageType",
+                "type": "enum",
+                "referenceType": "MessageType",
+                "scope": "general"
+            }
+        ],
+        "fields": [
+            {
+                "name": "startRecord",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "numberOfRecords",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 8
+            },
+            {
+                "name": "powerUpTime",
+                "description": "'time_t', Last time/date the server was powered up.",
+                "notes": "time_t is the number of seconds since 1970-01 00:00:00",
+                "type": "uint",
+                "size": 64,
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "RESPONSE"
+                }
+            },
+            {
+                "name": "lastSecurityChange",
+                "description": "'time_t', Last time/date the security credentials were modified.",
+                "notes": "time_t is the number of seconds since 1970-01 00:00:00",
+                "type": "uint",
+                "size": 64,
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "RESPONSE"
+                }
+            },
+            {
+                "name": "serverStatus",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "ServerStatus",
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "RESPONSE"
+                },
+                "scope": "general"
+            },
+            {
+                "name": "sessionRecordSize",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 16,
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "RESPONSE"
+                }
+            },
+            {
+                "name": "sessionLogRecords",
+                "description": "",
+                "notes": "",
+                "type": "list",
+                "elementType": "object",
+                "referenceType": "SessionLogRecord",
+                "conditional": {
+                    "indicator": "messageType",
+                    "operator": "=",
+                    "value": "RESPONSE"
+                },
+                "until": {
+                    "conditionType": "COUNT",
+                    "indicator": "self.numberOfRecords"
+                },
+                "scope": "general"
+            }
+        ],
+        "referenceCount": 1
+    },
+    {
+        "name": "SessionLogRecord",
+        "reference": "Network Management Specification Section 10.3.2.6",
+        "notes": "",
+        "logIndependently": true,
+        "logWithParent": false,
+        "fields": [
+            {
+                "name": "clientIPv4Address",
+                "description": "",
+                "notes": "",
+                "type": "addr",
+                "size": 32
+            },
+            {
+                "name": "clientIPv6Address",
+                "description": "",
+                "notes": "",
+                "type": "addr",
+                "size": 128
+            },
+            {
+                "name": "clientPort",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "serverPort",
+                "description": "",
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "connectTime",
+                "description": "'time_t', Connect time/date for that client.",
+                "notes": "time_t is the number of seconds since 1970-01 00:00:00",
+                "type": "uint",
+                "size": 64
+            },
+            {
+                "name": "disconnectTime",
+                "description": "'time_t', Disconnect time/date for that client. -1 if still connected.",
+                "notes": "time_t is the number of seconds since 1970-01 00:00:00",
+                "type": "uint",
+                "size": 64
+            },
+            {
+                "name": "sessionStatusSummary",
+                "description": "",
+                "notes": "",
+                "type": "bits",
+                "referenceType": "SessionStatus",
+                "scope": "general"
+            },
+            {
+                "name": "startConfigurationChangeCount",
+                "description": "Starting Configuration Change Counter",
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "endConfigurationChangeCount",
+                "description": "Ending Configuration Change Counter. Undefined while open.",
+                "notes": "",
+                "type": "uint",
+                "size": 16
+            },
+            {
+                "name": "numPublishPDU",
+                "description": "Number of publish (Burst) PDUs",
+                "notes": "",
+                "type": "uint",
+                "size": 32
+            },
+            {
+                "name": "numRequestPDU",
+                "description": "Number of Request PDUs",
+                "notes": "",
+                "type": "uint",
+                "size": 32
+            },
+            {
+                "name": "numResponsePDU",
+                "description": "Number of Response PDUs",
+                "notes": "",
+                "type": "uint",
+                "size": 32
+            }
+        ],
+        "referenceCount": 0
+    }
+]
