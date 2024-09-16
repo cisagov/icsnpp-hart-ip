@@ -1,11 +1,10 @@
-# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
-## main.zeek
-##
-## ICSNPP-HART_IP
-##
-## Zeek script type/record definitions describing the information
-## that will be written to the log files.
-##
+##! main.zeek
+##!
+##! ICSNPP-HART_IP
+##!
+##! Zeek script type/record definitions describing the information
+##! that will be written to the log files.
+##!
 
 module HART_IP;
 
