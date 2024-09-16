@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 spicy_add_analyzer(
     NAME HART_IP
     PACKAGE_NAME HART_IP

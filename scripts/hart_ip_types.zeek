@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP;
 
 export {
@@ -46,8 +47,7 @@ export {
         direct_pdu_device_status_loop_current_saturated                                         : bool &log &optional;
         direct_pdu_device_status_non_primary_variable_out_of_limits                             : bool &log &optional;
         direct_pdu_device_status_primary_variable_out_of_limits                                 : bool &log &optional;
-        direct_pdu_extended_status_undefined_bit_7                                              : bool &log &optional;
-        direct_pdu_extended_status_undefined_bit_6                                              : bool &log &optional;
+        direct_pdu_extended_status_undefined_bits                                               : count &log &optional;
         direct_pdu_extended_status_function_check                                               : bool &log &optional;
         direct_pdu_extended_status_out_of_specification                                         : bool &log &optional;
         direct_pdu_extended_status_failure                                                      : bool &log &optional;
@@ -58,19 +58,7 @@ export {
         read_audit_log_number_of_records                                                        : count &log &optional;
         read_audit_log_power_up_time                                                            : count &log &optional;
         read_audit_log_last_security_change                                                     : count &log &optional;
-        read_audit_log_server_status_undefined_bit_15                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_14                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_13                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_12                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_11                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_10                                           : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_9                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_8                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_7                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_6                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_5                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_4                                            : bool &log &optional;
-        read_audit_log_server_status_undefined_bit_3                                            : bool &log &optional;
+        read_audit_log_server_status_undefined_bits                                             : count &log &optional;
         read_audit_log_server_status_insecure_syslog_connection                                 : bool &log &optional;
         read_audit_log_server_status_syslog_server_located_but_connection_failed                : bool &log &optional;
         read_audit_log_server_status_unable_to_locate_syslog_server                             : bool &log &optional;
@@ -102,17 +90,7 @@ export {
         session_log_record_server_port                                          : count &log &optional;
         session_log_record_connect_time                                         : count &log &optional;
         session_log_record_disconnect_time                                      : count &log &optional;
-        session_log_record_session_status_summary_undefined_bit_15              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_14              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_13              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_12              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_11              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_10              : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_9               : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_8               : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_7               : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_6               : bool &log &optional;
-        session_log_record_session_status_summary_undefined_bit_5               : bool &log &optional;
+        session_log_record_session_status_summary_undefined_bits                : count &log &optional;
         session_log_record_session_status_summary_insecure_session              : bool &log &optional;
         session_log_record_session_status_summary_session_timeout               : bool &log &optional;
         session_log_record_session_status_summary_aborted_session               : bool &log &optional;

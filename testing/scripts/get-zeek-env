@@ -1,4 +1,5 @@
 #! /bin/sh
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 #
 # BTest helper for getting values for Zeek-related environment variables.
 

@@ -1,3 +1,4 @@
+// Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -149,4 +150,3 @@ namespace HART_IP_CONVERSION
     }
 
 }
-

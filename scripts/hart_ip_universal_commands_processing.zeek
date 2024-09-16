@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP_UNIVERSAL_COMMANDS;
 
 hook set_session_universal_commands_log(c: connection) {
@@ -35,8 +36,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponseEvt (c: connection
     info_universal_commands_log$read_unique_identifier_response_number_preambles_slave_master = readuniqueidentifierresponse$numberPreamblesSlaveMaster;
     info_universal_commands_log$read_unique_identifier_response_last_device_variable_this = readuniqueidentifierresponse$lastDeviceVariableThis;
     info_universal_commands_log$read_unique_identifier_response_configuration_change_counter = readuniqueidentifierresponse$configurationChangeCounter;
-    info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_undefined_bit_7 = readuniqueidentifierresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_7;
-    info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_undefined_bit_6 = readuniqueidentifierresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_6;
+    info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_undefined_bits = readuniqueidentifierresponse$extendedFieldDeviceStatus$UNDEFINED_BITS;
     info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_function_check = readuniqueidentifierresponse$extendedFieldDeviceStatus$FUNCTION_CHECK;
     info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_out_of_specification = readuniqueidentifierresponse$extendedFieldDeviceStatus$OUT_OF_SPECIFICATION;
     info_universal_commands_log$read_unique_identifier_response_extended_field_device_status_failure = readuniqueidentifierresponse$extendedFieldDeviceStatus$FAILURE;
@@ -173,8 +173,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceVariableResponseEvt (c: connection, 
     local info_universal_commands_log = c$hart_ip_universal_commands_log;
 
     info_universal_commands_log$command_number_link_id = readdevicevariableresponse$commandNumberLinkID;
-    info_universal_commands_log$read_device_variable_response_extended_field_device_status_undefined_bit_7 = readdevicevariableresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_7;
-    info_universal_commands_log$read_device_variable_response_extended_field_device_status_undefined_bit_6 = readdevicevariableresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_6;
+    info_universal_commands_log$read_device_variable_response_extended_field_device_status_undefined_bits = readdevicevariableresponse$extendedFieldDeviceStatus$UNDEFINED_BITS;
     info_universal_commands_log$read_device_variable_response_extended_field_device_status_function_check = readdevicevariableresponse$extendedFieldDeviceStatus$FUNCTION_CHECK;
     info_universal_commands_log$read_device_variable_response_extended_field_device_status_out_of_specification = readdevicevariableresponse$extendedFieldDeviceStatus$OUT_OF_SPECIFICATION;
     info_universal_commands_log$read_device_variable_response_extended_field_device_status_failure = readdevicevariableresponse$extendedFieldDeviceStatus$FAILURE;
@@ -363,8 +362,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierTagResponseEvt (c: connect
     info_universal_commands_log$read_unique_identifier_tag_response_number_preambles_slave_master = readuniqueidentifiertagresponse$numberPreamblesSlaveMaster;
     info_universal_commands_log$read_unique_identifier_tag_response_last_device_variable_this = readuniqueidentifiertagresponse$lastDeviceVariableThis;
     info_universal_commands_log$read_unique_identifier_tag_response_configuration_change_counter = readuniqueidentifiertagresponse$configurationChangeCounter;
-    info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_undefined_bit_7 = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_7;
-    info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_undefined_bit_6 = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_6;
+    info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_undefined_bits = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$UNDEFINED_BITS;
     info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_function_check = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$FUNCTION_CHECK;
     info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_out_of_specification = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$OUT_OF_SPECIFICATION;
     info_universal_commands_log$read_unique_identifier_tag_response_extended_field_device_status_failure = readuniqueidentifiertagresponse$extendedFieldDeviceStatus$FAILURE;
@@ -423,13 +421,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadDeviceInformationResponseEvt (c: connectio
     info_universal_commands_log$read_device_information_response_p_v_damping_value = readdeviceinformationresponse$pVDampingValue;
     info_universal_commands_log$read_device_information_response_write_protect_code = HART_IP_ENUM::WRITE_PROTECT_CODES[readdeviceinformationresponse$writeProtectCode];
     info_universal_commands_log$read_device_information_response__250 = readdeviceinformationresponse$_250;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_7 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_7;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_6 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_6;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_5 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_5;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_4 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_4;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_3 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_3;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_2 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_2;
-    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_1 = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_1;
+    info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_undefined_bits = readdeviceinformationresponse$pVAnalogChannelFlags$UNDEFINED_BITS;
     info_universal_commands_log$read_device_information_response_p_v_analog_channel_flags_analog_channel = readdeviceinformationresponse$pVAnalogChannelFlags$ANALOG_CHANNEL;
     HART_IP::emit_hart_ip_universal_commands_log(c);
 }
@@ -515,8 +507,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierLongTagResponseEvt (c: con
     info_universal_commands_log$read_unique_identifier_long_tag_response_number_preambles_slave_master = readuniqueidentifierlongtagresponse$numberPreamblesSlaveMaster;
     info_universal_commands_log$read_unique_identifier_long_tag_response_last_device_variable_this = readuniqueidentifierlongtagresponse$lastDeviceVariableThis;
     info_universal_commands_log$read_unique_identifier_long_tag_response_configuration_change_counter = readuniqueidentifierlongtagresponse$configurationChangeCounter;
-    info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_undefined_bit_7 = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_7;
-    info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_undefined_bit_6 = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$UNDEFINED_BIT_6;
+    info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_undefined_bits = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$UNDEFINED_BITS;
     info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_function_check = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$FUNCTION_CHECK;
     info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_out_of_specification = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$OUT_OF_SPECIFICATION;
     info_universal_commands_log$read_unique_identifier_long_tag_response_extended_field_device_status_failure = readuniqueidentifierlongtagresponse$extendedFieldDeviceStatus$FAILURE;
@@ -556,8 +547,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
     info_universal_commands_log$command_number_link_id = readadditionaldevicestatus$commandNumberLinkID;
     if (readadditionaldevicestatus?$packetContents){
         info_universal_commands_log$read_additional_device_status_contents_device_specific_status_0 = readadditionaldevicestatus$packetContents$deviceSpecificStatus_0;
-        info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_undefined_bit_7 = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$UNDEFINED_BIT_7;
-        info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_undefined_bit_6 = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$UNDEFINED_BIT_6;
+        info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_undefined_bits = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$UNDEFINED_BITS;
         info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_function_check = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$FUNCTION_CHECK;
         info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_out_of_specification = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$OUT_OF_SPECIFICATION;
         info_universal_commands_log$read_additional_device_status_contents_extended_field_device_status_failure = readadditionaldevicestatus$packetContents$extendedFieldDeviceStatus$FAILURE;
@@ -574,9 +564,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
         info_universal_commands_log$read_additional_device_status_contents_standardized_status0_non_volatile_memory_defect = readadditionaldevicestatus$packetContents$standardizedStatus0$NON_VOLATILE_MEMORY_DEFECT;
         info_universal_commands_log$read_additional_device_status_contents_standardized_status0_device_variable_simulation_active = readadditionaldevicestatus$packetContents$standardizedStatus0$DEVICE_VARIABLE_SIMULATION_ACTIVE;
         if (readadditionaldevicestatus$packetContents?$standardizedStatus1){
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status1_undefined_7 = readadditionaldevicestatus$packetContents$standardizedStatus1$UNDEFINED_7;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status1_undefined_6 = readadditionaldevicestatus$packetContents$standardizedStatus1$UNDEFINED_6;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status1_undefined_5 = readadditionaldevicestatus$packetContents$standardizedStatus1$UNDEFINED_5;
+            info_universal_commands_log$read_additional_device_status_contents_standardized_status1_undefined_bits = readadditionaldevicestatus$packetContents$standardizedStatus1$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status1_reserved = readadditionaldevicestatus$packetContents$standardizedStatus1$RESERVED;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status1_battery_or_power_supply_needs_maintenance = readadditionaldevicestatus$packetContents$standardizedStatus1$BATTERY_OR_POWER_SUPPLY_NEEDS_MAINTENANCE;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status1_event_notification_overflow = readadditionaldevicestatus$packetContents$standardizedStatus1$EVENT_NOTIFICATION_OVERFLOW;
@@ -584,19 +572,14 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
             info_universal_commands_log$read_additional_device_status_contents_standardized_status1_status_simulation_active = readadditionaldevicestatus$packetContents$standardizedStatus1$STATUS_SIMULATION_ACTIVE;
         }
         if (readadditionaldevicestatus$packetContents?$analogChannelSaturated){
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_undefined_7 = readadditionaldevicestatus$packetContents$analogChannelSaturated$UNDEFINED_7;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_undefined_6 = readadditionaldevicestatus$packetContents$analogChannelSaturated$UNDEFINED_6;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_undefined_5 = readadditionaldevicestatus$packetContents$analogChannelSaturated$UNDEFINED_5;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_undefined_4 = readadditionaldevicestatus$packetContents$analogChannelSaturated$UNDEFINED_4;
+            info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_undefined_bits = readadditionaldevicestatus$packetContents$analogChannelSaturated$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_quinary_analog = readadditionaldevicestatus$packetContents$analogChannelSaturated$QUINARY_ANALOG;
             info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_quaternary_analog = readadditionaldevicestatus$packetContents$analogChannelSaturated$QUATERNARY_ANALOG;
             info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_tertiary_analog = readadditionaldevicestatus$packetContents$analogChannelSaturated$TERTIARY_ANALOG;
             info_universal_commands_log$read_additional_device_status_contents_analog_channel_saturated_secondary_analog = readadditionaldevicestatus$packetContents$analogChannelSaturated$SECONDARY_ANALOG;
         }
         if (readadditionaldevicestatus$packetContents?$standardizedStatus2){
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status2_undefined_7 = readadditionaldevicestatus$packetContents$standardizedStatus2$UNDEFINED_7;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status2_undefined_6 = readadditionaldevicestatus$packetContents$standardizedStatus2$UNDEFINED_6;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status2_undefined_5 = readadditionaldevicestatus$packetContents$standardizedStatus2$UNDEFINED_5;
+            info_universal_commands_log$read_additional_device_status_contents_standardized_status2_undefined_bits = readadditionaldevicestatus$packetContents$standardizedStatus2$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status2_stale_data_notice = readadditionaldevicestatus$packetContents$standardizedStatus2$STALE_DATA_NOTICE;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status2_sub_device_with_duplicate_id = readadditionaldevicestatus$packetContents$standardizedStatus2$SUB_DEVICE_WITH_DUPLICATE_ID;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status2_sub_device_mismatch = readadditionaldevicestatus$packetContents$standardizedStatus2$SUB_DEVICE_MISMATCH;
@@ -604,9 +587,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
             info_universal_commands_log$read_additional_device_status_contents_standardized_status2_sub_device_list_changed = readadditionaldevicestatus$packetContents$standardizedStatus2$SUB_DEVICE_LIST_CHANGED;
         }
         if (readadditionaldevicestatus$packetContents?$standardizedStatus3){
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_undefined_7 = readadditionaldevicestatus$packetContents$standardizedStatus3$UNDEFINED_7;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_undefined_6 = readadditionaldevicestatus$packetContents$standardizedStatus3$UNDEFINED_6;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_undefined_5 = readadditionaldevicestatus$packetContents$standardizedStatus3$UNDEFINED_5;
+            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_undefined_bits = readadditionaldevicestatus$packetContents$standardizedStatus3$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_radio_failure = readadditionaldevicestatus$packetContents$standardizedStatus3$RADIO_FAILURE;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_block_transfer_pending = readadditionaldevicestatus$packetContents$standardizedStatus3$BLOCK_TRANSFER_PENDING;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_bandwith_allocation_pending = readadditionaldevicestatus$packetContents$standardizedStatus3$BANDWITH_ALLOCATION_PENDING;
@@ -614,13 +595,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_capacity_denied = readadditionaldevicestatus$packetContents$standardizedStatus3$CAPACITY_DENIED;
         }
         if (readadditionaldevicestatus$packetContents?$analogChannel){
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_7 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_7;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_6 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_6;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_5 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_5;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_4 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_4;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_3 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_3;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_2 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_2;
-            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_1 = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_1;
+            info_universal_commands_log$read_additional_device_status_contents_analog_channel_undefined_bits = readadditionaldevicestatus$packetContents$analogChannel$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_analog_channel_analog_channel = readadditionaldevicestatus$packetContents$analogChannel$ANALOG_CHANNEL;
         }
         if (readadditionaldevicestatus$packetContents?$deviceSpecificStatus_1){

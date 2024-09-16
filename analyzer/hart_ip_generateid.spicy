@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP_GENERATEID;
 
 public function generateId() : string &cxxname="HART_IP_GENERATEID::generateId";

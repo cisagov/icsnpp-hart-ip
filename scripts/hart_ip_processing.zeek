@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP;
 
 hook set_session_general_log(c: connection) {
@@ -94,8 +95,7 @@ event HART_IP::MessageEvt (c: connection, is_orig: bool, message: HART_IP::Messa
             info_general_log$direct_pdu_device_status_loop_current_saturated = message$body$directPDU$deviceStatus$LOOP_CURRENT_SATURATED;
             info_general_log$direct_pdu_device_status_non_primary_variable_out_of_limits = message$body$directPDU$deviceStatus$NON_PRIMARY_VARIABLE_OUT_OF_LIMITS;
             info_general_log$direct_pdu_device_status_primary_variable_out_of_limits = message$body$directPDU$deviceStatus$PRIMARY_VARIABLE_OUT_OF_LIMITS;
-            info_general_log$direct_pdu_extended_status_undefined_bit_7 = message$body$directPDU$extendedStatus$UNDEFINED_BIT_7;
-            info_general_log$direct_pdu_extended_status_undefined_bit_6 = message$body$directPDU$extendedStatus$UNDEFINED_BIT_6;
+            info_general_log$direct_pdu_extended_status_undefined_bits = message$body$directPDU$extendedStatus$UNDEFINED_BITS;
             info_general_log$direct_pdu_extended_status_function_check = message$body$directPDU$extendedStatus$FUNCTION_CHECK;
             info_general_log$direct_pdu_extended_status_out_of_specification = message$body$directPDU$extendedStatus$OUT_OF_SPECIFICATION;
             info_general_log$direct_pdu_extended_status_failure = message$body$directPDU$extendedStatus$FAILURE;
@@ -114,19 +114,7 @@ event HART_IP::MessageEvt (c: connection, is_orig: bool, message: HART_IP::Messa
                 info_general_log$read_audit_log_last_security_change = message$body$readAuditLog$lastSecurityChange;
             }
             if (message$body$readAuditLog?$serverStatus){
-                info_general_log$read_audit_log_server_status_undefined_bit_15 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_15;
-                info_general_log$read_audit_log_server_status_undefined_bit_14 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_14;
-                info_general_log$read_audit_log_server_status_undefined_bit_13 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_13;
-                info_general_log$read_audit_log_server_status_undefined_bit_12 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_12;
-                info_general_log$read_audit_log_server_status_undefined_bit_11 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_11;
-                info_general_log$read_audit_log_server_status_undefined_bit_10 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_10;
-                info_general_log$read_audit_log_server_status_undefined_bit_9 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_9;
-                info_general_log$read_audit_log_server_status_undefined_bit_8 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_8;
-                info_general_log$read_audit_log_server_status_undefined_bit_7 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_7;
-                info_general_log$read_audit_log_server_status_undefined_bit_6 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_6;
-                info_general_log$read_audit_log_server_status_undefined_bit_5 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_5;
-                info_general_log$read_audit_log_server_status_undefined_bit_4 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_4;
-                info_general_log$read_audit_log_server_status_undefined_bit_3 = message$body$readAuditLog$serverStatus$UNDEFINED_BIT_3;
+                info_general_log$read_audit_log_server_status_undefined_bits = message$body$readAuditLog$serverStatus$UNDEFINED_BITS;
                 info_general_log$read_audit_log_server_status_insecure_syslog_connection = message$body$readAuditLog$serverStatus$INSECURE_SYSLOG_CONNECTION;
                 info_general_log$read_audit_log_server_status_syslog_server_located_but_connection_failed = message$body$readAuditLog$serverStatus$SYSLOG_SERVER_LOCATED_BUT_CONNECTION_FAILED;
                 info_general_log$read_audit_log_server_status_unable_to_locate_syslog_server = message$body$readAuditLog$serverStatus$UNABLE_TO_LOCATE_SYSLOG_SERVER;
@@ -184,17 +172,7 @@ event HART_IP::SessionLogRecordEvt (c: connection, is_orig: bool, sessionlogreco
     info_session_log_record_log$session_log_record_server_port = sessionlogrecord$serverPort;
     info_session_log_record_log$session_log_record_connect_time = sessionlogrecord$connectTime;
     info_session_log_record_log$session_log_record_disconnect_time = sessionlogrecord$disconnectTime;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_15 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_15;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_14 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_14;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_13 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_13;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_12 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_12;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_11 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_11;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_10 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_10;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_9 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_9;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_8 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_8;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_7 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_7;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_6 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_6;
-    info_session_log_record_log$session_log_record_session_status_summary_undefined_bit_5 = sessionlogrecord$sessionStatusSummary$UNDEFINED_BIT_5;
+    info_session_log_record_log$session_log_record_session_status_summary_undefined_bits = sessionlogrecord$sessionStatusSummary$UNDEFINED_BITS;
     info_session_log_record_log$session_log_record_session_status_summary_insecure_session = sessionlogrecord$sessionStatusSummary$INSECURE_SESSION;
     info_session_log_record_log$session_log_record_session_status_summary_session_timeout = sessionlogrecord$sessionStatusSummary$SESSION_TIMEOUT;
     info_session_log_record_log$session_log_record_session_status_summary_aborted_session = sessionlogrecord$sessionStatusSummary$ABORTED_SESSION;

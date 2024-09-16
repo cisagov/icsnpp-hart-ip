@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 # Warning! This is an automatically generated file!
 #
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)

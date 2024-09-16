@@ -71,25 +71,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_7",
+                "name": "UNDEFINED_BITS",
                 "description": "",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_6",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_5",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
+                "type": "uint",
+                "bits": "5..7"
             },
             {
                 "name": "RESERVED",
@@ -136,25 +122,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_7",
+                "name": "UNDEFINED_BITS",
                 "description": "",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_6",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_5",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
+                "type": "uint",
+                "bits": "5..7"
             },
             {
                 "name": "STALE_DATA_NOTICE",
@@ -201,25 +173,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_7",
+                "name": "UNDEFINED_BITS",
                 "description": "",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_6",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_5",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
+                "type": "uint",
+                "bits": "5..7"
             },
             {
                 "name": "RADIO_FAILURE",
@@ -266,53 +224,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_7",
+                "name": "UNDEFINED_BITS",
                 "description": "",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_6",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_5",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
-            },
-            {
-                "name": "UNDEFINED_4",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "4"
-            },
-            {
-                "name": "UNDEFINED_3",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "3"
-            },
-            {
-                "name": "UNDEFINED_2",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "2"
-            },
-            {
-                "name": "UNDEFINED_1",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "1"
+                "type": "uint",
+                "bits": "1..7"
             },
             {
                 "name": "ANALOG_CHANNEL",
@@ -331,32 +247,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_7",
+                "name": "UNDEFINED_BITS",
                 "description": "",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_6",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_5",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
-            },
-            {
-                "name": "UNDEFINED_4",
-                "description": "",
-                "notes": "",
-                "type": "bool",
-                "bits": "4"
+                "type": "uint",
+                "bits": "4..7"
             },
             {
                 "name": "QUINARY_ANALOG",
@@ -554,18 +449,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_BIT_7",
+                "name": "UNDEFINED_BITS",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_BIT_6",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
+                "type": "uint",
+                "bits": "6..7"
             },
             {
                 "name": "FUNCTION_CHECK",
@@ -725,95 +613,11 @@
         "size": 16,
         "fields": [
             {
-                "name": "UNDEFINED_BIT_15",
+                "name": "UNDEFINED_BITS",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "15"
-            },
-            {
-                "name": "UNDEFINED_BIT_14",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "14"
-            },
-            {
-                "name": "UNDEFINED_BIT_13",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "13"
-            },
-            {
-                "name": "UNDEFINED_BIT_12",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "12"
-            },
-            {
-                "name": "UNDEFINED_BIT_11",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "11"
-            },
-            {
-                "name": "UNDEFINED_BIT_10",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "10"
-            },
-            {
-                "name": "UNDEFINED_BIT_9",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "9"
-            },
-            {
-                "name": "UNDEFINED_BIT_8",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "8"
-            },
-            {
-                "name": "UNDEFINED_BIT_7",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_BIT_6",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_BIT_5",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
-            },
-            {
-                "name": "UNDEFINED_BIT_4",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "4"
-            },
-            {
-                "name": "UNDEFINED_BIT_3",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "3"
+                "type": "uint",
+                "bits": "3..15"
             },
             {
                 "name": "INSECURE_SYSLOG_CONNECTION",
@@ -846,81 +650,11 @@
         "size": 16,
         "fields": [
             {
-                "name": "UNDEFINED_BIT_15",
+                "name": "UNDEFINED_BITS",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "15"
-            },
-            {
-                "name": "UNDEFINED_BIT_14",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "14"
-            },
-            {
-                "name": "UNDEFINED_BIT_13",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "13"
-            },
-            {
-                "name": "UNDEFINED_BIT_12",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "12"
-            },
-            {
-                "name": "UNDEFINED_BIT_11",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "11"
-            },
-            {
-                "name": "UNDEFINED_BIT_10",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "10"
-            },
-            {
-                "name": "UNDEFINED_BIT_9",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "9"
-            },
-            {
-                "name": "UNDEFINED_BIT_8",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "8"
-            },
-            {
-                "name": "UNDEFINED_BIT_7",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_BIT_6",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_BIT_5",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
+                "type": "uint",
+                "bits": "5..15"
             },
             {
                 "name": "INSECURE_SESSION",
@@ -974,46 +708,11 @@
                 "bits": "7"
             },
             {
-                "name": "UNDEFINED_BIT_6",
+                "name": "UNDEFINED_BITS_1_6",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_BIT_5",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
-            },
-            {
-                "name": "UNDEFINED_BIT_4",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "4"
-            },
-            {
-                "name": "UNDEFINED_BIT_3",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "3"
-            },
-            {
-                "name": "UNDEFINED_BIT_2",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "2"
-            },
-            {
-                "name": "UNDEFINED_BIT_1",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "1"
+                "type": "uint",
+                "bits": "1..6"
             },
             {
                 "name": "IS_INPUT",
@@ -1032,53 +731,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_BIT_7",
+                "name": "UNDEFINED_BITS",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_BIT_6",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_BIT_5",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
-            },
-            {
-                "name": "UNDEFINED_BIT_4",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "4"
-            },
-            {
-                "name": "UNDEFINED_BIT_3",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "3"
-            },
-            {
-                "name": "UNDEFINED_BIT_2",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "2"
-            },
-            {
-                "name": "UNDEFINED_BIT_1",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "1"
+                "type": "uint",
+                "bits": "1..7"
             },
             {
                 "name": "ADC_CONNECTED",
@@ -1097,25 +754,11 @@
         "size": 8,
         "fields": [
             {
-                "name": "UNDEFINED_BIT_7",
+                "name": "UNDEFINED_BITS",
                 "description": "Undefined in the specification",
                 "notes": "",
-                "type": "bool",
-                "bits": "7"
-            },
-            {
-                "name": "UNDEFINED_BIT_6",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "6"
-            },
-            {
-                "name": "UNDEFINED_BIT_5",
-                "description": "Undefined in the specification",
-                "notes": "",
-                "type": "bool",
-                "bits": "5"
+                "type": "uint",
+                "bits": "5..7"
             },
             {
                 "name": "LOCK_GATEWAY",

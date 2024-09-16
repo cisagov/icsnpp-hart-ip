@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 import HART_IP_UNIVERSAL_COMMANDS;
 import HART_IP_ENUM;
 import HART_IP_CONVERSION;
