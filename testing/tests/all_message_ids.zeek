@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 # @TEST-EXEC: touch hart_ip_common_commands.log hart_ip_direct_pdu_command.log hart_ip_general.log hart_ip_session_record.log
 # @TEST-EXEC: zeek -C -r ${TRACES}/hart-ip_all_messageIDs.pcapng ${PACKAGE} %INPUT
 # Keep only non-random fields

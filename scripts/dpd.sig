@@ -1,4 +1,4 @@
-# Copyright (c) 2023 by Battelle Energy Alliance
+# Copyright (c) 2024 by Battelle Energy Alliance
 
 # The specific version of HART-IP used to create this parser
 # First byte: 0x02 according to spec, 0x01 according to our test data

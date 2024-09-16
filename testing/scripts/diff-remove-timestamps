@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 #
 # Replace anything which looks like timestamps with XXXs (including the #start/end markers in logs).
 

@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP_COMMON_COMMANDS;
 
 export {
@@ -57,12 +58,7 @@ export {
         read_device_variable_information_response_device_variable_family                                                : string &log &optional;
         read_device_variable_information_response_acquisition_period                                                    : string &log &optional;
         read_device_variable_information_response_device_variable_properties_is_simulated                               : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_6                            : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_5                            : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_4                            : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_3                            : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_2                            : bool &log &optional;
-        read_device_variable_information_response_device_variable_properties_undefined_bit_1                            : bool &log &optional;
+        read_device_variable_information_response_device_variable_properties_undefined_bits_1_6                         : count &log &optional;
         read_device_variable_information_response_device_variable_properties_is_input                                   : bool &log &optional;
         write_device_variable_damping_value_device_variable_code                                                        : count &log &optional;
         write_device_variable_damping_value_device_variable_damping_value                                               : double &log &optional;
@@ -115,12 +111,7 @@ export {
         read_analog_channel_information_response_analog_channel_lower_range_value                                       : double &log &optional;
         read_analog_channel_information_response_analog_channel_damping_value                                           : double &log &optional;
         read_analog_channel_information_response_analog_channel_flags_is_simulated                                      : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_6                                   : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_5                                   : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_4                                   : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_3                                   : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_2                                   : bool &log &optional;
-        read_analog_channel_information_response_analog_channel_flags_undefined_bit_1                                   : bool &log &optional;
+        read_analog_channel_information_response_analog_channel_flags_undefined_bits_1_6                                : count &log &optional;
         read_analog_channel_information_response_analog_channel_flags_is_input                                          : bool &log &optional;
         write_analog_channel_additional_damping_value_analog_channel_number_code                                        : count &log &optional;
         write_analog_channel_additional_damping_value_analog_channel_damping_value                                      : double &log &optional;
@@ -168,8 +159,7 @@ export {
         find_device_response_number_preambles_slave_master                                                              : count &log &optional;
         find_device_response_last_device_variable_this                                                                  : count &log &optional;
         find_device_response_configuration_change_counter                                                               : count &log &optional;
-        find_device_response_extended_field_device_status_undefined_bit_7                                               : bool &log &optional;
-        find_device_response_extended_field_device_status_undefined_bit_6                                               : bool &log &optional;
+        find_device_response_extended_field_device_status_undefined_bits                                                : count &log &optional;
         find_device_response_extended_field_device_status_function_check                                                : bool &log &optional;
         find_device_response_extended_field_device_status_out_of_specification                                          : bool &log &optional;
         find_device_response_extended_field_device_status_failure                                                       : bool &log &optional;
@@ -209,8 +199,7 @@ export {
         poll_sub_device_response_number_preambles_slave_master                                                          : count &log &optional;
         poll_sub_device_response_last_device_variable_this                                                              : count &log &optional;
         poll_sub_device_response_configuration_change_counter                                                           : count &log &optional;
-        poll_sub_device_response_extended_field_device_status_undefined_bit_7                                           : bool &log &optional;
-        poll_sub_device_response_extended_field_device_status_undefined_bit_6                                           : bool &log &optional;
+        poll_sub_device_response_extended_field_device_status_undefined_bits                                            : count &log &optional;
         poll_sub_device_response_extended_field_device_status_function_check                                            : bool &log &optional;
         poll_sub_device_response_extended_field_device_status_out_of_specification                                      : bool &log &optional;
         poll_sub_device_response_extended_field_device_status_failure                                                   : bool &log &optional;
@@ -220,9 +209,7 @@ export {
         poll_sub_device_response_manufacturer_identification_code                                                       : string &log &optional;
         poll_sub_device_response_private_label_distributor_code                                                         : string &log &optional;
         poll_sub_device_response_device_profile                                                                         : string &log &optional;
-        read_lock_device_state_response_lock_status_undefined_bit_7                                                     : bool &log &optional;
-        read_lock_device_state_response_lock_status_undefined_bit_6                                                     : bool &log &optional;
-        read_lock_device_state_response_lock_status_undefined_bit_5                                                     : bool &log &optional;
+        read_lock_device_state_response_lock_status_undefined_bits                                                      : count &log &optional;
         read_lock_device_state_response_lock_status_lock_gateway                                                        : bool &log &optional;
         read_lock_device_state_response_lock_status_configuration_locked                                                : bool &log &optional;
         read_lock_device_state_response_lock_status_lock_primary                                                        : bool &log &optional;

@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP_COMMON_COMMANDS;
 
 import spicy;
@@ -236,14 +237,9 @@ type ReadDeviceVariableInformationResponse = unit (parentLinkId : string) {
     deviceVariableFamily                             : uint8 &convert=HART_IP_ENUM::DeviceVariableFamilyCode($$);
     acquisitionPeriod                                : bytes &size=4 &convert=HART_IP_CONVERSION::timeConversion($$);
     deviceVariableProperties                         : bitfield(8) {
-                                                           IS_SIMULATED     : 7 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_6  : 6 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_5  : 5 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_4  : 4 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_3  : 3 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_2  : 2 &convert=cast<bool>($$);
-                                                           UNDEFINED_BIT_1  : 1 &convert=cast<bool>($$);
-                                                           IS_INPUT         : 0 &convert=cast<bool>($$);
+                                                           IS_SIMULATED         : 7 &convert=cast<bool>($$);
+                                                           UNDEFINED_BITS_1_6   : 1..6;
+                                                           IS_INPUT             : 0 &convert=cast<bool>($$);
                                                        };
 };
 
@@ -438,14 +434,9 @@ type ReadAnalogChannelInformationResponse = unit (parentLinkId : string) {
     analogChannelLowerRangeValue                         : real &type=spicy::RealType::IEEE754_Single;
     analogChannelDampingValue                            : real &type=spicy::RealType::IEEE754_Single;
     analogChannelFlags                                   : bitfield(8) {
-                                                               IS_SIMULATED     : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6  : 6 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_5  : 5 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_4  : 4 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_3  : 3 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_2  : 2 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_1  : 1 &convert=cast<bool>($$);
-                                                               IS_INPUT         : 0 &convert=cast<bool>($$);
+                                                               IS_SIMULATED         : 7 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS_1_6   : 1..6;
+                                                               IS_INPUT             : 0 &convert=cast<bool>($$);
                                                            };
 };
 
@@ -611,8 +602,7 @@ type FindDeviceResponse = unit (parentLinkId : string) {
     lastDeviceVariableThis                               : uint8;
     configurationChangeCounter                           : uint16;
     extendedFieldDeviceStatus                            : bitfield(8) {
-                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS           : 6..7;
                                                                FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                                                OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                                                FAILURE                  : 3 &convert=cast<bool>($$);
@@ -707,8 +697,7 @@ type PollSubDeviceResponse = unit (parentLinkId : string) {
     lastDeviceVariableThis                               : uint8;
     configurationChangeCounter                           : uint16;
     extendedFieldDeviceStatus                            : bitfield(8) {
-                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS           : 6..7;
                                                                FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                                                OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                                                FAILURE                  : 3 &convert=cast<bool>($$);
@@ -736,9 +725,7 @@ type ReadLockDeviceStateResponse = unit (parentLinkId : string) {
         self.commandNumberLinkID = parentLinkId;
     }
     lockStatus       : bitfield(8) {
-                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
-                           UNDEFINED_BIT_5          : 5 &convert=cast<bool>($$);
+                           UNDEFINED_BITS           : 5..7;
                            LOCK_GATEWAY             : 4 &convert=cast<bool>($$);
                            CONFIGURATION_LOCKED     : 3 &convert=cast<bool>($$);
                            LOCK_PRIMARY             : 2 &convert=cast<bool>($$);

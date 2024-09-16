@@ -1,10 +1,10 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 # Development Machine Files
 .*.swp
 *~
 *.bak
 *.DS_Store
 .~lock.*#
-#.devcontainer/
 
 # Parsnip/Zeek Output Files
 *.svg

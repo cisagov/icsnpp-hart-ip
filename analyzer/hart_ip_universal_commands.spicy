@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP_UNIVERSAL_COMMANDS;
 
 import spicy;
@@ -52,8 +53,7 @@ type ReadUniqueIdentifierResponse = unit (parentLinkId : string) {
     lastDeviceVariableThis                               : uint8;
     configurationChangeCounter                           : uint16;
     extendedFieldDeviceStatus                            : bitfield(8) {
-                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS           : 6..7;
                                                                FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                                                OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                                                FAILURE                  : 3 &convert=cast<bool>($$);
@@ -218,8 +218,7 @@ type ReadDeviceVariableResponse = unit (byteCount : uint8, parentLinkId : string
         self.commandNumberLinkID = parentLinkId;
     }
     extendedFieldDeviceStatus        : bitfield(8) {
-                                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS           : 6..7;
                                            FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                            OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                            FAILURE                  : 3 &convert=cast<bool>($$);
@@ -383,8 +382,7 @@ type ReadUniqueIdentifierTagResponse = unit (parentLinkId : string) {
     lastDeviceVariableThis                               : uint8;
     configurationChangeCounter                           : uint16;
     extendedFieldDeviceStatus                            : bitfield(8) {
-                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS           : 6..7;
                                                                FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                                                OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                                                FAILURE                  : 3 &convert=cast<bool>($$);
@@ -487,13 +485,7 @@ type ReadDeviceInformationResponse = unit (parentLinkId : string) {
     # Reserved. Must be set to 250, Not Used.
     _250                         : uint8;
     pVAnalogChannelFlags         : bitfield(8) {
-                                       UNDEFINED_7      : 7 &convert=cast<bool>($$);
-                                       UNDEFINED_6      : 6 &convert=cast<bool>($$);
-                                       UNDEFINED_5      : 5 &convert=cast<bool>($$);
-                                       UNDEFINED_4      : 4 &convert=cast<bool>($$);
-                                       UNDEFINED_3      : 3 &convert=cast<bool>($$);
-                                       UNDEFINED_2      : 2 &convert=cast<bool>($$);
-                                       UNDEFINED_1      : 1 &convert=cast<bool>($$);
+                                       UNDEFINED_BITS   : 1..7;
                                        ANALOG_CHANNEL   : 0 &convert=cast<bool>($$);
                                    };
 };
@@ -625,8 +617,7 @@ type ReadUniqueIdentifierLongTagResponse = unit (parentLinkId : string) {
     lastDeviceVariableThis                               : uint8;
     configurationChangeCounter                           : uint16;
     extendedFieldDeviceStatus                            : bitfield(8) {
-                                                               UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                                               UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                                               UNDEFINED_BITS           : 6..7;
                                                                FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                                                OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                                                FAILURE                  : 3 &convert=cast<bool>($$);
@@ -673,8 +664,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
     deviceSpecificStatus_0           : bytes &size=6;
     # refer to Common Table 17, Extended Field Device Status Information
     extendedFieldDeviceStatus        : bitfield(8) {
-                                           UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS           : 6..7;
                                            FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                            OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                            FAILURE                  : 3 &convert=cast<bool>($$);
@@ -697,9 +687,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                        };
     # refer to Common Table 30
     standardizedStatus1              : bitfield(8) {
-                                           UNDEFINED_7                                  : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_6                                  : 6 &convert=cast<bool>($$);
-                                           UNDEFINED_5                                  : 5 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS                               : 5..7;
                                            RESERVED                                     : 4 &convert=cast<bool>($$);
                                            BATTERY_OR_POWER_SUPPLY_NEEDS_MAINTENANCE    : 3 &convert=cast<bool>($$);
                                            EVENT_NOTIFICATION_OVERFLOW                  : 2 &convert=cast<bool>($$);
@@ -708,10 +696,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                        } if (byteCount >= 10);
     # refer to Common Table 27
     analogChannelSaturated           : bitfield(8) {
-                                           UNDEFINED_7          : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_6          : 6 &convert=cast<bool>($$);
-                                           UNDEFINED_5          : 5 &convert=cast<bool>($$);
-                                           UNDEFINED_4          : 4 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS       : 4..7;
                                            QUINARY_ANALOG       : 3 &convert=cast<bool>($$);
                                            QUATERNARY_ANALOG    : 2 &convert=cast<bool>($$);
                                            TERTIARY_ANALOG      : 1 &convert=cast<bool>($$);
@@ -719,9 +704,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                        } if (byteCount >= 11);
     # refer to Common Table 31
     standardizedStatus2              : bitfield(8) {
-                                           UNDEFINED_7                      : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_6                      : 6 &convert=cast<bool>($$);
-                                           UNDEFINED_5                      : 5 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS                   : 5..7;
                                            STALE_DATA_NOTICE                : 4 &convert=cast<bool>($$);
                                            SUB_DEVICE_WITH_DUPLICATE_ID     : 3 &convert=cast<bool>($$);
                                            SUB_DEVICE_MISMATCH              : 2 &convert=cast<bool>($$);
@@ -730,9 +713,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                        } if (byteCount >= 12);
     # refer to Common Table 32
     standardizedStatus3              : bitfield(8) {
-                                           UNDEFINED_7                  : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_6                  : 6 &convert=cast<bool>($$);
-                                           UNDEFINED_5                  : 5 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS               : 5..7;
                                            RADIO_FAILURE                : 4 &convert=cast<bool>($$);
                                            BLOCK_TRANSFER_PENDING       : 3 &convert=cast<bool>($$);
                                            BANDWITH_ALLOCATION_PENDING  : 2 &convert=cast<bool>($$);
@@ -741,13 +722,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                        } if (byteCount >= 13);
     # refer to Common Table 28
     analogChannel                    : bitfield(8) {
-                                           UNDEFINED_7      : 7 &convert=cast<bool>($$);
-                                           UNDEFINED_6      : 6 &convert=cast<bool>($$);
-                                           UNDEFINED_5      : 5 &convert=cast<bool>($$);
-                                           UNDEFINED_4      : 4 &convert=cast<bool>($$);
-                                           UNDEFINED_3      : 3 &convert=cast<bool>($$);
-                                           UNDEFINED_2      : 2 &convert=cast<bool>($$);
-                                           UNDEFINED_1      : 1 &convert=cast<bool>($$);
+                                           UNDEFINED_BITS   : 1..7;
                                            ANALOG_CHANNEL   : 0 &convert=cast<bool>($$);
                                        } if (byteCount >= 14);
     # refer to appropriate device-specific document for detailed information

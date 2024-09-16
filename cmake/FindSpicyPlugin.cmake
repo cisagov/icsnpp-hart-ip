@@ -1,4 +1,5 @@
 # Warning! This is an automatically generated file!
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 #
 # Find the Spicy plugin to get access to the infrastructure it provides.
 #

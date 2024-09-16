@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 module HART_IP;
 
 import spicy;
@@ -190,8 +191,7 @@ type DirectPDU = unit (messageType : HART_IP_ENUM::MessageType, byteCount : uint
                                        PRIMARY_VARIABLE_OUT_OF_LIMITS       : 0 &convert=cast<bool>($$);
                                    };
     extendedStatus               : bitfield(8) {
-                                       UNDEFINED_BIT_7          : 7 &convert=cast<bool>($$);
-                                       UNDEFINED_BIT_6          : 6 &convert=cast<bool>($$);
+                                       UNDEFINED_BITS           : 6..7;
                                        FUNCTION_CHECK           : 5 &convert=cast<bool>($$);
                                        OUT_OF_SPECIFICATION     : 4 &convert=cast<bool>($$);
                                        FAILURE                  : 3 &convert=cast<bool>($$);
@@ -320,19 +320,7 @@ type ReadAuditLog = unit (messageType : HART_IP_ENUM::MessageType) {
     # time_t is the number of seconds since 1970-01 00:00:00
     lastSecurityChange       : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
     serverStatus             : bitfield(16) {
-                                   UNDEFINED_BIT_15                             : 15 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_14                             : 14 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_13                             : 13 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_12                             : 12 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_11                             : 11 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_10                             : 10 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_9                              : 9 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_8                              : 8 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_7                              : 7 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_6                              : 6 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_5                              : 5 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_4                              : 4 &convert=cast<bool>($$);
-                                   UNDEFINED_BIT_3                              : 3 &convert=cast<bool>($$);
+                                   UNDEFINED_BITS                               : 3..15;
                                    INSECURE_SYSLOG_CONNECTION                   : 2 &convert=cast<bool>($$);
                                    SYSLOG_SERVER_LOCATED_BUT_CONNECTION_FAILED  : 1 &convert=cast<bool>($$);
                                    UNABLE_TO_LOCATE_SYSLOG_SERVER               : 0 &convert=cast<bool>($$);
@@ -356,17 +344,7 @@ type SessionLogRecord = unit (listParentLinkId : string) {
     # time_t is the number of seconds since 1970-01 00:00:00
     disconnectTime                       : uint64;
     sessionStatusSummary                 : bitfield(16) {
-                                               UNDEFINED_BIT_15             : 15 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_14             : 14 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_13             : 13 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_12             : 12 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_11             : 11 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_10             : 10 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_9              : 9 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_8              : 8 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_7              : 7 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_6              : 6 &convert=cast<bool>($$);
-                                               UNDEFINED_BIT_5              : 5 &convert=cast<bool>($$);
+                                               UNDEFINED_BITS               : 5..15;
                                                INSECURE_SESSION             : 4 &convert=cast<bool>($$);
                                                SESSION_TIMEOUT              : 3 &convert=cast<bool>($$);
                                                ABORTED_SESSION              : 2 &convert=cast<bool>($$);
