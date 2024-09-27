@@ -45,7 +45,17 @@ redef record connection += {
     hart_ip_universal_commands_log: HART_IP_UNIVERSAL_COMMANDS::universal_commands_log &optional;
 };
 
-#Put protocol detection information here
+# Define tcp ports
+const tcp_ports = {
+    5094/tcp,
+};
+
+# Define udp ports
+const udp_ports = {
+    5094/udp,
+};
+
+# Initialization Function
 event zeek_init() &priority=5 {
     # initialize logging streams for all hart_ip logs
     Log::create_stream(HART_IP::LOG_GENERAL_LOG,
@@ -73,6 +83,8 @@ event zeek_init() &priority=5 {
     $ev=log_universal_commands_log,
     $path="hart_ip_universal_commands",
     $policy=log_policy_universal_commands_log]);
+    Analyzer::register_for_ports(Analyzer::HART_IP_TCP, tcp_ports);
+    Analyzer::register_for_ports(Analyzer::HART_IP_UDP, udp_ports);
 }
 
 function emit_hart_ip_general_log(c: connection) {
