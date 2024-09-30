@@ -83,8 +83,8 @@ event zeek_init() &priority=5 {
     $ev=log_universal_commands_log,
     $path="hart_ip_universal_commands",
     $policy=log_policy_universal_commands_log]);
-    Analyzer::register_for_ports(Analyzer::HART_IP_TCP, tcp_ports);
-    Analyzer::register_for_ports(Analyzer::HART_IP_UDP, udp_ports);
+    Analyzer::register_for_ports(Analyzer::ANALYZER_SPICY_HART_IP_TCP, tcp_ports);
+    Analyzer::register_for_ports(Analyzer::ANALYZER_SPICY_HART_IP_UDP, udp_ports);
 }
 
 function emit_hart_ip_general_log(c: connection) {
