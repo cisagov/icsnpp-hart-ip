@@ -8,12 +8,10 @@ import HART_IP_CONVERSION;
 import Zeek_HART_IP;
 
 protocol analyzer spicy::HART_IP_TCP over TCP:
-    parse with HART_IP::Messages,
-    ports {5094/tcp};
+    parse with HART_IP::Messages;
 
 protocol analyzer spicy::HART_IP_UDP over UDP:
-    parse with HART_IP::Messages,
-    ports {5094/udp};
+    parse with HART_IP::Messages;
 
 export HART_IP::Messages;
 export HART_IP::Message;
