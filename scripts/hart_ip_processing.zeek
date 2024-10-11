@@ -7,7 +7,7 @@ hook set_session_general_log(c: connection) {
             $ts=network_time(),
             $uid=c$uid,
             $id=c$id,
-            $proto="hart_ip");
+            $proto=get_conn_transport_proto(c$id));
 }
 
 hook set_session_direct_pdu_command_log(c: connection) {
@@ -16,7 +16,7 @@ hook set_session_direct_pdu_command_log(c: connection) {
             $ts=network_time(),
             $uid=c$uid,
             $id=c$id,
-            $proto="hart_ip");
+            $proto=get_conn_transport_proto(c$id));
 }
 
 hook set_session_session_log_record_log(c: connection) {
@@ -25,7 +25,7 @@ hook set_session_session_log_record_log(c: connection) {
             $ts=network_time(),
             $uid=c$uid,
             $id=c$id,
-            $proto="hart_ip");
+            $proto=get_conn_transport_proto(c$id));
 }
 
 event HART_IP::MessageEvt (c: connection, is_orig: bool, message: HART_IP::Message) {

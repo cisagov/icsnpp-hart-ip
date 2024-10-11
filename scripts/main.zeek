@@ -1,3 +1,4 @@
+# Copyright 2024, Battelle Energy Alliance, LLC, ALL RIGHTS RESERVED
 ##! main.zeek
 ##!
 ##! ICSNPP-HART_IP
@@ -37,7 +38,6 @@ export {
 
 # redefine connection record to contain one of each of the hart_ip records
 redef record connection += {
-    hart_ip_proto: string &optional;
     hart_ip_general_log: general_log &optional;
     hart_ip_direct_pdu_command_log: direct_pdu_command_log &optional;
     hart_ip_session_log_record_log: session_log_record_log &optional;
@@ -90,8 +90,6 @@ event zeek_init() &priority=5 {
 function emit_hart_ip_general_log(c: connection) {
     if (! c?$hart_ip_general_log )
         return;
-    if ( c?$hart_ip_proto )
-        c$hart_ip_general_log$proto = c$hart_ip_proto;
     Log::write(HART_IP::LOG_GENERAL_LOG, c$hart_ip_general_log);
     delete c$hart_ip_general_log;
 }
@@ -99,8 +97,6 @@ function emit_hart_ip_general_log(c: connection) {
 function emit_hart_ip_direct_pdu_command_log(c: connection) {
     if (! c?$hart_ip_direct_pdu_command_log )
         return;
-    if ( c?$hart_ip_proto )
-        c$hart_ip_direct_pdu_command_log$proto = c$hart_ip_proto;
     Log::write(HART_IP::LOG_DIRECT_PDU_COMMAND_LOG, c$hart_ip_direct_pdu_command_log);
     delete c$hart_ip_direct_pdu_command_log;
 }
@@ -108,8 +104,6 @@ function emit_hart_ip_direct_pdu_command_log(c: connection) {
 function emit_hart_ip_session_log_record_log(c: connection) {
     if (! c?$hart_ip_session_log_record_log )
         return;
-    if ( c?$hart_ip_proto )
-        c$hart_ip_session_log_record_log$proto = c$hart_ip_proto;
     Log::write(HART_IP::LOG_SESSION_LOG_RECORD_LOG, c$hart_ip_session_log_record_log);
     delete c$hart_ip_session_log_record_log;
 }
@@ -117,8 +111,6 @@ function emit_hart_ip_session_log_record_log(c: connection) {
 function emit_hart_ip_common_commands_log(c: connection) {
     if (! c?$hart_ip_common_commands_log )
         return;
-    if ( c?$hart_ip_proto )
-        c$hart_ip_common_commands_log$proto = c$hart_ip_proto;
     Log::write(HART_IP::LOG_COMMON_COMMANDS_LOG, c$hart_ip_common_commands_log);
     delete c$hart_ip_common_commands_log;
 }
@@ -126,8 +118,6 @@ function emit_hart_ip_common_commands_log(c: connection) {
 function emit_hart_ip_universal_commands_log(c: connection) {
     if (! c?$hart_ip_universal_commands_log )
         return;
-    if ( c?$hart_ip_proto )
-        c$hart_ip_universal_commands_log$proto = c$hart_ip_proto;
     Log::write(HART_IP::LOG_UNIVERSAL_COMMANDS_LOG, c$hart_ip_universal_commands_log);
     delete c$hart_ip_universal_commands_log;
 }

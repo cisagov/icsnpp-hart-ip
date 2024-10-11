@@ -6,7 +6,7 @@ export {
         ts                                                                                      : time &log;
         uid                                                                                     : string &log;
         id                                                                                      : conn_id &log;
-        proto                                                                                   : string &log;
+        proto                                                                                   : transport_proto &log;
         command_number_link_id                                                                  : string &log &optional;
         direct_pdu_command_link_id                                                              : string &log &optional;
         session_log_record_link_id                                                              : string &log &optional;
@@ -69,7 +69,7 @@ export {
         ts                                          : time &log;
         uid                                         : string &log;
         id                                          : conn_id &log;
-        proto                                       : string &log;
+        proto                                       : transport_proto &log;
         direct_pdu_command_link_id                  : string &log &optional;
         command_number_link_id                      : string &log &optional;
         direct_pdu_command_data_data                : vector of count &log &optional;
@@ -82,7 +82,7 @@ export {
         ts                                                                      : time &log;
         uid                                                                     : string &log;
         id                                                                      : conn_id &log;
-        proto                                                                   : string &log;
+        proto                                                                   : transport_proto &log;
         session_log_record_link_id                                              : string &log &optional;
         session_log_record_client_i_pv4_address                                 : addr &log &optional;
         session_log_record_client_i_pv6_address                                 : addr &log &optional;
