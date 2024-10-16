@@ -7,7 +7,7 @@ hook set_session_universal_commands_log(c: connection) {
             $ts=network_time(),
             $uid=c$uid,
             $id=c$id,
-            $proto="hart_ip");
+            $proto=get_conn_transport_proto(c$id));
 }
 
 event HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponseEvt (c: connection, is_orig: bool, readuniqueidentifierresponse: HART_IP_UNIVERSAL_COMMANDS::ReadUniqueIdentifierResponse) {

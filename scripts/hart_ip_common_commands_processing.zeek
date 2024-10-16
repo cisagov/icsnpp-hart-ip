@@ -7,7 +7,7 @@ hook set_session_common_commands_log(c: connection) {
             $ts=network_time(),
             $uid=c$uid,
             $id=c$id,
-            $proto="hart_ip");
+            $proto=get_conn_transport_proto(c$id));
 }
 
 event HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequestEvt (c: connection, is_orig: bool, readdevicevariablesrequest: HART_IP_COMMON_COMMANDS::ReadDeviceVariablesRequest) {

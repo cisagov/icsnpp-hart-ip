@@ -6,7 +6,7 @@ export {
         ts                                                                                                                      : time &log;
         uid                                                                                                                     : string &log;
         id                                                                                                                      : conn_id &log;
-        proto                                                                                                                   : string &log;
+        proto                                                                                                                   : transport_proto &log;
         command_number_link_id                                                                                                  : string &log &optional;
         read_unique_identifier_response__254                                                                                    : count &log &optional;
         read_unique_identifier_response_expanded_device_type                                                                    : string &log &optional;
