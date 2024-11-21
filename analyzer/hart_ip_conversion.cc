@@ -25,7 +25,7 @@ namespace HART_IP_CONVERSION
     std::string dateConversion(const hilti::rt::Bytes &data)    {
         if(data.size() < 3)
         {
-            printf("[error] Date Type Improper Byte Length (%li), must be 3\n", data.size());
+            printf("[error] Date Type Improper Byte Length (%li), must be 3\n", (long) data.size());
             return "";
         }
 
@@ -47,7 +47,7 @@ namespace HART_IP_CONVERSION
         const unsigned int MINUTES_PER_HOUR = 60;
         if(data.size() < 4)
         {
-            printf("[error] Time Type Improper Byte Length (%li), must be 4\n", data.size());
+            printf("[error] Time Type Improper Byte Length (%li), must be 4\n", (long) data.size());
             return "";
         }
         const char *char_ptr = (const char *) data.data();
@@ -105,7 +105,7 @@ namespace HART_IP_CONVERSION
             
         if(0 != data.size() % INPUT_CHARS)
         {
-            printf("[error] Packed Type Improper Byte Length (%li), must be divisible by %i\n", data.size(), INPUT_CHARS);
+            printf("[error] Packed Type Improper Byte Length (%li), must be divisible by %i\n", (long) data.size(), INPUT_CHARS);
             return "";
         }
         std::string outputString;
@@ -150,3 +150,4 @@ namespace HART_IP_CONVERSION
     }
 
 }
+
