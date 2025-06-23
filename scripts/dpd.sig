@@ -6,7 +6,6 @@
 # Third byte: 0x00 - 0x05
 # Fourth byte: 0x00, 0x02, 0x05, 0x06, 0x08, 0x09, 0x0e, 0x0f, 0x10, 0x1e
 
-
 signature dpd_hart_ip {
     # Pattern breakdown:
     # 1. Session initiate: [\x01\x02][\x00-\x02\x0f]\x00[\x00\x05\x06\x08\x09\x0e\x0f\x10\x1e]...
