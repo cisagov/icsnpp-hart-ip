@@ -14,7 +14,11 @@
 
 signature dpd_sip_header {
     # Match either a SIP request line (method SP ...) or a SIP response line (SIP/2.0 ...)
-    payload/^((INVITE|REGISTER|OPTIONS|ACK|BYE|CANCEL|SUBSCRIBE|NOTIFY|PUBLISH|MESSAGE|INFO|PRACK|UPDATE|REFER) [^\r\n]+|SIP\/2\.0)/
+    # The SIP response line is of the form "SIP/2.0 <status-code> <reason-phrase>\r\n".
+    # Require a three–digit status code followed by a space in order to avoid
+    # accidental matches of binary protocols whose first bytes might coincide
+    # with the ASCII string "SIP/2.0".
+    payload/^((INVITE|REGISTER|OPTIONS|ACK|BYE|CANCEL|SUBSCRIBE|NOTIFY|PUBLISH|MESSAGE|INFO|PRACK|UPDATE|REFER) [^\r\n]+|SIP\/2\.0 [1-6][0-9]{2} )/
 }
 
 signature dpd_hart_ip {
