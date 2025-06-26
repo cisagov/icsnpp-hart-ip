@@ -14,11 +14,11 @@ This parser is a minimal release. While many commands are parsed, not all of the
 
 ### Package Manager
 
-This script is available as a package for [Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/index.html). It requires [Spicy](https://docs.zeek.org/projects/spicy/en/latest/) and the [Zeek Spicy plugin](https://docs.zeek.org/projects/spicy/en/latest/zeek.html).
+This script is available as a package for [Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/index.html). Zeek includes Spicy support by default as of [v6.0.0](https://github.com/zeek/zeek/releases/tag/v6.0.0).
 
 ```bash
-$ zkg refresh
-$ zkg install icsnpp-hart-ip
+zkg refresh
+zkg install icsnpp-hart-ip
 ```
 
 If this package is installed from ZKG it will be added to the available plugins. This can be tested by running `zeek -NN | grep ANALYZER_SPICY_HART_IP`. If installed correctly you will see:
