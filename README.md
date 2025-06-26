@@ -41,9 +41,6 @@ mkdir build && cd build && cmake .. && make
 From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
 Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
 
-From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
-Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
-
 ## ICSNPP Packages
 
 All ICSNPP Packages:
