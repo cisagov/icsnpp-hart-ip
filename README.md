@@ -22,6 +22,7 @@ zkg install icsnpp-hart-ip
 ```
 
 If this package is installed from ZKG it will be added to the available plugins. This can be tested by running `zeek -NN | grep ANALYZER_SPICY_HART_IP`. If installed correctly you will see:
+
 ```bash
 [Analyzer] spicy_HART_IP_TCP (ANALYZER_SPICY_HART_IP_TCP, enabled)
 [Analyzer] spicy_HART_IP_UDP (ANALYZER_SPICY_HART_IP_UDP, enabled)
@@ -36,6 +37,9 @@ git clone https://github.com/cisagov/icsnpp-hart-ip.git
 cd icsnpp-hart-ip
 mkdir build && cd build && cmake .. && make
 ```
+
+From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
+Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
 
 From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
 Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
