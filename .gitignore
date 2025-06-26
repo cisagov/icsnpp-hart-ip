@@ -17,3 +17,6 @@ testing/.btest.failed.dat
 
 # Don't ignore baseline log files
 !testing/baseline/*/*.log
+
+# Build Files
+build/
