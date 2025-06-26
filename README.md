@@ -10,32 +10,35 @@ It is currently maintained by the FieldComm Group (https://www.fieldcommgroup.or
 
 This parser is a minimal release. While many commands are parsed, not all of them are currently implemented. Additional commands may be added based on community feedback.
 
-## Installation
+## Installation (via zkg)
 
-### Package Manager (Remote Repository)
-This script is available as a package for [Zeek Package Manger](https://docs.zeek.org/projects/package-manager/en/stable/index.html)
+### Package Manager
 
-```bash
-zkg refresh
-zkg install icsnpp-hart-ip
-```
-
-If ZKG is configured to load packages (see @load packages in quickstart guide), this script will automatically be loaded and ready to go.
-[ZKG Quickstart Guide](https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html)
-
-If users are not using site/local.zeek or another site installation of Zeek and want to run this script on a packet capture, they can add `icsnpp-hart-ip` to the command to run this script on the packet capture from a cloned version of this repository:
+This script is available as a package for [Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/index.html). It requires [Spicy](https://docs.zeek.org/projects/spicy/en/latest/) and the [Zeek Spicy plugin](https://docs.zeek.org/projects/spicy/en/latest/zeek.html).
 
 ```bash
-zeek -Cr <path_to_pcap> icsnpp-hart-ip
+$ zkg refresh
+$ zkg install icsnpp-hart-ip
 ```
 
-### Package Manager (Local Folder)
-To install from a local version of the repository, navigate to a clean locally cloned version of the repository and run the following commands:
+If this package is installed from ZKG it will be added to the available plugins. This can be tested by running `zeek -NN | grep ANALYZER_SPICY_HART_IP`. If installed correctly you will see:
+```bash
+[Analyzer] spicy_HART_IP_TCP (ANALYZER_SPICY_HART_IP_TCP, enabled)
+[Analyzer] spicy_HART_IP_UDP (ANALYZER_SPICY_HART_IP_UDP, enabled)
+```
+
+If you have ZKG configured to load packages (see `@load packages` in the [ZKG Quickstart Guide](https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html)), this plugin and scripts will automatically be loaded and ready to go.
+
+## Installation (via git clone)
 
 ```bash
-zkg install .
-zeek -Cr <path_to_pcap> local
+git clone https://github.com/cisagov/icsnpp-hart-ip.git
+cd icsnpp-hart-ip
+mkdir build && cd build && cmake .. && make
 ```
+
+From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
+Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
 
 ## ICSNPP Packages
 
