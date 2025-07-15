@@ -12,7 +12,7 @@ signature dpd_hart_ip {
 
 signature dpd_hart_ip_tcp {
   ip-proto == tcp
-    requires-signature dpd_hart_ip
+  requires-signature dpd_hart_ip
   enable "spicy_HART_IP_TCP"
 }
 
