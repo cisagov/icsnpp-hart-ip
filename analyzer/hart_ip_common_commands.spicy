@@ -919,7 +919,6 @@ type SetRealTimeClock = unit (messageType : HART_IP_ENUM::MessageType, parentLin
     timeSetCode      : uint8 &convert=HART_IP_ENUM::TimeSetCodes($$);
     date             : bytes &size=3 &convert=HART_IP_CONVERSION::dateConversion($$);
     timeOfDay        : bytes &size=4 &convert=HART_IP_CONVERSION::timeConversion($$);
-    #timestamp	     : unint64
     nullBytes        : uint16 if (messageType == HART_IP_ENUM::MessageType::REQUEST);
 };
 
