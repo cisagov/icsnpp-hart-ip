@@ -67,10 +67,10 @@ export {
         read_unit_tag_descriptor_date_response_unit_tag                                                                 : string &log &optional;
         read_unit_tag_descriptor_date_response_unit_descriptor                                                          : string &log &optional;
         read_unit_tag_descriptor_date_response_unit_date                                                                : string &log &optional;
-        write_unit_tag_descriptor_date_unit_tag                                                                         : string &log &optional;
+		write_unit_tag_descriptor_date_unit_tag                                                                         : string &log &optional;
         write_unit_tag_descriptor_date_unit_descriptor                                                                  : string &log &optional;
-        write_unit_tag_descriptor_date_unit_date                                                                        : string &log &optional;
-        write_number_of_response_preambles_number_of_preambles                                                          : count &log &optional;
+		write_unit_tag_descriptor_date_unit_date                                                                        : string &log &optional;
+		write_number_of_response_preambles_number_of_preambles                                                          : count &log &optional;
         read_analog_channel_and_percent_of_range_request_analog_channel_number_code                                     : count &log &optional;
         read_analog_channel_and_percent_of_range_response_analog_channel_number_code                                    : count &log &optional;
         read_analog_channel_and_percent_of_range_response_analog_channel_units_code                                     : string &log &optional;
@@ -260,6 +260,8 @@ export {
         set_real_time_clock_time_set_code                                                                               : string &log &optional;
         set_real_time_clock_date                                                                                        : string &log &optional;
         set_real_time_clock_time_of_day                                                                                 : string &log &optional;
+        #use information from set_real_time_clock_date & set_real_time_clock_time_of_day for new field set_real_time_clock_timestamp
+	    set_real_time_clock_timestamp											                                        : time &log &optional; 
         set_real_time_clock_null_bytes                                                                                  : count &log &optional;
     };
 

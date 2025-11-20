@@ -316,9 +316,9 @@ type ReadAuditLog = unit (messageType : HART_IP_ENUM::MessageType) {
     startRecord              : uint8;
     numberOfRecords          : uint8;
     # time_t is the number of seconds since 1970-01 00:00:00
-    powerUpTime              : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
-    # time_t is the number of seconds since 1970-01 00:00:00
-    lastSecurityChange       : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE);
+    powerUpTime              : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #&convert=cast<double>($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #uint64
+    # time_t is the number of seconds since 1970-01 00:00:00 
+    lastSecurityChange       : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #&convert=cast<double>($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #uint64
     serverStatus             : bitfield(16) {
                                    UNDEFINED_BITS                               : 3..15;
                                    INSECURE_SYSLOG_CONNECTION                   : 2 &convert=cast<bool>($$);
@@ -339,10 +339,10 @@ type SessionLogRecord = unit (listParentLinkId : string) {
     clientIPv6Address                    : addr &ipv6;
     clientPort                           : uint16;
     serverPort                           : uint16;
+    # time_t is the number of seconds since 1970-01 00:00:00 
+    connectTime                          : uint64; #&convert=cast<double>($$); #uint64
     # time_t is the number of seconds since 1970-01 00:00:00
-    connectTime                          : uint64;
-    # time_t is the number of seconds since 1970-01 00:00:00
-    disconnectTime                       : uint64;
+    disconnectTime                       : uint64; #&convert=cast<double>($$); #uint64
     sessionStatusSummary                 : bitfield(16) {
                                                UNDEFINED_BITS               : 5..15;
                                                INSECURE_SESSION             : 4 &convert=cast<bool>($$);
@@ -358,4 +358,4 @@ type SessionLogRecord = unit (listParentLinkId : string) {
     numResponsePDU                       : uint32;
 };
 
-# vim: ai si tabstop=4 shiftwidth=4 softtabstop=4 expandtab colorcolumn=101 syntax=spicy
+# vim: ai si tabstop=4 shiftwidth=4 softtabstop=4 expand tab colorcolumn=101 syntax=spicy

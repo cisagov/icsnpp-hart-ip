@@ -753,6 +753,14 @@ event HART_IP_COMMON_COMMANDS::SetRealTimeClockEvt (c: connection, is_orig: bool
     info_common_commands_log$set_real_time_clock_time_set_code = HART_IP_ENUM::TIME_SET_CODES[setrealtimeclock$timeSetCode];
     info_common_commands_log$set_real_time_clock_date = setrealtimeclock$date;
     info_common_commands_log$set_real_time_clock_time_of_day = setrealtimeclock$timeOfDay;
+    # Concatenate the date and time
+    local datetime_str = fmt("%s %s", setrealtimeclock$date, setrealtimeclock$timeOfDay);
+
+    # Parse the combined string to a Zeek time value (UNIX epoch)
+    # Format string must match input format exactly
+    local parsed_time: time = strptime("%B %d, %Y %H:%M:%S", datetime_str);
+
+    #info_common_commands_log$set_real_time_clock_timestamp = parsed_time;
     if (setrealtimeclock?$nullBytes){
         info_common_commands_log$set_real_time_clock_null_bytes = setrealtimeclock$nullBytes;
     }

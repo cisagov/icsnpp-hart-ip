@@ -56,8 +56,8 @@ export {
         direct_pdu_extended_status_maintenance_required                                         : bool &log &optional;
         read_audit_log_start_record                                                             : count &log &optional;
         read_audit_log_number_of_records                                                        : count &log &optional;
-        read_audit_log_power_up_time                                                            : count &log &optional;
-        read_audit_log_last_security_change                                                     : count &log &optional;
+        read_audit_log_power_up_time                                                            : time &log &optional; #changed from count to time
+        read_audit_log_last_security_change                                                     : time &log &optional; #changed from count to time
         read_audit_log_server_status_undefined_bits                                             : count &log &optional;
         read_audit_log_server_status_insecure_syslog_connection                                 : bool &log &optional;
         read_audit_log_server_status_syslog_server_located_but_connection_failed                : bool &log &optional;
@@ -88,8 +88,8 @@ export {
         session_log_record_client_i_pv6_address                                 : addr &log &optional;
         session_log_record_client_port                                          : count &log &optional;
         session_log_record_server_port                                          : count &log &optional;
-        session_log_record_connect_time                                         : count &log &optional;
-        session_log_record_disconnect_time                                      : count &log &optional;
+        session_log_record_connect_time                                         : time &log &optional; #changed from count to time
+        session_log_record_disconnect_time                                      : time &log &optional; #changed from count to time
         session_log_record_session_status_summary_undefined_bits                : count &log &optional;
         session_log_record_session_status_summary_insecure_session              : bool &log &optional;
         session_log_record_session_status_summary_session_timeout               : bool &log &optional;
