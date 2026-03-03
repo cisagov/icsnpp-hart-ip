@@ -16,7 +16,7 @@ public type Messages = unit {
 public type Message = unit {
     header           : HART_IP::Header;
     body             : HART_IP::Body(self.header.messageID, self.header.messageType.messageType, self.header.length - 8) if (self.header.messageType.messageType == HART_IP_ENUM::MessageType::REQUEST || self.header.messageType.messageType == HART_IP_ENUM::MessageType::RESPONSE);
-    # Not currently parsing the packet
+s    # Not currently parsing the packet, catch all if body isn't supported
     packetBytes      : (uint8)[(self.header.length - 8)] if (self.header.messageType.messageType != HART_IP_ENUM::MessageType::REQUEST && self.header.messageType.messageType != HART_IP_ENUM::MessageType::RESPONSE);
 };
 
@@ -28,7 +28,7 @@ type Header = unit {
                                messageType  : 0..3 &convert=HART_IP_ENUM::MessageType($$);
                            };
     messageID            : uint8 &convert=HART_IP_ENUM::MessageID($$);
-    # Technically Depends on messageID
+    # Technically, depends on messageID
     statusCode           : uint8 &convert=HART_IP_ENUM::StatusCode($$);
     sequenceNumber       : uint16;
     # This includes the length of the header
@@ -315,9 +315,9 @@ type ReadAuditLog = unit (messageType : HART_IP_ENUM::MessageType) {
     }
     startRecord              : uint8;
     numberOfRecords          : uint8;
-    # time_t is the number of seconds since 1970-01 00:00:00
+    # The number of seconds since 1970-01 00:00:00
     powerUpTime              : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #&convert=cast<double>($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #uint64
-    # time_t is the number of seconds since 1970-01 00:00:00 
+    # The number of seconds since 1970-01 00:00:00 
     lastSecurityChange       : uint64 if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #&convert=cast<double>($$) if (messageType == HART_IP_ENUM::MessageType::RESPONSE); #uint64
     serverStatus             : bitfield(16) {
                                    UNDEFINED_BITS                               : 3..15;
