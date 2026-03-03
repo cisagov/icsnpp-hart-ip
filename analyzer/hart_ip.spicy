@@ -339,9 +339,9 @@ type SessionLogRecord = unit (listParentLinkId : string) {
     clientPort                           : uint16;
     serverPort                           : uint16;
     # time_t is the number of seconds since 1970-01 00:00:00 
-    connectTime                          : uint64; #&convert=cast<double>($$); #uint64
+    connectTime                          : uint64; #&convert=cast<double>($$);
     # time_t is the number of seconds since 1970-01 00:00:00
-    disconnectTime                       : uint64; #&convert=cast<double>($$); #uint64
+    disconnectTime                       : uint64; #&convert=cast<double>($$);
     sessionStatusSummary                 : bitfield(16) {
                                                UNDEFINED_BITS               : 5..15;
                                                INSECURE_SESSION             : 4 &convert=cast<bool>($$);

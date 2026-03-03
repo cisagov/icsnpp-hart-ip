@@ -31,8 +31,8 @@ namespace HART_IP_CONVERSION
 
         const char *char_ptr = (const char *) data.data();
 	
-        unsigned char month = char_ptr[0];
-        unsigned char day = char_ptr[1];
+        unsigned char day = char_ptr[0];
+        unsigned char month = char_ptr[1];
         unsigned char shortYear = char_ptr[2];
         unsigned int longYear = 1900 + shortYear;
 
