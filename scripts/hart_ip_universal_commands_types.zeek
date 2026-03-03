@@ -172,9 +172,9 @@ export {
         read_unique_identifier_tag_response_device_profile                                                                      : string &log &optional;
         read_message_response_message                                                                                           : string &log &optional;
         read_tag_response_tag                                                                                                   : string &log &optional;
-		read_tag_response_descriptor                                                                                            : string &log &optional;
+        read_tag_response_descriptor                                                                                            : string &log &optional;
         read_tag_response_date_code                                                                                             : string &log &optional;
-		read_primary_variable_transducer_information_response_p_v_transducer_serial_number                                      : count &log &optional;
+        read_primary_variable_transducer_information_response_p_v_transducer_serial_number                                      : count &log &optional;
         read_primary_variable_transducer_information_response_p_v_transducer_limits_units                                       : string &log &optional;
         read_primary_variable_transducer_information_response_p_v_upper_transducer_limit                                        : double &log &optional;
         read_primary_variable_transducer_information_response_p_v_lower_transducer_limit                                        : double &log &optional;
@@ -192,8 +192,8 @@ export {
         read_final_assembly_number_response_final_assembly_number                                                               : count &log &optional;
         write_message_message_string                                                                                            : string &log &optional;
         write_tag_descriptor_date_tag                                                                                           : string &log &optional;
-        write_tag_descriptor_date_record_keeping_descriptor                                                                     : string &log &optional;  
-		write_tag_descriptor_date_date_code                                                                                     : string &log &optional;
+        write_tag_descriptor_date_record_keeping_descriptor                                                                     : string &log &optional;
+        write_tag_descriptor_date_date_code                                                                                     : string &log &optional;
         write_final_assembly_number_final_assembly_number                                                                       : count &log &optional;
         read_long_tag_response_long_tag                                                                                         : string &log &optional;
         read_unique_identifier_long_tag_request_long_tag                                                                        : string &log &optional;

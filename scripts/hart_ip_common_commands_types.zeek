@@ -67,9 +67,9 @@ export {
         read_unit_tag_descriptor_date_response_unit_tag                                                                 : string &log &optional;
         read_unit_tag_descriptor_date_response_unit_descriptor                                                          : string &log &optional;
         read_unit_tag_descriptor_date_response_unit_date                                                                : string &log &optional;
-		write_unit_tag_descriptor_date_unit_tag                                                                         : string &log &optional;
+        write_unit_tag_descriptor_date_unit_tag                                                                         : string &log &optional;
         write_unit_tag_descriptor_date_unit_descriptor                                                                  : string &log &optional;
-		write_unit_tag_descriptor_date_unit_date                                                                        : string &log &optional;
+        write_unit_tag_descriptor_date_unit_date                                                                        : string &log &optional;
 		write_number_of_response_preambles_number_of_preambles                                                          : count &log &optional;
         read_analog_channel_and_percent_of_range_request_analog_channel_number_code                                     : count &log &optional;
         read_analog_channel_and_percent_of_range_response_analog_channel_number_code                                    : count &log &optional;
