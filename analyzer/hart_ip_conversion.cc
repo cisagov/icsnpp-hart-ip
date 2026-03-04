@@ -39,6 +39,7 @@ namespace HART_IP_CONVERSION
 	// Month name lookup
 	// Lines from here to end of function are additions
 	// for converting to Month Day, Year format
+    // Default logging as Month (string) Day, Year
     	static const std::string months[] = {
         	"", "January", "February", "March", "April", "May", "June",
         	"July", "August", "September", "October", "November", "December"
@@ -54,6 +55,7 @@ namespace HART_IP_CONVERSION
 
 	return monthName + " " + std::to_string(day) + ", " + std::to_string(longYear);
 
+    // Remove the comments on lines 58-60 and comment out lines 43-56 to log as Month-Day-Year in integers
 	//return std::to_string(month) + "-" +
         //       std::to_string(day) + "-" +
         //       std::to_string(longYear);
