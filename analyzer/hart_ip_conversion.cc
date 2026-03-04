@@ -30,15 +30,35 @@ namespace HART_IP_CONVERSION
         }
 
         const char *char_ptr = (const char *) data.data();
-
+	
         unsigned char day = char_ptr[0];
         unsigned char month = char_ptr[1];
         unsigned char shortYear = char_ptr[2];
         unsigned int longYear = 1900 + shortYear;
 
-        return std::to_string(month) + "-" +
-               std::to_string(day) + "-" +
-               std::to_string(longYear);
+	// Month name lookup
+	// Lines from here to end of function are additions
+	// for converting to Month Day, Year format
+    // Default logging as Month (string) Day, Year
+    	static const std::string months[] = {
+        	"", "January", "February", "March", "April", "May", "June",
+        	"July", "August", "September", "October", "November", "December"
+    	};
+
+	std::string monthName = "";
+	if(month >= 1 && month <= 12) {
+		monthName = months[month];
+	}
+	else {
+		monthName = "InvalidMonth";
+	}
+
+	return monthName + " " + std::to_string(day) + ", " + std::to_string(longYear);
+
+    // Remove the comments on lines 58-60 and comment out lines 43-56 to log as Month-Day-Year in integers
+	//return std::to_string(month) + "-" +
+        //       std::to_string(day) + "-" +
+        //       std::to_string(longYear);
     }
 
     std::string timeConversion(const hilti::rt::Bytes &data)    {
