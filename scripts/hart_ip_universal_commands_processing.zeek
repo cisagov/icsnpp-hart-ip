@@ -590,7 +590,7 @@ event HART_IP_UNIVERSAL_COMMANDS::ReadAdditionalDeviceStatusEvt (c: connection, 
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_undefined_bits = readadditionaldevicestatus$packetContents$standardizedStatus3$UNDEFINED_BITS;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_radio_failure = readadditionaldevicestatus$packetContents$standardizedStatus3$RADIO_FAILURE;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_block_transfer_pending = readadditionaldevicestatus$packetContents$standardizedStatus3$BLOCK_TRANSFER_PENDING;
-            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_bandwith_allocation_pending = readadditionaldevicestatus$packetContents$standardizedStatus3$BANDWITH_ALLOCATION_PENDING;
+            info_universal_commands_log$read_additional_device_status_contents_standardized_status3_bandwidth_allocation_pending = readadditionaldevicestatus$packetContents$standardizedStatus3$BANDWIDTH_ALLOCATION_PENDING;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_resereved = readadditionaldevicestatus$packetContents$standardizedStatus3$RESEREVED;
             info_universal_commands_log$read_additional_device_status_contents_standardized_status3_capacity_denied = readadditionaldevicestatus$packetContents$standardizedStatus3$CAPACITY_DENIED;
         }

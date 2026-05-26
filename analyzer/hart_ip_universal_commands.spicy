@@ -716,7 +716,7 @@ type ReadAdditionalDeviceStatusContents = unit (byteCount : uint8) {
                                            UNDEFINED_BITS               : 5..7;
                                            RADIO_FAILURE                : 4 &convert=cast<bool>($$);
                                            BLOCK_TRANSFER_PENDING       : 3 &convert=cast<bool>($$);
-                                           BANDWITH_ALLOCATION_PENDING  : 2 &convert=cast<bool>($$);
+                                           BANDWIDTH_ALLOCATION_PENDING  : 2 &convert=cast<bool>($$);
                                            RESEREVED                    : 1 &convert=cast<bool>($$);
                                            CAPACITY_DENIED              : 0 &convert=cast<bool>($$);
                                        } if (byteCount >= 13);
