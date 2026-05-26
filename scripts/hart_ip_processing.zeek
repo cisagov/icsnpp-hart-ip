@@ -177,7 +177,7 @@ event HART_IP::SessionLogRecordEvt (c: connection, is_orig: bool, sessionlogreco
     info_session_log_record_log$session_log_record_session_status_summary_session_timeout = sessionlogrecord$sessionStatusSummary$SESSION_TIMEOUT;
     info_session_log_record_log$session_log_record_session_status_summary_aborted_session = sessionlogrecord$sessionStatusSummary$ABORTED_SESSION;
     info_session_log_record_log$session_log_record_session_status_summary_bad_session_initialization = sessionlogrecord$sessionStatusSummary$BAD_SESSION_INITIALIZATION;
-    info_session_log_record_log$session_log_record_session_status_summary_writes_occured = sessionlogrecord$sessionStatusSummary$WRITES_OCCURED;
+    info_session_log_record_log$session_log_record_session_status_summary_writes_occurred = sessionlogrecord$sessionStatusSummary$WRITES_OCCURRED;
     info_session_log_record_log$session_log_record_start_configuration_change_count = sessionlogrecord$startConfigurationChangeCount;
     info_session_log_record_log$session_log_record_end_configuration_change_count = sessionlogrecord$endConfigurationChangeCount;
     info_session_log_record_log$session_log_record_num_publish_pdu = sessionlogrecord$numPublishPDU;

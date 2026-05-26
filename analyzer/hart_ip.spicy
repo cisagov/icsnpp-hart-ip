@@ -349,7 +349,7 @@ type SessionLogRecord = unit (listParentLinkId : string) {
                                                SESSION_TIMEOUT              : 3 &convert=cast<bool>($$);
                                                ABORTED_SESSION              : 2 &convert=cast<bool>($$);
                                                BAD_SESSION_INITIALIZATION   : 1 &convert=cast<bool>($$);
-                                               WRITES_OCCURED               : 0 &convert=cast<bool>($$);
+                                               WRITES_OCCURRED               : 0 &convert=cast<bool>($$);
                                            };
     startConfigurationChangeCount        : uint16;
     endConfigurationChangeCount          : uint16;

@@ -685,7 +685,7 @@
                 "bits": "1"
             },
             {
-                "name": "WRITES_OCCURED",
+                "name": "WRITES_OCCURRED",
                 "description": "",
                 "notes": "",
                 "type": "bool",

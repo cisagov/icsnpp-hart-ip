@@ -95,7 +95,7 @@ export {
         session_log_record_session_status_summary_session_timeout               : bool &log &optional;
         session_log_record_session_status_summary_aborted_session               : bool &log &optional;
         session_log_record_session_status_summary_bad_session_initialization    : bool &log &optional;
-        session_log_record_session_status_summary_writes_occured                : bool &log &optional;
+        session_log_record_session_status_summary_writes_occurred                : bool &log &optional;
         session_log_record_start_configuration_change_count                     : count &log &optional;
         session_log_record_end_configuration_change_count                       : count &log &optional;
         session_log_record_num_publish_pdu                                      : count &log &optional;
