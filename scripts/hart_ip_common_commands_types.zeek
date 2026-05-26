@@ -260,6 +260,8 @@ export {
         set_real_time_clock_time_set_code                                                                               : string &log &optional;
         set_real_time_clock_date                                                                                        : string &log &optional;
         set_real_time_clock_time_of_day                                                                                 : string &log &optional;
+        ##< Uses information from set_real_time_clock_date & set_real_time_clock_time_of_day for new zeek time type field
+	    set_real_time_clock_timestamp											                                        : time &log &optional; 
         set_real_time_clock_null_bytes                                                                                  : count &log &optional;
     };
 

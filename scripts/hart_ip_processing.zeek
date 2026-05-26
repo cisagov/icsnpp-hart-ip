@@ -108,10 +108,10 @@ event HART_IP::MessageEvt (c: connection, is_orig: bool, message: HART_IP::Messa
             info_general_log$read_audit_log_start_record = message$body$readAuditLog$startRecord;
             info_general_log$read_audit_log_number_of_records = message$body$readAuditLog$numberOfRecords;
             if (message$body$readAuditLog?$powerUpTime){
-                info_general_log$read_audit_log_power_up_time = message$body$readAuditLog$powerUpTime;
+                info_general_log$read_audit_log_power_up_time = double_to_time(message$body$readAuditLog$powerUpTime);
             }
             if (message$body$readAuditLog?$lastSecurityChange){
-                info_general_log$read_audit_log_last_security_change = message$body$readAuditLog$lastSecurityChange;
+                info_general_log$read_audit_log_last_security_change = double_to_time(message$body$readAuditLog$lastSecurityChange);
             }
             if (message$body$readAuditLog?$serverStatus){
                 info_general_log$read_audit_log_server_status_undefined_bits = message$body$readAuditLog$serverStatus$UNDEFINED_BITS;
@@ -170,8 +170,8 @@ event HART_IP::SessionLogRecordEvt (c: connection, is_orig: bool, sessionlogreco
     info_session_log_record_log$session_log_record_client_i_pv6_address = sessionlogrecord$clientIPv6Address;
     info_session_log_record_log$session_log_record_client_port = sessionlogrecord$clientPort;
     info_session_log_record_log$session_log_record_server_port = sessionlogrecord$serverPort;
-    info_session_log_record_log$session_log_record_connect_time = sessionlogrecord$connectTime;
-    info_session_log_record_log$session_log_record_disconnect_time = sessionlogrecord$disconnectTime;
+    info_session_log_record_log$session_log_record_connect_time = double_to_time(sessionlogrecord$connectTime);
+    info_session_log_record_log$session_log_record_disconnect_time = double_to_time(sessionlogrecord$disconnectTime);
     info_session_log_record_log$session_log_record_session_status_summary_undefined_bits = sessionlogrecord$sessionStatusSummary$UNDEFINED_BITS;
     info_session_log_record_log$session_log_record_session_status_summary_insecure_session = sessionlogrecord$sessionStatusSummary$INSECURE_SESSION;
     info_session_log_record_log$session_log_record_session_status_summary_session_timeout = sessionlogrecord$sessionStatusSummary$SESSION_TIMEOUT;
