@@ -267,7 +267,7 @@ export {
         read_additional_device_status_contents_standardized_status3_radio_failure                                               : bool &log &optional;
         read_additional_device_status_contents_standardized_status3_block_transfer_pending                                      : bool &log &optional;
         read_additional_device_status_contents_standardized_status3_bandwidth_allocation_pending                                 : bool &log &optional;
-        read_additional_device_status_contents_standardized_status3_resereved                                                   : bool &log &optional;
+        read_additional_device_status_contents_standardized_status3_reserved                                                   : bool &log &optional;
         read_additional_device_status_contents_standardized_status3_capacity_denied                                             : bool &log &optional;
         read_additional_device_status_contents_analog_channel_undefined_bits                                                    : count &log &optional;
         read_additional_device_status_contents_analog_channel_analog_channel                                                    : bool &log &optional;

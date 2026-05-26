@@ -201,7 +201,7 @@
                 "bits": "2"
             },
             {
-                "name": "RESEREVED",
+                "name": "RESERVED",
                 "description": "",
                 "notes": "",
                 "type": "bool",
