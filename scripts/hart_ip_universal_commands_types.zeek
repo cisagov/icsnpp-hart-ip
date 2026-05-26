@@ -23,7 +23,7 @@ export {
         read_unique_identifier_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation                                              : bool &log &optional;
         read_unique_identifier_response_flags_protocol_bridge_device                                                            : bool &log &optional;
         read_unique_identifier_response_flags_eeprom_control                                                                    : bool &log &optional;
-        read_unique_identifier_response_flags_mutli_sensor_field_device                                                         : bool &log &optional;
+        read_unique_identifier_response_flags_multi_sensor_field_device                                                         : bool &log &optional;
         read_unique_identifier_response_device_id                                                                               : count &log &optional;
         read_unique_identifier_response_number_preambles_slave_master                                                           : count &log &optional;
         read_unique_identifier_response_last_device_variable_this                                                               : count &log &optional;
@@ -155,7 +155,7 @@ export {
         read_unique_identifier_tag_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation                                          : bool &log &optional;
         read_unique_identifier_tag_response_flags_protocol_bridge_device                                                        : bool &log &optional;
         read_unique_identifier_tag_response_flags_eeprom_control                                                                : bool &log &optional;
-        read_unique_identifier_tag_response_flags_mutli_sensor_field_device                                                     : bool &log &optional;
+        read_unique_identifier_tag_response_flags_multi_sensor_field_device                                                     : bool &log &optional;
         read_unique_identifier_tag_response_device_id                                                                           : count &log &optional;
         read_unique_identifier_tag_response_number_preambles_slave_master                                                       : count &log &optional;
         read_unique_identifier_tag_response_last_device_variable_this                                                           : count &log &optional;
@@ -212,7 +212,7 @@ export {
         read_unique_identifier_long_tag_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation                                     : bool &log &optional;
         read_unique_identifier_long_tag_response_flags_protocol_bridge_device                                                   : bool &log &optional;
         read_unique_identifier_long_tag_response_flags_eeprom_control                                                           : bool &log &optional;
-        read_unique_identifier_long_tag_response_flags_mutli_sensor_field_device                                                : bool &log &optional;
+        read_unique_identifier_long_tag_response_flags_multi_sensor_field_device                                                : bool &log &optional;
         read_unique_identifier_long_tag_response_device_id                                                                      : count &log &optional;
         read_unique_identifier_long_tag_response_number_preambles_slave_master                                                  : count &log &optional;
         read_unique_identifier_long_tag_response_last_device_variable_this                                                      : count &log &optional;

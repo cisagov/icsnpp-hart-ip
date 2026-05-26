@@ -591,7 +591,7 @@ type FindDeviceResponse = unit (parentLinkId : string) {
                                                                IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
                                                                PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
                                                                EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
-                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                               MULTI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
                                                            };
     var deviceID                                         : uint64;
                                                          : bytes &size=3 {
@@ -686,7 +686,7 @@ type PollSubDeviceResponse = unit (parentLinkId : string) {
                                                                IEEE_802_15_4_DSSS_O_QPSK_MODULATION     : 3 &convert=cast<bool>($$);
                                                                PROTOCOL_BRIDGE_DEVICE                   : 2 &convert=cast<bool>($$);
                                                                EEPROM_CONTROL                           : 1 &convert=cast<bool>($$);
-                                                               MUTLI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
+                                                               MULTI_SENSOR_FIELD_DEVICE                : 0 &convert=cast<bool>($$);
                                                            };
     var deviceID                                         : uint64;
                                                          : bytes &size=3 {

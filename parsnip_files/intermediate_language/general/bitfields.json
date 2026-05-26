@@ -433,7 +433,7 @@
                 "bits": "1"
             },
             {
-                "name": "MUTLI_SENSOR_FIELD_DEVICE",
+                "name": "MULTI_SENSOR_FIELD_DEVICE",
                 "description": "",
                 "notes": "",
                 "type": "bool",

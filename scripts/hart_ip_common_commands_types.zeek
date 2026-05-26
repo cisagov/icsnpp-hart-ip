@@ -154,7 +154,7 @@ export {
         find_device_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation                                                 : bool &log &optional;
         find_device_response_flags_protocol_bridge_device                                                               : bool &log &optional;
         find_device_response_flags_eeprom_control                                                                       : bool &log &optional;
-        find_device_response_flags_mutli_sensor_field_device                                                            : bool &log &optional;
+        find_device_response_flags_multi_sensor_field_device                                                            : bool &log &optional;
         find_device_response_device_id                                                                                  : count &log &optional;
         find_device_response_number_preambles_slave_master                                                              : count &log &optional;
         find_device_response_last_device_variable_this                                                                  : count &log &optional;
@@ -194,7 +194,7 @@ export {
         poll_sub_device_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation                                             : bool &log &optional;
         poll_sub_device_response_flags_protocol_bridge_device                                                           : bool &log &optional;
         poll_sub_device_response_flags_eeprom_control                                                                   : bool &log &optional;
-        poll_sub_device_response_flags_mutli_sensor_field_device                                                        : bool &log &optional;
+        poll_sub_device_response_flags_multi_sensor_field_device                                                        : bool &log &optional;
         poll_sub_device_response_device_id                                                                              : count &log &optional;
         poll_sub_device_response_number_preambles_slave_master                                                          : count &log &optional;
         poll_sub_device_response_last_device_variable_this                                                              : count &log &optional;

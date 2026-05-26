@@ -514,7 +514,7 @@ event HART_IP_COMMON_COMMANDS::FindDeviceResponseEvt (c: connection, is_orig: bo
     info_common_commands_log$find_device_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation = finddeviceresponse$flags$IEEE_802_15_4_DSSS_O_QPSK_MODULATION;
     info_common_commands_log$find_device_response_flags_protocol_bridge_device = finddeviceresponse$flags$PROTOCOL_BRIDGE_DEVICE;
     info_common_commands_log$find_device_response_flags_eeprom_control = finddeviceresponse$flags$EEPROM_CONTROL;
-    info_common_commands_log$find_device_response_flags_mutli_sensor_field_device = finddeviceresponse$flags$MUTLI_SENSOR_FIELD_DEVICE;
+    info_common_commands_log$find_device_response_flags_multi_sensor_field_device = finddeviceresponse$flags$MULTI_SENSOR_FIELD_DEVICE;
     info_common_commands_log$find_device_response_device_id = finddeviceresponse$deviceID;
     info_common_commands_log$find_device_response_number_preambles_slave_master = finddeviceresponse$numberPreamblesSlaveMaster;
     info_common_commands_log$find_device_response_last_device_variable_this = finddeviceresponse$lastDeviceVariableThis;
@@ -578,7 +578,7 @@ event HART_IP_COMMON_COMMANDS::PollSubDeviceResponseEvt (c: connection, is_orig:
     info_common_commands_log$poll_sub_device_response_flags_ieee_802_15_4_dsss_o_qpsk_modulation = pollsubdeviceresponse$flags$IEEE_802_15_4_DSSS_O_QPSK_MODULATION;
     info_common_commands_log$poll_sub_device_response_flags_protocol_bridge_device = pollsubdeviceresponse$flags$PROTOCOL_BRIDGE_DEVICE;
     info_common_commands_log$poll_sub_device_response_flags_eeprom_control = pollsubdeviceresponse$flags$EEPROM_CONTROL;
-    info_common_commands_log$poll_sub_device_response_flags_mutli_sensor_field_device = pollsubdeviceresponse$flags$MUTLI_SENSOR_FIELD_DEVICE;
+    info_common_commands_log$poll_sub_device_response_flags_multi_sensor_field_device = pollsubdeviceresponse$flags$MULTI_SENSOR_FIELD_DEVICE;
     info_common_commands_log$poll_sub_device_response_device_id = pollsubdeviceresponse$deviceID;
     info_common_commands_log$poll_sub_device_response_number_preambles_slave_master = pollsubdeviceresponse$numberPreamblesSlaveMaster;
     info_common_commands_log$poll_sub_device_response_last_device_variable_this = pollsubdeviceresponse$lastDeviceVariableThis;
