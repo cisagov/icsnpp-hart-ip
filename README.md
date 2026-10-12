@@ -48,6 +48,40 @@ mkdir build && cd build && cmake .. && make
 From here you can install the locally built files through `zkg install ./icsnpp-hart-ip` and run it like you would normally.
 Or you can manually run the parser without installing it: `zeek ./build/hart_ip.hlto ./scripts/__load__.zeek  -Cr <pcap>`
 
+## Custom Ports
+
+The parser uses both port-based analyzer registration and payload signatures for TCP and UDP. The default server ports are `5094/tcp` and `5094/udp`.
+
+To add TCP port 12345 while retaining the default TCP port, add the following to `local.zeek`:
+
+```zeek
+redef HART_IP::tcp_ports += { 12345/tcp };
+```
+
+To add UDP port 12345 while retaining the default UDP port, add:
+
+```zeek
+redef HART_IP::udp_ports += { 12345/udp };
+```
+
+As an alternative, supply additional TCP and UDP ports in a comma-separated environment variable:
+
+```bash
+ZEEK_HART_IP_PORTS="12345/tcp,12345/udp"
+```
+
+Entries must use `NUMBER/tcp` or `NUMBER/udp` and a port number from 0 through 65535. Whitespace around entries is allowed. Invalid entries are ignored with a warning. Environment-provided ports are merged into the corresponding `HART_IP::tcp_ports` or `HART_IP::udp_ports` set.
+
+The transport-specific sets are registered directly with their respective HART-IP analyzers. They are also added to Zeek's `likely_server_ports` set to improve originator/responder inference when the initial handshake or UDP request is unavailable. `likely_server_ports` is only a direction heuristic: adding a port to it without also adding the port to the appropriate HART-IP transport set does not enable parsing.
+
+Port configuration is read when Zeek initializes. Restart a standalone Zeek process, or redeploy/restart Zeek cluster workers, after changing `local.zeek` or `ZEEK_HART_IP_PORTS`. Port-only changes do not require rebuilding or reinstalling the parser.
+
+Direct port registration assigns traffic whose inferred server port matches a configured port to the HART-IP analyzer. Configure only ports dedicated to HART-IP; unrelated or malformed traffic on those ports incurs parsing overhead and will be rejected when it does not parse as HART-IP.
+
+### Signature Detection
+
+The payload signatures in [`scripts/dpd.sig`](scripts/dpd.sig) can detect HART-IP on non-standard ports without port configuration. The signatures are not restricted to a port or payload direction: the TCP signature applies to TCP payloads, and the UDP signature applies to both client-to-server and server-to-client payloads. No signature edit is required for a custom port. Adding a port to the transport sets enables deterministic port-based assignment in addition to signature-based detection.
+
 ## ICSNPP Packages
 
 All ICSNPP Packages:

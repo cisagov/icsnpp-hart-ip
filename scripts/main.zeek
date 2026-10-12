@@ -34,6 +34,15 @@ export {
     global emit_hart_ip_common_commands_log: function(c: connection);
     global emit_hart_ip_universal_commands_log: function(c: connection);
 
+    ## TCP ports assigned directly to the HART-IP TCP analyzer.
+    const tcp_ports: set[port] = {
+        5094/tcp,
+    } &redef;
+
+    ## UDP ports assigned directly to the HART-IP UDP analyzer.
+    const udp_ports: set[port] = {
+        5094/udp,
+    } &redef;
 }
 
 # redefine connection record to contain one of each of the hart_ip records
@@ -45,18 +54,52 @@ redef record connection += {
     hart_ip_universal_commands_log: HART_IP_UNIVERSAL_COMMANDS::universal_commands_log &optional;
 };
 
-# Define tcp ports
-const tcp_ports = {
-    5094/tcp,
-};
+# Additional HART-IP ports supplied through env variable.
+global hartip_ports_str: string = getenv("ZEEK_HART_IP_PORTS");
 
-# Define udp ports
-const udp_ports = {
-    5094/udp,
-};
+function add_environment_ports()
+    {
+    if ( hartip_ports_str == "" )
+        return;
+
+    local custom_ports = split_string(hartip_ports_str, /,/);
+
+    for ( port_idx in custom_ports )
+        {
+        local port_string = strip(custom_ports[port_idx]);
+
+        if ( /^[0-9]{1,5}\/(tcp|udp)$/ !in port_string )
+            {
+            Reporter::warning(fmt("Ignoring invalid ZEEK_HART_IP_PORTS entry '%s'; expected NUMBER/tcp or NUMBER/udp", port_string));
+            next;
+            }
+
+        local port_parts = split_string(port_string, /\//);
+        local port_number = to_count(port_parts[0]);
+
+        if ( port_number > 65535 )
+            {
+            Reporter::warning(fmt("Ignoring out-of-range ZEEK_HART_IP_PORTS entry '%s'", port_string));
+            next;
+            }
+
+        if ( port_parts[1] == "tcp" )
+            add tcp_ports[count_to_port(port_number, tcp)];
+        else
+            add udp_ports[count_to_port(port_number, udp)];
+        }
+    }
 
 # Initialization Function
 event zeek_init() &priority=5 {
+    add_environment_ports();
+
+    for ( p in tcp_ports )
+        add likely_server_ports[p];
+
+    for ( p in udp_ports )
+        add likely_server_ports[p];
+
     # initialize logging streams for all hart_ip logs
     Log::create_stream(HART_IP::LOG_GENERAL_LOG,
     [$columns=general_log,
@@ -121,5 +164,4 @@ function emit_hart_ip_universal_commands_log(c: connection) {
     Log::write(HART_IP::LOG_UNIVERSAL_COMMANDS_LOG, c$hart_ip_universal_commands_log);
     delete c$hart_ip_universal_commands_log;
 }
-
 
