@@ -10,11 +10,29 @@ import HART_IP_COMMON_COMMANDS;
 import HART_IP_CONVERSION;
 
 public type Messages = unit {
-     : Message[];
+    var syncing : bool = False;  # looking for the next message after a gap or an error
+     : (Message(self) &synchronize)[];
+
+    on %synced {
+        self.syncing = True;
+    }
 };
 
-public type Message = unit {
-    header           : HART_IP::Header;
+public type Message = unit(inout top : Messages) {
+    # After a gap in the stream (a packet the sensor did not see) or a parse error, look for the next message
+    # header: version 1, a known message type with the reserved bits zero, a known message ID. Parsing resumes there.
+    %synchronize-at = /\x01[\x00\x01\x02\x0f][\x00-\x05]/;
+
+    header           : HART_IP::Header {
+        if ( top.syncing ) {
+            if ( self.header.length >= 8 ) {
+                top.syncing = False;
+                confirm;
+            }
+            else
+                reject;
+        }
+    }
     body             : HART_IP::Body(self.header.messageID, self.header.messageType.messageType, self.header.length - 8) if (self.header.messageType.messageType == HART_IP_ENUM::MessageType::REQUEST || self.header.messageType.messageType == HART_IP_ENUM::MessageType::RESPONSE);
     # Not currently parsing the packet, catch all if body isn't supported
     packetBytes      : (uint8)[(self.header.length - 8)] if (self.header.messageType.messageType != HART_IP_ENUM::MessageType::REQUEST && self.header.messageType.messageType != HART_IP_ENUM::MessageType::RESPONSE);
