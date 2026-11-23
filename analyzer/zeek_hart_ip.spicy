@@ -3,6 +3,7 @@ module Zeek_HART_IP;
 
 import HART_IP;
 import spicy;
+import zeek;
 
 on HART_IP::Messages::%done {
     spicy::accept_input();
@@ -12,3 +13,7 @@ on HART_IP::Messages::%error {
     spicy::decline_input("error parsing HART_IP message");
 }
 
+# Leave a note in weird.log each time parsing resumed after a gap or an error.
+on HART_IP::Messages::%synced {
+    zeek::weird("hartip_gap_resync");
+}
